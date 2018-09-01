@@ -1,5 +1,5 @@
 from talon.voice import Context, Key, Str
-from user import std
+from user.misc import std
 from user.utils import parse_words
 import string
 

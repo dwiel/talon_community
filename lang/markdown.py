@@ -2,7 +2,7 @@ from os import system
 
 from talon.voice import Context, Key, press, Str
 
-from user.atom import jump_to_bol
+from user.apps.atom import jump_to_bol
 from user.utils import optional_numerals
 
 

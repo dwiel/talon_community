@@ -1,7 +1,7 @@
 from talon import applescript, ui
 from talon.voice import Context
 
-from user.std import parse_words
+from user.misc.std import parse_words
 
 ctx = Context('menu')
 

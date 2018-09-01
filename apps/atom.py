@@ -1,7 +1,7 @@
 import time
 
 from talon.voice import Key, press, Str, Context, Rule
-from user import std
+from user.misc import std
 from user.utils import parse_words_as_integer, parse_words, numeral_map, numerals, optional_numerals, text
 
 ctx = Context('atom', bundle='com.github.atom')
