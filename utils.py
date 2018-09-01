@@ -14,11 +14,6 @@ mapping = {
     'virg': 'v',
     'zug': 's',
     'pre-': 'pre',
-    'the wheel': 'dwiel',
-    'the real': 'dwiel',
-    'the do real': 'zdwiel',
-    'shayna': 'shaina',
-    'our june': 'arjun',
     'in turn': 'intern',
 
     'fulsome': 'folsom',
