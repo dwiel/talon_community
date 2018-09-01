@@ -1,6 +1,6 @@
 from talon.voice import Context, Key, Str
-from user.misc import std
-from user.utils import parse_words
+from ..misc import std
+from ..utils import parse_words
 import string
 
 ctx = Context('talon_editor')

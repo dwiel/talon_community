@@ -1,5 +1,5 @@
 from talon.voice import Context, Key, Str
-from user.utils import alternatives, parse_word
+from ..utils import alternatives, parse_word
 
 ctx = Context('words')
 

@@ -2,8 +2,8 @@ from os import system
 
 from talon.voice import Context, Key, press, Str
 
-from user.apps.atom import jump_to_bol
-from user.utils import optional_numerals
+from ..apps.atom import jump_to_bol
+from ..utils import optional_numerals
 
 
 def markdown_complete(m):

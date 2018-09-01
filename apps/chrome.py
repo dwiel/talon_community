@@ -1,6 +1,6 @@
 import time
 
-from user.utils import parse_words_as_integer
+from ..utils import parse_words_as_integer
 
 from talon.voice import Context, Key, Str, press
 

@@ -2,7 +2,7 @@ import time
 
 from talon.voice import Context, Key, press
 from talon import clip
-from user import utils
+from .. import utils
 
 ctx = Context('emoji')
 

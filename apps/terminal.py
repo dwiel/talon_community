@@ -1,7 +1,7 @@
 from talon.voice import Word, Key, Context, Str, press
 import string
 
-from user.utils import numerals, parse_words
+from ..utils import numerals, parse_words
 
 terminals = ('com.apple.Terminal', 'com.googlecode.iterm2')
 ctx = Context('terminal', func=lambda app, win: any(

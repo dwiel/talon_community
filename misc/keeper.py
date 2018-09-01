@@ -1,5 +1,5 @@
 from talon.voice import Context, Key, engine, Str
-from user.utils import parse_word
+from ..utils import parse_word
 
 ctx = Context('keeper')
 

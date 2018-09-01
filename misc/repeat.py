@@ -2,7 +2,7 @@
 # and https://github.com/pimentel/talon_user/blob/master/repeat.py
 
 from talon.voice import Context, Rep, RepPhrase, talon
-from user.utils import parse_words_as_integer
+from ..utils import parse_words_as_integer
 
 ctx = Context('repeater')
 

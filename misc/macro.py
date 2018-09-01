@@ -1,6 +1,6 @@
 from talon.voice import Context, talon, Key, Str, press
 from talon.engine import engine
-from user.utils import text_to_number
+from ..utils import text_to_number
 
 macro = []
 last_actions = None
