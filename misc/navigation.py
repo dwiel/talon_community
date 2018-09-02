@@ -15,10 +15,6 @@ keymap = {
     'new window': Key('cmd-n'),
     '(next window | gibby)': Key('cmd-`'),
     '(last window | shibby)': Key('cmd-shift-`'),
-    # '(next tab | goneck)': Key('ctrl-tab'),
-    # '(last tab | gopreev)': Key('ctrl-shift-tab'),
-    '(next tab | goneck)': Key('cmd-shift-]'),
-    '(last tab | gopreev)': Key('cmd-shift-['),
     'next space': Key('cmd-alt-ctrl-right'),
     'last space': Key('cmd-alt-ctrl-left'),
 
