@@ -47,9 +47,9 @@ def refocus_page(m):
     press('escape')
 
 
-def back(m):
+def back(m) :
     refocus_page(None)
-    press('cmd-left')
+    press('cmd-[')
     refocus_page(None)
 
 
@@ -75,8 +75,8 @@ context.keymap({
     'new tab': Key('cmd-t'),
     'close tab': Key('cmd-w'),
     '(reopen | unclose) tab': Key('cmd-shift-t'),
-    '(next tab | goneck)': Key('cmd-alt-right'),
-    '((last | prevous | preev) tab | gopreev)': Key('cmd-alt-left'),
+    '(next tab | goneck)': Key('cmd-shift-]'),
+    '((last | prevous | preev) tab | gopreev)': Key('cmd-shift-['),
     'tab (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)': jump_tab,
     '(end | rightmost) tab': Key('cmd-9'),
     'find': Key('cmd-f'),

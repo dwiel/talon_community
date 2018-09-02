@@ -303,9 +303,9 @@ keymap.update({
     'last window': Key('cmd-shift-`'),
     'next app': Key('cmd-tab'),
     'last app': Key('cmd-shift-tab'),
-    'next tab': Key('ctrl-tab'),
+    'next tab': Key('cmd-shift-]'),
     'new tab': Key('cmd-t'),
-    'last tab': Key('ctrl-shift-tab'),
+    '(last | prevous | preev) tab': Key('cmd-shift-['),
 
     'next space': Key('cmd-alt-ctrl-right'),
     'last space': Key('cmd-alt-ctrl-left'),
