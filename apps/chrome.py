@@ -66,78 +66,42 @@ def jump_tab(m):
 
 
 context.keymap({
-    '(address bar | focus address | focus url | url)':
-    focus_address_bar,
-    'copy url':
-    'yy',
-    'back[ward]':
-    back,
-    'forward':
-    forward,
-    'reload':
-    Key('cmd-r'),
-    'hard reload':
-    Key('cmd-shift-r'),
-    'new tab':
-    Key('cmd-t'),
-    'close tab':
-    Key('cmd-w'),
-    '(reopen | unclose) tab':
-    Key('cmd-shift-t'),
-    'next tab':
-    Key('cmd-alt-right'),
-    '(last | prevous | preev) tab':
-    Key('cmd-alt-left'),
-    'tab (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)':
-    jump_tab,
-    '(end | rightmost) tab':
-    Key('cmd-9'),
-    'find':
-    Key('cmd-f'),
-    'next':
-    Key('cmd-g'),
-    '(last | prevous)':
-    Key('cmd-shift-g'),
-    'toggle dev tools':
-    Key('cmd-alt-i'),
-    'command [menu]':
-    Key('cmd-shift-p'),
-    'next panel':
-    next_panel,
-    '(last | prevous) panel':
-    last_panel,
-    'show application [panel]':
-    lambda m: show_panel('Application'),
-    'show audit[s] [panel]':
-    lambda m: show_panel('Audits'),
-    'show console [panel]':
-    lambda m: show_panel('Console'),
-    'show element[s] [panel]':
-    lambda m: show_panel('Elements'),
-    'show memory [panel]':
-    lambda m: show_panel('Memory'),
-    'show network [panel]':
-    lambda m: show_panel('Network'),
-    'show performance [panel]':
-    lambda m: show_panel('Performance'),
-    'show security [panel]':
-    lambda m: show_panel('Security'),
-    'show source[s] [panel]':
-    lambda m: show_panel('Sources'),
-    '(refocus | focus) page':
-    refocus_page,
-    '[refocus] dev tools':
-    open_focus_devtools,
+    '(address bar | focus address | focus url | url)': focus_address_bar,
+    'copy url': 'yy',
+    'back[ward]': back,
+    'forward': forward,
+    'reload': Key('cmd-r'),
+    'hard reload': Key('cmd-shift-r'),
+    'new tab': Key('cmd-t'),
+    'close tab': Key('cmd-w'),
+    '(reopen | unclose) tab': Key('cmd-shift-t'),
+    'next tab': Key('cmd-alt-right'),
+    '(last | prevous | preev) tab': Key('cmd-alt-left'),
+    'tab (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)': jump_tab,
+    '(end | rightmost) tab': Key('cmd-9'),
+    'find': Key('cmd-f'),
+    'next': Key('cmd-g'),
+    '(last | prevous)': Key('cmd-shift-g'),
+    'toggle dev tools': Key('cmd-alt-i'),
+    'command [menu]': Key('cmd-shift-p'),
+    'next panel': next_panel,
+    '(last | prevous) panel': last_panel,
+    'show application [panel]': lambda m: show_panel('Application'),
+    'show audit[s] [panel]': lambda m: show_panel('Audits'),
+    'show console [panel]': lambda m: show_panel('Console'),
+    'show element[s] [panel]': lambda m: show_panel('Elements'),
+    'show memory [panel]': lambda m: show_panel('Memory'),
+    'show network [panel]': lambda m: show_panel('Network'),
+    'show performance [panel]': lambda m: show_panel('Performance'),
+    'show security [panel]': lambda m: show_panel('Security'),
+    'show source[s] [panel]': lambda m: show_panel('Sources'),
+    '(refocus | focus) page': refocus_page,
+    '[refocus] dev tools': open_focus_devtools,
 
     # Clipboard
-    'cut':
-    Key('cmd-x'),
-    'copy':
-    Key('cmd-c'),
-    'paste':
-    Key('cmd-v'),
-    'paste same style':
-    Key('cmd-alt-shift-v'),
-    'mendeley':
-    Key('cmd-shift-m'),
+    'cut': Key('cmd-x'),
+    'copy': Key('cmd-c'),
+    'paste': Key('cmd-v'),
+    'paste same style': Key('cmd-alt-shift-v'),
+    'mendeley': Key('cmd-shift-m'),
 })
