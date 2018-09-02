@@ -18,7 +18,7 @@ alpha.update({'sky %s' % word: letter for word, letter in zip(alpha_alt, string.
 alpha.update({'control %s' % k: Key('ctrl-%s' % v) for k, v in alnum})
 alpha.update({'command %s' % k: Key('cmd-%s' % v) for k, v in alnum})
 alpha.update({'Chom %s' % k: Key('cmd-%s' % v) for k, v in alnum})
-alpha.update({'command shift %s' % k: Key('ctrl-shift-%s' % v) for k, v in alnum})
+alpha.update({'command shift %s' % k: Key('cmd-shift-%s' % v) for k, v in alnum})
 alpha.update({'alt %s' % k: Key('alt-%s' % v) for k, v in alnum})
 
 
