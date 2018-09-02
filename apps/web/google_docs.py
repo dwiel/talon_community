@@ -48,7 +48,7 @@ ctx.keymap({
     'right align': Key('cmd+shift+r'),
     'justify': Key('cmd+shift+j'),
     'numbered list': Key('cmd+shift+7'),
-    'bulleted list': Key('cmd+shift+8'),
+    '(bullet | bulleted) [list]': Key('cmd+shift+8'),
     'resize larger': Key('cmd+ctrl+k'),
     'resize larger horizontally': Key('cmd+ctrl+b'),
     'resize larger vertically': Key('cmd+ctrl+i'),
@@ -123,7 +123,7 @@ ctx.keymap({
     'announce formatting at cursor location': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('a'), press('f'),
-        ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
+        ctrl.ke8y_press('cmd', ctrl=True, cmd=True, up=True),
     ),
     'speak the table column and row header': lambda m: (
         ctrl.key_press('shift', ctrl=True, cmd=True, shift=True, down=True),
@@ -145,72 +145,72 @@ ctx.keymap({
         press('t'), press('c'),
         ctrl.key_press('shift', ctrl=True, cmd=True, shift=True, up=True),
     ),
-    'move to next heading': lambda m: (
+    '[move to] next heading': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('n'), press('h'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to previous heading': lambda m: (
+    '[[move] to] previous heading': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('p'), press('h'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to next heading 1': lambda m: (
+    '[[move] to] next heading 1': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('n'), press('1'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to next heading 2': lambda m: (
+    '[move to] next heading 2': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('n'), press('2'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to next heading 3': lambda m: (
+    '[move to] next heading 3': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('n'), press('3'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to next heading 4': lambda m: (
+    '[move to] next heading 4': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('n'), press('4'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to next heading 5': lambda m: (
+    '[move to] next heading 5': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('n'), press('5'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to next heading 6': lambda m: (
+    '[move to] next heading 6': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('n'), press('6'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to previous heading 1': lambda m: (
+    '[move to] previous heading 1': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('p'), press('1'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to previous heading 2': lambda m: (
+    '[move to] previous heading 2': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('p'), press('2'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to previous heading 3': lambda m: (
+    '[move to] previous heading 3': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('p'), press('3'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to previous heading 4': lambda m: (
+    '[move to] previous heading 4': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('p'), press('4'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to previous heading 5': lambda m: (
+    '[move to] previous heading 5': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('p'), press('5'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),
     ),
-    'move to previous heading 6': lambda m: (
+    '[move to] previous heading 6': lambda m: (
         ctrl.key_press('cmd', ctrl=True, cmd=True, down=True),
         press('p'), press('6'),
         ctrl.key_press('cmd', ctrl=True, cmd=True, up=True),

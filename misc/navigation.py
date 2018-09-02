@@ -37,7 +37,6 @@ keymap = {
     # moving
     '(tab | tarp)': Key('tab'),
     'tarsh': Key('shift-tab'),
-    # 'slap': [Key('cmd-right enter')],
     'shocker': [Key('cmd-left enter up')],
     'wonkrim': Key('alt-ctrl-left'),
     'wonkrish': Key('alt-ctrl-right'),
