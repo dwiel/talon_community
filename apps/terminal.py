@@ -101,6 +101,7 @@ keymap = {
     'jet commit all [<dgndictation>]': ['git commit -a -m ""', Key('left'), text],
     'jet diff [<dgndictation>]': ['git diff ', text],
     'jet history': 'git hist\n',
+    'jet (init | initialize)': 'git init\n',
     'jet merge [<dgndictation>]': ['git merge ', text],
     'jet move [<dgndictation>]': ['git mv ', text],
     'jet pull [<dgndictation>]': ['git pull ', text],
