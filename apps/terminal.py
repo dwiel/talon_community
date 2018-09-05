@@ -57,6 +57,7 @@ keymap = {
     'dash <dgndictation> [over]': dash,
 
     'pseudo': 'sudo ',
+    'shell C H mod': 'chmod ',
     'shell clear': [Key('ctrl-c'), 'clear\n'],
     'shell copy [<dgndictation>]': ['cp ', text],
     'shell copy (recursive | curse) [<dgndictation>]': ['cp -r', text],
@@ -105,7 +106,7 @@ keymap = {
     'jet merge [<dgndictation>]': ['git merge ', text],
     'jet move [<dgndictation>]': ['git mv ', text],
     'jet pull [<dgndictation>]': ['git pull ', text],
-    'jet pull (base | re-base) [<dgndictation>]': ['git pull --rebase ', text],
+    'jet pull (base | re-base | rebase | re base) [<dgndictation>]': ['git pull --rebase ', text],
     'jet push [<dgndictation>]': ['git push ', text],
     'jet push force [<dgndictation>]': ['git push --force', text],
     'jet rebase continue': 'git rebase --continue',
