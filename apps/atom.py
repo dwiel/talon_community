@@ -215,7 +215,6 @@ keymap = {
     'cut line' + optional_numerals: cut_line,
     'paste line' + optional_numerals: paste_line,
 
-
     # 'snipple': [Key(atom_hotkey), Key(COMMANDS.DELETE_TO_BOL)],
     # 'snipper': [Key(atom_hotkey), Key(COMMANDS.DELETE_TO_EOL)],
 
@@ -238,6 +237,8 @@ keymap = {
     'advanced open file': Key('cmd-alt-o'),
     'pain' + numerals: change_pain,
     'tab' + numerals: jump_tab,
+    'goneck': Key('cmd-shift-]'),
+    'gopreev': Key('cmd-shift-['),
     'close tab' + numerals: close_tab,
     '(reopen | unclose) tab': Key('cmd-shift-t'),
     'split pain left': [Key('cmd-k'), Key('left')],
