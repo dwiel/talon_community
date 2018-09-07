@@ -11,17 +11,11 @@ keymap = {
 
     # Application navigation
     'swick': Key('cmd-tab'),
-    # 'totch': Key('cmd-w'),
     'new window': Key('cmd-n'),
     '(next window | gibby)': Key('cmd-`'),
     '(last window | shibby)': Key('cmd-shift-`'),
     'next space': Key('cmd-alt-ctrl-right'),
     'last space': Key('cmd-alt-ctrl-left'),
-
-    # Following three commands should be application specific
-    #'(baxley | go back)': Key('cmd-alt-left'),
-    #'(fourthly | go forward)': Key('cmd-alt-right'),
-    # '(new tab | peach)': Key('cmd-t'),
 
     # deleting
     # '(delete line)': Key('cmd-right cmd-backspace'),
@@ -79,20 +73,6 @@ keymap = {
     '(last window | shibby)': Key('cmd-shift-`'),
     'window space right': Key('cmd-alt-ctrl-right'),
     'window space left': Key('cmd-alt-ctrl-left'),
-
-    'new window': Key('cmd-n'),
-
-    # 'next app': Key('cmd-tab'),
-    # 'last app': Key('cmd-shift-tab'),
-
-    'next space': Key('cmd-alt-ctrl-right'),
-    'last space': Key('cmd-alt-ctrl-left'),
-
-    # Following three commands should be application specific
-    'last tab': Key('cmd-shift-['),
-    'next tab': Key('cmd-shift-]'),
-    'new tab': Key('cmd-t'),
-    'reload': Key('cmd-r'),
 
     # 'scroll down': [Key('down')] * 30,
     'page up': [Key('pageup')],
