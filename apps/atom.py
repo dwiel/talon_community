@@ -245,7 +245,7 @@ keymap = {
     'split pain right': [Key('cmd-k'), Key('right')],
     'split pain up': [Key('cmd-k'), Key('up')],
     'split pain down': [Key('cmd-k'), Key('down')],
-    'mark all': Key('cmd-shift-f'),
+    '(search all files | mark all)': Key('cmd-shift-f'),
 
     'command pallet': Key(atom_command_pallet),
     'cursor center': command('center-line:toggle'),
@@ -259,7 +259,7 @@ keymap = {
     # needs bracket-matcher atom package; still a bit poor.
     'bracken': command('bracket-matcher:select-inside-bracket'),
     'go match': command('bracket-matcher:go-to-matching-bracket'),
-    'remove matching brackets': command('bracket-matcher:remove-matching-brackets'),
+    'remove [matching] (bracket | brackets)': command('bracket-matcher:remove-matching-brackets'),
 
     'quinn' + '({})'.format(' | '.join(snippets.keys())): code_snippet,
     # '({})'.format(' | '.join(snippets.keys())): code_snippet_naked,
@@ -279,6 +279,9 @@ keymap = {
     'jet hub issues': command('open-on-github:issues'),
     'jet hub pull requests': command('open-on-github:pull-requests'),
     'jet hub branch compare': command('open-on-github:branch-compare'),
+
+    # go to definition
+    'go to definition': command('goto-definition:go'),
 }
 
 ctx.keymap(keymap)
