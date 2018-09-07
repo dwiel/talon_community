@@ -11,6 +11,7 @@ def youtube_download(m):
     time.sleep(0.1)
     url = clip.get()
     print(f'url: {url}')
+    press('escape')
 
     command = f'youtube-dl --extract-audio {url}'
     print(f'command: {command}')
