@@ -251,9 +251,10 @@ keymap = {
     'cursor center': command('center-line:toggle'),
     'cursor top': [command('center-line:toggle'), command('center-line:toggle')],
     # 'cell pair': command('py-ast-edit:select-parent'),
-    'cell expand': Key('alt-up'),
+    '(cell expand | cell pair)': Key('alt-up'),
     'cell contract': Key('alt-down'),
     'cell this': command('py-ast-edit:select-this'),
+    '(select | cell) [inside] (quote | quotes)': command('expand-selection-to-quotes:toggle'),
 
     # needs bracket-matcher atom package; still a bit poor.
     'bracken': command('bracket-matcher:select-inside-bracket'),
@@ -268,6 +269,16 @@ keymap = {
     'else': ['else:', Key('enter')],
     'self': 'self',
     'to do': '# TODO: ',
+
+    # github
+    'jet hub open': command('open-on-github:file'),
+    'jet hub copy': command('open-on-github:copy-url'),
+    'jet hub blame': command('open-on-github:blame'),
+    'jet hub repository': command('open-on-github:repository'),
+    'jet hub history': command('open-on-github:history'),
+    'jet hub issues': command('open-on-github:issues'),
+    'jet hub pull requests': command('open-on-github:pull-requests'),
+    'jet hub branch compare': command('open-on-github:branch-compare'),
 }
 
 ctx.keymap(keymap)
