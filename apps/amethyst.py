@@ -1,6 +1,7 @@
+from talon import ui
 from talon.voice import Key, Context
 
-ctx = Context('amethyst')
+ctx = Context('amethyst', func=lambda app, win: bool(ui.apps(bundle='com.amethyst.Amethyst')))
 
 keymap = {
     # 'desk <dgndictation>': desk,
