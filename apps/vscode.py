@@ -1,6 +1,5 @@
 from talon.voice import Context, Key, press, Str
-from user.utils import parse_words_as_integer
-from user.utils import parse_words_as_integer, repeat_function, threeDigitNumber
+from ..utils import parse_words_as_integer, repeat_function, optional_numerals
 
 context = Context('VSCode', bundle='com.microsoft.VSCode')
 
@@ -51,7 +50,7 @@ def select_lines_function(m):
 
 context.keymap({
     # Selecting text
-    'select line' + threeDigitNumber + 'until' + threeDigitNumber: select_lines_function,
+    'select line' + optional_numerals + 'until' + optional_numerals: select_lines_function,
 
     # Finding text
     'find': Key('cmd-f'),
@@ -61,10 +60,10 @@ context.keymap({
     'clone': Key('alt-shift-down'),
     
     # Navigation
-    'line' + threeDigitNumber: jump_to_line,
+    'line' + optional_numerals: jump_to_line,
     'Go to line': Key('cmd-g'),
-    'line up' + threeDigitNumber: repeat_function(2, 'alt-up'),
-    'line down' + threeDigitNumber: repeat_function(2, 'alt-down'),
+    'line up' + optional_numerals: repeat_function(2, 'alt-up'),
+    'line down' + optional_numerals: repeat_function(2, 'alt-down'),
 
     # tabbing
     'stiffy': Key('cmd-alt-left'),
@@ -72,7 +71,7 @@ context.keymap({
     'stippy': Key('cmd-alt-right'),
     'last tab': Key('cmd-alt-left'),
     'new tab': Key('cmd-n'),
-    'jump' + threeDigitNumber: jump_tabs,
+    'jump' + optional_numerals: jump_tabs,
 
     # editing
     'bracken': [Key('cmd-shift-ctrl-right')],
