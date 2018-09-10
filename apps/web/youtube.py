@@ -4,7 +4,13 @@ from talon.voice import Context, Key, press
 from talon import ctrl, clip, applescript
 
 
-def youtube_download(m):
+def youtube_download_audio(m):
+    youtube_download(video=False)
+
+def youtube_download_video(m):
+    youtube_download(video=True)
+
+def youtube_download(video=True):
     press('escape')
     press('cmd-l')
     press('cmd-c')
@@ -13,7 +19,10 @@ def youtube_download(m):
     print(f'url: {url}')
     press('escape')
 
-    command = f'youtube-dl --extract-audio {url}'
+    command = f'youtube-dl '
+    if not video:
+        command += '--extract-audio '
+    command += '{url}'
     print(f'command: {command}')
 
     return applescript.run(
@@ -28,5 +37,6 @@ def youtube_download(m):
 title = ' - YouTube'
 context = Context('youtube', func=lambda app, win: title in win.title)
 context.keymap({
-    'download audio': youtube_download,
+    'download audio': youtube_download_audio,
+    'download video': youtube_download_video,
 })
