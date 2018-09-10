@@ -9,7 +9,7 @@ def keeper(j):
         if phrase and phrase[0] == 'keeper':
             # Str(' '.join(map(parse_word, phrase[1:])))(None)
             Str(' '.join(phrase[1:]))(None)
-            return False
+            j['cmd'] = 'p.skip'
 
 engine.register('pre:phrase', keeper)
 ctx.keymap({
