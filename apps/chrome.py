@@ -83,7 +83,7 @@ context.keymap({
     'next': Key('cmd-g'),
     '(last | prevous)': Key('cmd-shift-g'),
     'toggle dev tools': Key('cmd-alt-i'),
-    'command [menu]': Key('cmd-shift-p'),
+    'command menu': Key('cmd-shift-p'),
     'next panel': next_panel,
     '(last | prevous) panel': last_panel,
     'show application [panel]': lambda m: show_panel('Application'),
@@ -104,4 +104,7 @@ context.keymap({
     'paste': Key('cmd-v'),
     'paste same style': Key('cmd-alt-shift-v'),
     'mendeley': Key('cmd-shift-m'),
+
+    # TODO: this should probably bem specific to the page
+    'submit': Key('cmd-enter'),
 })
