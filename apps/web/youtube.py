@@ -1,7 +1,10 @@
 import time
+import os
 
 from talon.voice import Context, Key, press
 from talon import ctrl, clip, applescript
+
+DOWNLOAD_PATH = '~/Music'
 
 
 def youtube_download_audio(m):
@@ -28,7 +31,7 @@ def youtube_download(video=True):
     return applescript.run(
         f"""
         tell application "Terminal"
-            do script "cd /Users/zdwiel/Music; {command}; exit"
+            do script "cd {os.path.expanduser(DOWNLOAD_PATH)}; {command}; exit"
         end tell
         """
     )
