@@ -280,8 +280,12 @@ keymap = {
     'jet hub pull requests': command('open-on-github:pull-requests'),
     'jet hub branch compare': command('open-on-github:branch-compare'),
 
-    # go to definition
-    'go to definition': command('goto-definition:go'),
+    # autocomplete-python
+    'go to definition': command('autocomplete-python:go-to-definition'),
+    'show usages': command('autocomplete-python:show-usages'),
+    'complete arguments': command('autocomplete-python:complete-arguments'),
+    'rename': command('autocomplete-python:rename'),
+    'override method': command('autocomplete-python:override-method'),
 }
 
 ctx.keymap(keymap)
