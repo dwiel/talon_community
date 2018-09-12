@@ -3,7 +3,8 @@ import collections
 import itertools
 
 from talon import clip
-from talon.voice import Str, Key
+from talon.voice import Str, Key, press
+from time import sleep
 
 mapping = {
     'semicolon': ';',
@@ -333,3 +334,17 @@ def preserve_clipboard(fn):
         fn(*args, **kwargs)
         clip.set(old)
     return wrapped_function
+
+# The. following function is used to be able to repeat commands by following it by one or several numbers, e.g.:
+# 'delete' + optional_numerals: repeat_function(1, 'delete'),
+def repeat_function(numberOfWordsBeforeNumber, keyCode, delay=0):
+    def repeater(m): 
+        line_number = parse_words_as_integer(m._words[numberOfWordsBeforeNumber:])
+
+        if line_number == None:
+            line_number = 1
+ 
+        for i in range(0, line_number):
+            sleep(delay)
+            press(keyCode)
+    return repeater
