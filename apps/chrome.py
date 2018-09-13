@@ -47,9 +47,9 @@ def refocus_page(m):
     press('escape')
 
 
-def back(m):
+def back(m) :
     refocus_page(None)
-    press('cmd-left')
+    press('cmd-[')
     refocus_page(None)
 
 
@@ -75,15 +75,15 @@ context.keymap({
     'new tab': Key('cmd-t'),
     'close tab': Key('cmd-w'),
     '(reopen | unclose) tab': Key('cmd-shift-t'),
-    '(next tab | goneck)': Key('cmd-alt-right'),
-    '((last | prevous | preev) tab | gopreev)': Key('cmd-alt-left'),
+    '(next tab | goneck)': Key('cmd-shift-]'),
+    '((last | prevous | preev) tab | gopreev)': Key('cmd-shift-['),
     'tab (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)': jump_tab,
     '(end | rightmost) tab': Key('cmd-9'),
     'find': Key('cmd-f'),
     'next': Key('cmd-g'),
     '(last | prevous)': Key('cmd-shift-g'),
     'toggle dev tools': Key('cmd-alt-i'),
-    'command [menu]': Key('cmd-shift-p'),
+    'command menu': Key('cmd-shift-p'),
     'next panel': next_panel,
     '(last | prevous) panel': last_panel,
     'show application [panel]': lambda m: show_panel('Application'),
@@ -104,4 +104,7 @@ context.keymap({
     'paste': Key('cmd-v'),
     'paste same style': Key('cmd-alt-shift-v'),
     'mendeley': Key('cmd-shift-m'),
+
+    # TODO: this should probably bem specific to the page
+    'submit': Key('cmd-enter'),
 })

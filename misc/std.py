@@ -8,6 +8,7 @@ import string
 from ..utils import parse_word, surround, text, sentence_text, word, parse_words
 
 alpha_alt = 'air bat cap drum each fine gust harp sit jury crunch look made near odd pit quench red sun trap urge vest whale plex yank zip'.split()
+###
 alnum = list(zip(alpha_alt, string.ascii_lowercase)) + [(str(i), str(i)) for i in range(0, 10)]
 
 alpha = {}
@@ -15,11 +16,35 @@ alpha.update(dict(alnum))
 alpha.update({'ship %s' % word: letter for word, letter in zip(alpha_alt, string.ascii_uppercase)})
 alpha.update({'sky %s' % word: letter for word, letter in zip(alpha_alt, string.ascii_uppercase)})
 
-alpha.update({'control %s' % k: Key('ctrl-%s' % v) for k, v in alnum})
-alpha.update({'command %s' % k: Key('cmd-%s' % v) for k, v in alnum})
-alpha.update({'Chom %s' % k: Key('cmd-%s' % v) for k, v in alnum})
-alpha.update({'command shift %s' % k: Key('ctrl-shift-%s' % v) for k, v in alnum})
-alpha.update({'alt %s' % k: Key('alt-%s' % v) for k, v in alnum})
+# modifier key mappings
+fkeys = [(f'F {i}', f'f{i}') for i in range(1, 13)]
+keys = [
+    'left', 'right', 'up', 'down', 'shift', 'tab', 'escape', 'enter', 'space',
+    'backspace', 'delete', 'home', 'pageup', 'pagedown', 'end',
+]
+keys = alnum + [(k, k) for k in keys]
+keys += [
+    ('tilde', '`'),
+    ('comma', ','),
+    ('dot', '.'),
+    ('slash', '/'),
+    ('(semi | semicolon)', ';'),
+    ('quote', "'"),
+    ('[left] square', '['),
+    ('(right | are) square', ']'),
+    ('backslash', '\\'),
+    ('minus', '-'),
+    ('equals', '='),
+] + fkeys
+alpha.update({word: Key(key) for word, key in fkeys})
+alpha.update({'control %s' % k: Key('ctrl-%s' % v) for k, v in keys})
+alpha.update({'control shift %s' % k: Key('ctrl-shift-%s' % v) for k, v in keys})
+alpha.update({'control alt %s' % k: Key('ctrl-alt-%s' % v) for k, v in keys})
+alpha.update({'command %s' % k: Key('cmd-%s' % v) for k, v in keys})
+alpha.update({'command shift %s' % k: Key('cmd-shift-%s' % v) for k, v in keys})
+alpha.update({'command alt shift %s' % k: Key('cmd-alt-shift-%s' % v) for k, v in keys})
+alpha.update({'alt %s' % k: Key('alt-%s' % v) for k, v in keys})
+alpha.update({'alt shift %s' % k: Key('alt-%s' % v) for k, v in keys})
 
 
 def rot13(i, word, _):
@@ -134,7 +159,7 @@ keymap.update({
     '(angle | left angle | less than)': '<', '(rangle | are angle | right angle | greater than)': '>',
 
     '(star | asterisk)': '*',
-    '(pound | hash [sign] | octo | number sign)': '#',
+    '(pound [sign] | hash [sign] | octo | number sign)': '#',
     'percent [sign]': '%',
     'caret': '^',
     'at sign': '@',
@@ -303,9 +328,9 @@ keymap.update({
     'last window': Key('cmd-shift-`'),
     'next app': Key('cmd-tab'),
     'last app': Key('cmd-shift-tab'),
-    'next tab': Key('ctrl-tab'),
+    'next tab': Key('cmd-shift-]'),
     'new tab': Key('cmd-t'),
-    'last tab': Key('ctrl-shift-tab'),
+    '(last | prevous | preev) tab': Key('cmd-shift-['),
 
     'next space': Key('cmd-alt-ctrl-right'),
     'last space': Key('cmd-alt-ctrl-left'),
