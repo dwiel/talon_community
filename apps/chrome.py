@@ -79,7 +79,7 @@ context.keymap({
     '((last | prevous | preev) tab | gopreev)': Key('cmd-shift-['),
     'tab (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)': jump_tab,
     '(end | rightmost) tab': Key('cmd-9'),
-    'find': Key('cmd-f'),
+    'marco': Key('cmd-f'),
     'next': Key('cmd-g'),
     '(last | prevous)': Key('cmd-shift-g'),
     'toggle dev tools': Key('cmd-alt-i'),
