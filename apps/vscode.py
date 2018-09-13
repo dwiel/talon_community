@@ -1,5 +1,5 @@
 from talon.voice import Context, Key, press, Str
-from ..utils import parse_words_as_integer, repeat_function, optional_numerals
+from ..utils import parse_words_as_integer, repeat_function, optional_numerals, text
 
 context = Context('VSCode', bundle='com.microsoft.VSCode')
 
@@ -65,6 +65,15 @@ context.keymap({
     'line up' + optional_numerals: repeat_function(2, 'alt-up'),
     'line down' + optional_numerals: repeat_function(2, 'alt-down'),
 
+    # Navigating Interface
+    'explore tab': Key('shift-cmd-e'),
+    'search tab': Key('shift-cmd-f'),
+    'debug tab': Key('shift-cmd-d'),
+    'source control tab': Key('shift-ctrl-g'),
+    'extensions tab': Key('shift-cmd-x'),
+    'go to file <dgndictation>': [Key('cmd-p'), text],
+    'master': Key('cmd-p'),
+
     # tabbing
     'stiffy': Key('cmd-alt-left'),
     'next tab': Key('cmd-alt-right'),
@@ -73,14 +82,16 @@ context.keymap({
     'new tab': Key('cmd-n'),
     'jump' + optional_numerals: jump_tabs,
 
+    # Menu
+    'save': Key('cmd+s'), 
+    'open': Key('cmd+o'),
+
     # editing
     'bracken': [Key('cmd-shift-ctrl-right')],
 
     # various
     'comment': Key('cmd-shift-7'),
-    'master': Key('cmd-p'),
     'search all': Key('cmd-shift-f'),
-    'explorer': Key('cmd-shift-e'),
     '(drop-down | drop)': Key('ctrl-space'),
 
 })
