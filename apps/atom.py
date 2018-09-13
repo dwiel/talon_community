@@ -286,6 +286,20 @@ keymap = {
     'complete arguments': command('autocomplete-python:complete-arguments'),
     'rename': command('autocomplete-python:rename'),
     'override method': command('autocomplete-python:override-method'),
+
+    # symbols-view
+    'symbol': command('symbols-view:toggle-file-symbols'),
+    'symbol <dgndictation>': [command('symbols-view:toggle-file-symbols'), lambda m: time.sleep(0.5), text, Key('enter')],
+
+    # folding
+    'fold all': command('editor:fold-all'),
+    'unfold all': command('editor:unfold-all'),
+    'fold [current row]': command('editor:fold-current-row'),
+    'unfold [current row]': command('editor:unfold-current-row'),
+
+    # project
+    'add project': command('application:add-project-folder'),
+    'remove project': command('tree view remove project folder'),
 }
 
 ctx.keymap(keymap)
