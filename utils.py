@@ -84,7 +84,6 @@ mapping = {
     'and p': 'np',
     'all the rhythms': 'algorithms',
     'all rhythms': 'algorithms',
-    'access': 'axis',
     'waits': 'weights',
     'wait': 'weight',
     'dk': 'decay',
