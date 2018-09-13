@@ -3,6 +3,8 @@ import string
 
 from ..utils import numerals, parse_words
 
+# TODO: move application specific commands into their own files: git, apt-get, etc
+
 terminals = ('com.apple.Terminal', 'com.googlecode.iterm2')
 ctx = Context('terminal', func=lambda app, win: any(
     t in app.bundle for t in terminals))
@@ -42,6 +44,8 @@ def dash(m):
 
 
 keymap = {
+    '(pain new | split vertical)': Key('cmd-d'),
+
     # some habits die hard
     'troll char': Key('ctrl-c'),
     'reverse': Key('ctrl-r'),
@@ -82,6 +86,7 @@ keymap = {
     'create virtual environment': ['virtualenv -p python3 venv', Key('enter')],
     'activate virtual environment': ['source `find . | grep bin/activate$`', Key('enter')],
 
+    # apt-get
     'apt get': 'apt-get ',
     'apt get install': 'apt-get install ',
     'apt get update': 'apt-get update ',
@@ -101,8 +106,9 @@ keymap = {
     'jet commit amend [<dgndictation>]': ['git commit --amend -m ""', Key('left'), text],
     'jet commit all [<dgndictation>]': ['git commit -a -m ""', Key('left'), text],
     'jet diff [<dgndictation>]': ['git diff ', text],
-    'jet history': 'git hist',
-    'jet (init | initialize)': 'git init',
+    'jet history': 'git hist ',
+    'jet (init | initialize)': 'git init ',
+    'jet log': 'git log ',
     'jet merge [<dgndictation>]': ['git merge ', text],
     'jet move [<dgndictation>]': ['git mv ', text],
     'jet pull [<dgndictation>]': ['git pull ', text],
@@ -112,12 +118,12 @@ keymap = {
     'jet rebase continue': 'git rebase --continue',
     'jet rebase [<dgndictation>]': ['git rebase ', text],
     'jet remove [<dgndictation>]': ['git rm ', text],
-    'jet reset': 'git reset',
+    'jet reset': 'git reset ',
     'jet reset hard': 'git reset --hard',
     'jet show': 'git show ',
-    'jet stash': 'git stash',
+    'jet stash': 'git stash ',
     'jet stash apply': 'git stash apply',
-    'jet status': 'git status',
+    'jet status': 'git status ',
 
     # Tools
     '(grep | grip)': ['grep  .', Key('left left')],
