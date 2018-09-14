@@ -2,9 +2,9 @@ from talon.voice import Key, Context, Str, press
 
 def go_to_path(path):
     def path_function(m):
-    press('cmd-shift-g')
-    Str(path)(None)
-    press('return')
+        press('cmd-shift-g')
+        Str(path)(None)
+        press('return')
     return path_function
 
 ctx = Context('Finder', bundle='com.apple.finder')
