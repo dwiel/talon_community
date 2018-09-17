@@ -41,7 +41,10 @@ set {text item delimiters, TID} to {",", text item delimiters}
 set {text item delimiters, theListAsString} to {TID, theList as text}
 return theListAsString
 ''')
-    items = items.split(',')
+    if items is not None:
+        items = items.split(',')
+    else:
+        items = []
     new = {}
     for item in items:
         words = item.split(' ')
