@@ -1,8 +1,15 @@
 from talon.voice import Context, Key, press
 from talon import ctrl
 
-titles = ('- Google Docs', '- Google Sheets', '- Google Slides')
-ctx = Context('google_docs', func=lambda app, win: win.title.endswith(titles))
+titles = (
+    '- Google Docs',
+    '- Google Sheets',
+    '- Google Slides',
+)
+def func(app, win):
+    return any(title in win.title for title in titles)
+
+ctx = Context('google_docs', func=func)
 ctx.keymap({
     'copy': Key('cmd+c'),
     'cut': Key('cmd+x'),
