@@ -1,15 +1,8 @@
 from talon.voice import Context, Key, press
 from talon import ctrl
 
-titles = (
-    '- Google Docs',
-    '- Google Sheets',
-    '- Google Slides',
-)
-def func(app, win):
-    return any(title in win.title for title in titles)
-
-ctx = Context('google_docs', func=func)
+ctx = Context('google_docs', func=lambda app, win:
+              win.title.endswith('- Google Docs') or '- Google Docs -' in win.title)
 ctx.keymap({
     'copy': Key('cmd+c'),
     'cut': Key('cmd+x'),
@@ -43,7 +36,7 @@ ctx.keymap({
     'decrease font size': Key('cmd+shift+<'),
     'increase [paragraph] indentation': Key('cmd+]'),
     'decrease [paragraph] indentation': Key('cmd+['),
-    'apply normal text style': Key('cmd+alt+o'),
+    '[apply] normal [text] style': Key('cmd+alt+o'),
     '[apply] heading [style] 1': Key('cmd+alt+1'),
     '[apply] heading [style] 2': Key('cmd+alt+2'),
     '[apply] heading [style] 3': Key('cmd+alt+3'),
