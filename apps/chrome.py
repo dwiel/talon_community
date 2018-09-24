@@ -44,7 +44,7 @@ def refocus_page(m):
     time.sleep(0.1)
     # Escape button
     # This leaves the focus on the page at previous tab focused point, not the beginning of the page
-    press('escape')
+    press('tab')
 
 
 def back(m) :
