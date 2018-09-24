@@ -204,7 +204,8 @@ def code_snippet_naked(m):
 
 keymap = {
     'sprinkle' + optional_numerals: jump_to_bol,
-    'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
+    # 'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
+    'spring' + optional_numerals: jump_to_bol,
     '(dear | sprinkler)' + optional_numerals: jump_to_eol_and(lambda: None),
     'smear' + optional_numerals: jump_to_eol_and(jump_to_nearly_end_of_line),
     'trundle': toggle_comments,
@@ -254,7 +255,7 @@ keymap = {
     '(cell expand | cell pair)': Key('alt-up'),
     'cell contract': Key('alt-down'),
     'cell this': command('py-ast-edit:select-this'),
-    '(select | cell) [inside] (quote | quotes)': command('expand-selection-to-quotes:toggle'),
+    '(select | cell) [inside] (quote | quotes | string)': command('expand-selection-to-quotes:toggle'),
 
     # needs bracket-matcher atom package; still a bit poor.
     'bracken': command('bracket-matcher:select-inside-bracket'),
@@ -266,9 +267,7 @@ keymap = {
 
     # python
     'quinn if': ['if :', Key('left')],
-    'else': ['else:', Key('enter')],
-    'self': 'self',
-    'to do': '# TODO: ',
+    'quinn to do': '# TODO: ',
 
     # github
     'jet hub open': command('open-on-github:file'),
