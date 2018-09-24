@@ -1,14 +1,11 @@
 from talon.voice import Key, Context
-from subprocess import Popen, PIPE
+from talon import applescript
 
 ctx = Context('audio')
 
 
 def run_script(script):
-    p = Popen(['osascript'], stdin=PIPE,
-              stdout=PIPE, stderr=PIPE, universal_newlines=True)
-    p.communicate(script)
-    p.terminate()
+    applescript.run(script)
 
 
 def text_to_number(m, numwords={}):
@@ -53,7 +50,22 @@ def parse_word(word):
     return word
 
 
-def set_system_volume(m):
+def play_pause(m):
+    script = '''tell app "iTunes" to playpause'''
+    run_script(script)
+
+
+def next_track(m):
+    script = '''tell app "iTunes" to play next track'''
+    run_script(script)
+
+
+def previous_track(m):
+    script = '''tell app "iTunes" to play previous track'''
+    run_script(script)
+
+
+def set_volume(m):
     volume = text_to_number(m)
     if volume == -1:
         return
@@ -64,7 +76,10 @@ def set_system_volume(m):
 
 
 keymap = {
-    'volume <dgndictation>': set_system_volume,
+    'play pause': play_pause,
+    'track next': next_track,
+    'track last': previous_track,
+    'set volume <dgndictation>': set_volume
 }
 
 
