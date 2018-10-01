@@ -1,7 +1,7 @@
 # talon_community
 a single source of application-specific scripts
 
-Put this in a directory inside of your `user` directory, such as `community`.
+Put a fork of this in a directory inside of your `user` directory, such as `community`.
 
 ## General Guidelines
 
