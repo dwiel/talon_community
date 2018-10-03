@@ -56,7 +56,6 @@ def rot13(i, word, _):
     return out
 
 formatters = {
-    'phrase':  (True,  lambda i, word, _: word if i == 0 else ' '+word),
     'cram':  (True, lambda i, word, _: word if i == 0 else word.capitalize()),
     'pathway':  (True, lambda i, word, _: word if i == 0 else '/'+word),
     'dotsway':  (True, lambda i, word, _: word if i == 0 else '.'+word),
@@ -86,7 +85,6 @@ formatters = {
     'padded': (False, surround(" ")),
     'rot-thirteen':  (False, rot13),
 }
-
 
 def FormatText(m):
     fmt = []
@@ -122,6 +120,8 @@ ctx = Context('input')
 keymap = {}
 keymap.update(alpha)
 keymap.update({
+    'phrase <dgndictation> [over]': text,
+
     'sentence <dgndictation> [over]': sentence_text,
     'comma <dgndictation> [over]': [', ', text],
     'period <dgndictation> [over]': ['. ', sentence_text],
