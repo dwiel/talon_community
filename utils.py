@@ -16,6 +16,8 @@ mapping = {
     'zug': 's',
     'pre-': 'pre',
     'in turn': 'intern',
+    're- factor': 'refactor',
+    'e-mail': 'email',
 
     'fulsome': 'folsom',
 
@@ -162,7 +164,10 @@ def parse_words(m):
     if isinstance(m, list):
         words = m
     else:
-        words = m.dgndictation[0]._words
+        if hasattr(m, 'dgndictation'):
+            words = m.dgndictation[0]._words
+        else:
+            return []
 
     words = list(map(parse_word, words))
     words = replace_words(words, mappings[2], 2)
@@ -332,12 +337,12 @@ def preserve_clipboard(fn):
 # The. following function is used to be able to repeat commands by following it by one or several numbers, e.g.:
 # 'delete' + optional_numerals: repeat_function(1, 'delete'),
 def repeat_function(numberOfWordsBeforeNumber, keyCode, delay=0):
-    def repeater(m): 
+    def repeater(m):
         line_number = parse_words_as_integer(m._words[numberOfWordsBeforeNumber:])
 
         if line_number == None:
             line_number = 1
- 
+
         for i in range(0, line_number):
             sleep(delay)
             press(keyCode)
