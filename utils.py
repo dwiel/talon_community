@@ -17,6 +17,7 @@ mapping = {
     'pre-': 'pre',
     'in turn': 'intern',
     're- factor': 'refactor',
+    're- factoring': 'refactoring',
     'e-mail': 'email',
 
     'fulsome': 'folsom',
