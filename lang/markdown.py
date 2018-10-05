@@ -7,7 +7,8 @@ from ..utils import optional_numerals
 
 
 def markdown_complete(m):
-    jump_to_bol(m)
+    if len(m._words) > 2:
+        jump_to_bol(m)
     press("right")
     press("right")
     press("right")
@@ -16,7 +17,8 @@ def markdown_complete(m):
 
 
 def markdown_incomplete(m):
-    jump_to_bol(m)
+    if len(m._words) > 2:
+        jump_to_bol(m)
     press("right")
     press("right")
     press("right")
