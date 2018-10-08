@@ -1,23 +1,21 @@
 from talon.voice import Context, Key
 from ..misc.switcher import switch_app
 
-ctx = Context('outlook')
+ctx = Context("outlook")
 
-ctx.keymap({
-    'reply to e-mail': Key('cmd-r'),
-    'send e-mail': Key('cmd-enter'),
-    'clear flag': None,
-    'next pain': Key('shift-ctrl-['),
-    'preev pain': Key('shift-ctrl-]'),
-
-    'dismiss outlook': [
-        lambda m: switch_app(name='outlook'),
-        Key('cmd-w'),
-    ]
-})
+ctx.keymap(
+    {
+        "reply to e-mail": Key("cmd-r"),
+        "send e-mail": Key("cmd-enter"),
+        "clear flag": None,
+        "next pain": Key("shift-ctrl-["),
+        "preev pain": Key("shift-ctrl-]"),
+        "dismiss outlook": [lambda m: switch_app(name="outlook"), Key("cmd-w")],
+    }
+)
 
 
-'''
+"""
 pack = Packages.register
   name: "custom outlook"
   applications: ["com.microsoft.Outlook"]
@@ -49,4 +47,4 @@ pack.implement
   'object:next': -> @key ']', 'control'
   'object:backward': -> @key '[', 'shift control'
   'object:forward': -> @key ']', 'shift control'
-'''
+"""

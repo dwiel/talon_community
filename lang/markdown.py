@@ -26,12 +26,12 @@ def markdown_incomplete(m):
     Str(" ")(None)
 
 
-ctx = Context('markdown')
+ctx = Context("markdown")
 
 keymap = {
-    'markdown check': '- [ ] ',
-    'markdown complete' + optional_numerals: markdown_complete,
-    'markdown incomplete' + optional_numerals: markdown_incomplete,
+    "markdown check": "- [ ] ",
+    "markdown complete" + optional_numerals: markdown_complete,
+    "markdown incomplete" + optional_numerals: markdown_incomplete,
 }
 
 ctx.keymap(keymap)

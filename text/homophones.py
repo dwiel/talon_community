@@ -18,7 +18,7 @@ import os
 # a suitable one can be found here:
 # https://github.com/pimentel/homophones
 cwd = os.path.dirname(os.path.realpath(__file__))
-homophones_file = os.path.join(cwd, 'homophones.csv')
+homophones_file = os.path.join(cwd, "homophones.csv")
 # if quick_replace, then when a word is selected and only one homophone exists,
 # replace it without bringing up the options
 quick_replace = True
@@ -28,15 +28,15 @@ font_size = 22
 padding_left = 20
 ########################################################################
 
-context = Context('homophones')
-pick_context = Context('pick')
+context = Context("homophones")
+pick_context = Context("pick")
 
 phones = {}
 canonical = []
-with open(homophones_file, 'r') as f:
+with open(homophones_file, "r") as f:
     for h in f:
         h = h.rstrip()
-        h = h.split(',')
+        h = h.split(",")
         canonical.append(max(h, key=len))
         for w in h:
             w = w.lower()
@@ -63,26 +63,27 @@ def draw_homophones(canvas):
 
     paint = canvas.paint
     paint.textsize = font_size
-    paint.color = '000000'
+    paint.color = "000000"
     paint.style = paint.Style.FILL
     canvas.draw_rect(Rect(canvas.x, canvas.y, canvas.width, canvas.height))
 
     line_height = paint.get_fontmetrics(1.5)[0]
 
     h = active_word_list
-    h_string = ['%d . %s' % (i + 1, h[i]) for i in range(len(h))]
-    paint.color = 'ffffff'
+    h_string = ["%d . %s" % (i + 1, h[i]) for i in range(len(h))]
+    paint.color = "ffffff"
     for i in range(len(h_string)):
         h = h_string[i]
-        canvas.draw_text(h, canvas.x + padding_left,
-                         canvas.y + line_height + (i * line_height))
+        canvas.draw_text(
+            h, canvas.x + padding_left, canvas.y + line_height + (i * line_height)
+        )
 
 
 # initialize the overlay
 screen = ui.main_screen()
 w, h = screen.width / 3, screen.height / 3
 panel = canvas.Canvas(w, h, w, h, panel=True)
-panel.register('draw', draw_homophones)
+panel.register("draw", draw_homophones)
 panel.hide()
 
 
@@ -92,7 +93,7 @@ def close_homophones():
 
 
 def make_selection(m, is_selection, transform=lambda x: x):
-    cron.after('0s', close_homophones)
+    cron.after("0s", close_homophones)
     words = m._words
     d = None
     if len(words) == 1:
@@ -104,14 +105,14 @@ def make_selection(m, is_selection, transform=lambda x: x):
         w = transform(w)
     if is_selection:
         clip.set(w)
-        press('cmd-v', wait=0)
+        press("cmd-v", wait=0)
     else:
         Str(w)(None)
 
 
 def get_selection():
     with clip.capture() as s:
-        press('cmd-c', wait=0)
+        press("cmd-c", wait=0)
     return s.get()
 
 
@@ -122,7 +123,7 @@ def raise_homophones(m, force_raise=False, is_selection=False):
     if is_selection:
         word = get_selection()
         word = word.strip()
-    elif hasattr(m, 'dgndictation'):
+    elif hasattr(m, "dgndictation"):
         # this mode is currently disabled...
         # experimenting with using a canonical representation and not using
         # dgndictation
@@ -135,27 +136,29 @@ def raise_homophones(m, force_raise=False, is_selection=False):
     word = word.lower()
 
     if word not in all_homophones:
-        app.notify('homophones.py', '"%s" not in homophones list' % word)
+        app.notify("homophones.py", '"%s" not in homophones list' % word)
         return
 
     active_word_list = all_homophones[word]
-    if is_selection and len(active_word_list) == 2 and quick_replace and \
-            not force_raise:
+    if (
+        is_selection
+        and len(active_word_list) == 2
+        and quick_replace
+        and not force_raise
+    ):
         if word == active_word_list[0].lower():
             new = active_word_list[1]
         else:
             new = active_word_list[0]
         clip.set(new)
-        press('cmd-v', wait=0)
+        press("cmd-v", wait=0)
         return
 
     valid_indices = range(len(active_word_list))
     panel.show()
     panel.freeze()
 
-    keymap = {
-        '0': lambda x: close_homophones(),
-    }
+    keymap = {"0": lambda x: close_homophones()}
 
     def capitalize(x):
         return x[0].upper() + x[1:]
@@ -166,18 +169,30 @@ def raise_homophones(m, force_raise=False, is_selection=False):
     def lowercase(x):
         return x.lower()
 
-    keymap.update({'%s' % (i + 1):
-                   lambda m: make_selection(m, is_selection)
-                   for i in valid_indices})
-    keymap.update({'ship %s' % (i + 1):
-                   lambda m: make_selection(m, is_selection, capitalize)
-                   for i in valid_indices})
-    keymap.update({'yeller %s' % (i + 1):
-                   lambda m: make_selection(m, is_selection, uppercase)
-                   for i in valid_indices})
-    keymap.update({'lower %s' % (i + 1):
-                   lambda m: make_selection(m, is_selection, lowercase)
-                   for i in valid_indices})
+    keymap.update(
+        {
+            "%s" % (i + 1): lambda m: make_selection(m, is_selection)
+            for i in valid_indices
+        }
+    )
+    keymap.update(
+        {
+            "ship %s" % (i + 1): lambda m: make_selection(m, is_selection, capitalize)
+            for i in valid_indices
+        }
+    )
+    keymap.update(
+        {
+            "yeller %s" % (i + 1): lambda m: make_selection(m, is_selection, uppercase)
+            for i in valid_indices
+        }
+    )
+    keymap.update(
+        {
+            "lower %s" % (i + 1): lambda m: make_selection(m, is_selection, lowercase)
+            for i in valid_indices
+        }
+    )
     pick_context.keymap(keymap)
     pick_context.load()
 
@@ -193,14 +208,17 @@ def raise_homophones(m, force_raise=False, is_selection=False):
 #     # 'force phones [<dgndictation>]': lambda m: raise_homophones(m, True),
 # }
 
-keymap = {'phones %s' % k: raise_homophones for k in canonical}
-keymap.update({'phones': lambda m: raise_homophones(m, is_selection=True)})
-keymap.update({'force phones %s' % k:
-               lambda m: raise_homophones(m, force_raise=True)
-               for k in canonical})
-keymap.update({'force phones':
-               lambda m: raise_homophones(m, force_raise=True,
-                                          is_selection=True)})
+keymap = {"phones %s" % k: raise_homophones for k in canonical}
+keymap.update({"phones": lambda m: raise_homophones(m, is_selection=True)})
+keymap.update(
+    {
+        "force phones %s" % k: lambda m: raise_homophones(m, force_raise=True)
+        for k in canonical
+    }
+)
+keymap.update(
+    {"force phones": lambda m: raise_homophones(m, force_raise=True, is_selection=True)}
+)
 
 # keymap.update({'alt %d' % i: raise_homophones for i in range(10)})
 

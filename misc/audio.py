@@ -1,7 +1,7 @@
 from talon.voice import Key, Context
 from talon import applescript
 
-ctx = Context('audio')
+ctx = Context("audio")
 
 
 def run_script(script):
@@ -18,15 +18,39 @@ def text_to_number(m, numwords={}):
 
     if not numwords:
         units = [
-            "zero", "one", "two", "three", "four", "five", "six",
-            "seven", "eight", "nine", "ten", "eleven", "twelve",
-            "thirteen", "fourteen", "fifteen", "sixteen",
-            "seventeen", "eighteen", "nineteen"
+            "zero",
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+            "six",
+            "seven",
+            "eight",
+            "nine",
+            "ten",
+            "eleven",
+            "twelve",
+            "thirteen",
+            "fourteen",
+            "fifteen",
+            "sixteen",
+            "seventeen",
+            "eighteen",
+            "nineteen",
         ]
 
         tens = [
-            "", "", "twenty", "thirty", "forty", "fifty",
-            "sixty", "seventy", "eighty", "ninety"
+            "",
+            "",
+            "twenty",
+            "thirty",
+            "forty",
+            "fifty",
+            "sixty",
+            "seventy",
+            "eighty",
+            "ninety",
         ]
 
         for idx, word in enumerate(units):
@@ -46,22 +70,22 @@ def text_to_number(m, numwords={}):
 
 
 def parse_word(word):
-    word = word.lstrip('\\').split('\\', 1)[0]
+    word = word.lstrip("\\").split("\\", 1)[0]
     return word
 
 
 def play_pause(m):
-    script = '''tell app "iTunes" to playpause'''
+    script = """tell app "iTunes" to playpause"""
     run_script(script)
 
 
 def next_track(m):
-    script = '''tell app "iTunes" to play next track'''
+    script = """tell app "iTunes" to play next track"""
     run_script(script)
 
 
 def previous_track(m):
-    script = '''tell app "iTunes" to play previous track'''
+    script = """tell app "iTunes" to play previous track"""
     run_script(script)
 
 
@@ -71,15 +95,15 @@ def set_volume(m):
         return
 
     volume = str(volume)
-    script = '''set volume output volume ''' + volume
+    script = """set volume output volume """ + volume
     run_script(script)
 
 
 keymap = {
-    'play pause': play_pause,
-    'track next': next_track,
-    'track last': previous_track,
-    'set volume <dgndictation>': set_volume
+    "play pause": play_pause,
+    "track next": next_track,
+    "track last": previous_track,
+    "set volume <dgndictation>": set_volume,
 }
 
 
