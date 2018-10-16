@@ -34,8 +34,6 @@ def react(m):
         utils.insert("+" + emojis[key])
         press("enter", wait=2000)
 
-        print(old_text)
-        print(old_clipboard)
         if old_clipboard != old_text:
             press("cmd-a", wait=2000)
             time.sleep(0.25)
@@ -56,5 +54,4 @@ keymap.update(
 )
 
 
-print(keymap)
 ctx.keymap(keymap)
