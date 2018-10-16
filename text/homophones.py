@@ -123,12 +123,12 @@ def raise_homophones(m, force_raise=False, is_selection=False):
     if is_selection:
         word = get_selection()
         word = word.strip()
-    elif hasattr(m, "dgndictation"):
-        # this mode is currently disabled...
-        # experimenting with using a canonical representation and not using
-        # dgndictation
-        word = str(m.dgndictation[0]._words[0])
-        word = parse_word(word)
+    # elif hasattr(m, "dgndictation"):
+    #     # this mode is currently disabled...
+    #     # experimenting with using a canonical representation and not using
+    #     # dgndictation
+    #     word = str(m.dgndictation[0]._words[0])
+    #     word = parse_word(word)
     elif len(m._words) >= 2:
         word = str(m._words[len(m._words) - 1])
         word = parse_word(word)
@@ -208,18 +208,10 @@ def raise_homophones(m, force_raise=False, is_selection=False):
 #     # 'force phones [<dgndictation>]': lambda m: raise_homophones(m, True),
 # }
 
-keymap = {"phones %s" % k: raise_homophones for k in canonical}
-keymap.update({"phones": lambda m: raise_homophones(m, is_selection=True)})
-keymap.update(
-    {
-        "force phones %s" % k: lambda m: raise_homophones(m, force_raise=True)
-        for k in canonical
-    }
-)
-keymap.update(
-    {"force phones": lambda m: raise_homophones(m, force_raise=True, is_selection=True)}
-)
-
-# keymap.update({'alt %d' % i: raise_homophones for i in range(10)})
-
-context.keymap(keymap)
+context.keymap({
+    'phones {homophones.canonical}': raise_homophones,
+    'phones': lambda m: raise_homophones(m, is_selection=True),
+    'force phones {homophones.canonical}': lambda m: raise_homophones(m, force_raise=True),
+    'force phones': lambda m: raise_homophones(m, force_raise=True, is_selection=True),
+})
+context.set_list('canonical', canonical)
