@@ -8,17 +8,29 @@ f_keys = {f'F {i}': f'f{i}' for i in range(1, 13)}
 arrows = ['left', 'right', 'up', 'down']
 simple_keys = [
     'tab', 'escape', 'enter', 'space',
-    'backspace', 'delete',
-    'home', 'pageup', 'pagedown', 'end',
+    'home', 'page up', 'page down', 'end',
 ]
+alternate_keys = {
+    'backspace': 'backspace',
+    'delete': 'backspace',
+    'forward delete': 'delete',
+
+    # voicecode alternates
+    'tarp': 'tab',
+    'crimp': 'left',
+    'chris': 'right',
+    'jeep': 'up',
+    'doom': 'down',
+    'junk': 'backspace',
+}
 symbols = {
     'back tick': '`',
     'comma': ',',
     'dot': '.', 'period': '.',
     'semi': ';', 'semicolon': ';',
     'quote': "'",
-    'L square': '[', 'left square': '[', 'square': '[',
-    'R square': ']', 'right square': ']',
+    'L square': '[', 'left square': '[', 'left square bracket': '[', 'square': '[',
+    'R square': ']', 'right square': ']', 'right square bracket': ']',
     'forward slash': '/', 'slash': '/',
     'backslash': '\\',
     'minus': '-', 'dash': '-',
@@ -39,6 +51,7 @@ arrows = {k: k for k in arrows}
 keys = {}
 keys.update(f_keys)
 keys.update(simple_keys)
+keys.update(alternate_keys)
 keys.update(symbols)
 
 # map alnum and keys separately so engine gives priority to letter/number repeats
