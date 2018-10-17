@@ -243,7 +243,7 @@ def code_snippet_naked(m):
 keymap = {
     "sprinkle" + optional_numerals: jump_to_bol,
     # 'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
-    "spring" + optional_numerals: jump_to_bol,
+    "spring" + numerals: jump_to_bol,
     "(dear | sprinkler)" + optional_numerals: jump_to_eol_and(lambda: None),
     "smear" + optional_numerals: jump_to_eol_and(jump_to_nearly_end_of_line),
     "trundle": toggle_comments,
