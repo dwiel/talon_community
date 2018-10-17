@@ -61,7 +61,6 @@ return theListAsString
         return
     ctx.set_list("menu_items", new.keys())
     menu_items = new
-    print(("menu_items", menu_items))
 
 
 def ui_event(event, arg):
