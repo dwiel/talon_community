@@ -22,6 +22,7 @@ alternate_keys = {
     'jeep': 'up',
     'doom': 'down',
     'junk': 'backspace',
+    'shock': 'enter',
 }
 symbols = {
     'back tick': '`',
