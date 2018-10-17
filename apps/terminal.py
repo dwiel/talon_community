@@ -90,6 +90,7 @@ keymap = {
     "shell mosh": "mosh ",
     "shell M player": "mplayer ",
     "shell nvidia S M I": "nvidia-smi ",
+    # python
     "create virtual environment": ["virtualenv -p python3 venv", Key("enter")],
     "activate virtual environment": [
         "source `find . | grep bin/activate$`",
