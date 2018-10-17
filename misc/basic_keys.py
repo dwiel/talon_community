@@ -82,7 +82,7 @@ ctx.keymap({
     '{basic_keys.modifiers}* {basic_keys.alphabet}+': press_keys,
     '{basic_keys.modifiers}* {basic_keys.digits}+': press_keys,
     '{basic_keys.modifiers}* {basic_keys.keys}+': press_keys,
-    '(go | {basic_keys.modifiers}) {basic_keys.arrows}+': press_keys,
+    '(go | {basic_keys.modifiers}+) {basic_keys.arrows}+': press_keys,
 })
 ctx.set_list('alphabet', alphabet.keys())
 ctx.set_list('arrows', arrows.keys())
