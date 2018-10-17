@@ -1,7 +1,7 @@
 from talon.voice import Word, Key, Context, Str, press
 import string
 
-from ..utils import numerals, parse_words
+from ..utils import numerals, parse_words, text
 
 # TODO: move application specific commands into their own files: git, apt-get, etc
 
@@ -15,17 +15,6 @@ def parse_word(word):
     word = word.lstrip("\\").split("\\", 1)[0]
     word = mapping.get(word, word)
     return word
-
-
-# Ask for forgiveness not permission in failure scenario.
-# https://stackoverflow.com/questions/610883/how-to-know-if-an-object-has-an-attribute-in-python
-def text(m):
-    try:
-        tmp = [str(s).lower() for s in m.dgndictation[0]._words]
-        words = [parse_word(word) for word in tmp]
-        Str(" ".join(words))(None)
-    except AttributeError:
-        return
 
 
 def dash(m):
