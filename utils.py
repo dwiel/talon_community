@@ -157,9 +157,9 @@ def parse_words(m):
     if isinstance(m, list):
         words = m
     else:
-        if hasattr(m, "dgndictation"):
-            words = m.dgndictation[0]._words
-        else:
+        try:
+            words = m.dgndictation[0]
+        except KeyError:
             return []
 
     words = list(map(parse_word, words))
@@ -271,7 +271,7 @@ def m_to_number(m):
         factor = 10 * factor
 
     return result
-    
+
 
 def text_to_range(words, delimiter="until"):
     tmp = [str(s).lower() for s in words]
