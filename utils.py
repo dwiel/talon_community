@@ -256,6 +256,23 @@ def text_to_number(words):
     return result
 
 
+def m_to_number(m):
+    tmp = [str(s).lower() for s in m._words]
+    words = [parse_word(word) for word in tmp]
+
+    result = 0
+    factor = 1
+    for word in reversed(words):
+        if word not in numerals:
+            # we consumed all the numbers and only the command name is left.
+            break
+
+        result = result + factor * int(numeral_map[word])
+        factor = 10 * factor
+
+    return result
+    
+
 def text_to_range(words, delimiter="until"):
     tmp = [str(s).lower() for s in words]
     split = tmp.index(delimiter)

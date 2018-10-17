@@ -9,6 +9,7 @@ from ..utils import (
     numerals,
     optional_numerals,
     text,
+    m_to_number,
 )
 
 ctx = Context("atom", bundle="com.github.atom")
@@ -36,29 +37,11 @@ COMMANDS = Struct(
 ############## support for parsing numbers as command postfix
 
 
-def text_to_number(m):
-
-    tmp = [str(s).lower() for s in m._words]
-    words = [parse_word(word) for word in tmp]
-
-    result = 0
-    factor = 1
-    for word in reversed(words):
-        if word not in numerals:
-            # we consumed all the numbers and only the command name is left.
-            break
-
-        result = result + factor * int(numeral_map[word])
-        factor = 10 * factor
-
-    return result
-
-
 def text_to_number_wrapper(func):
     def wrapper(*args, **kwargs):
         if not kwargs and len(args) == 1:
             if isinstance(args[0], Rule):
-                args = (text_to_number(args[0]),) + args[1:]
+                args = (m_to_number(args[0]),) + args[1:]
         func(*args, **kwargs)
 
     return wrapper
@@ -140,19 +123,19 @@ def find_previous(m):
 
 
 def copy_line(m):
-    line = text_to_number(m)
+    line = m_to_number(m)
     execute_atom_command(COMMANDS.COPY_LINE, str(line))
 
 
 def move_line(m):
-    line = text_to_number(m)
+    line = m_to_number(m)
     execute_atom_command(COMMANDS.MOVE_LINE, str(line))
 
 
 def select_lines(m):
     # NB: line_range is e.g. 99102, which is parsed in
     #  the atom package as lines 99..102
-    line_range = text_to_number(m)
+    line_range = m_to_number(m)
     execute_atom_command(COMMANDS.SELECT_LINES, str(line_range))
 
 
@@ -170,7 +153,7 @@ def paste_line(m):
 
 
 def change_pain(m):
-    line = text_to_number(m)
+    line = m_to_number(m)
     for i in range(10):
         press("cmd-k")
         press("cmd-left")
