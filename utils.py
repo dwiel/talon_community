@@ -156,11 +156,10 @@ def replace_words(words, mapping, count):
 def parse_words(m):
     if isinstance(m, list):
         words = m
+    elif hasattr(words, 'dgndictation'):
+        words = m.dgndictation[0]
     else:
-        try:
-            words = m.dgndictation[0]
-        except KeyError:
-            return []
+        return []
 
     words = list(map(parse_word, words))
     words = replace_words(words, mappings[2], 2)
