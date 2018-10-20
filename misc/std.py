@@ -96,7 +96,7 @@ ctx.keymap({
 
     "tarpy": [Key("tab"), Key("tab")],
     "trough": Key("alt-backspace"),
-    "(slap | shock)": [Key("cmd-right enter")],
+    "slap": [Key("cmd-right enter")],
     "sky shock": Key("shift-enter"),
     "question [mark]": "?",
     "tilde": "~",

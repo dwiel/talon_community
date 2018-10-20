@@ -156,11 +156,10 @@ def replace_words(words, mapping, count):
 def parse_words(m):
     if isinstance(m, list):
         words = m
+    elif hasattr(m, 'dgndictation'):
+        words = m.dgndictation[0]
     else:
-        if hasattr(m, "dgndictation"):
-            words = m.dgndictation[0]._words
-        else:
-            return []
+        return []
 
     words = list(map(parse_word, words))
     words = replace_words(words, mappings[2], 2)
@@ -253,6 +252,23 @@ def text_to_number(words):
         else:
             result = result + factor * number
         factor = (10 ** len(str(number))) * factor
+    return result
+
+
+def m_to_number(m):
+    tmp = [str(s).lower() for s in m._words]
+    words = [parse_word(word) for word in tmp]
+
+    result = 0
+    factor = 1
+    for word in reversed(words):
+        if word not in numerals:
+            # we consumed all the numbers and only the command name is left.
+            break
+
+        result = result + factor * int(numeral_map[word])
+        factor = 10 * factor
+
     return result
 
 

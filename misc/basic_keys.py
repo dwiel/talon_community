@@ -8,7 +8,7 @@ f_keys = {f'F {i}': f'f{i}' for i in range(1, 13)}
 arrows = ['left', 'right', 'up', 'down']
 simple_keys = [
     'tab', 'escape', 'enter', 'space',
-    'home', 'page up', 'page down', 'end',
+    'home', 'pageup', 'pagedown', 'end',
 ]
 alternate_keys = {
     'backspace': 'backspace',
@@ -22,6 +22,7 @@ alternate_keys = {
     'jeep': 'up',
     'doom': 'down',
     'junk': 'backspace',
+    'shock': 'enter',
 }
 symbols = {
     'back tick': '`',
