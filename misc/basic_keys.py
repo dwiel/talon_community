@@ -25,7 +25,7 @@ alternate_keys = {
     'shock': 'enter',
 }
 symbols = {
-    'back tick': '`',
+    'back tick': '`', 'tick': '`',
     'comma': ',',
     'dot': '.', 'period': '.',
     'semi': ';', 'semicolon': ';',
