@@ -294,7 +294,7 @@ def parse_words_as_integer(words):
 
     # Ignore any potential trailing non-number words
     number_words = list(
-        itertools.takewhile(lambda w: w not in number_conversions, words)
+        itertools.takewhile(lambda w: w in number_conversions, words)
     )
 
     # Somehow, no numbers were detected
