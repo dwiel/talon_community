@@ -290,12 +290,11 @@ for i, w in enumerate(
 
 
 def parse_words_as_integer(words):
-    # TODO: Once implemented, use number input value rather than manually parsing number words with this function
+    # TODO: Once implemented, use number input value rather than manually
+    # parsing number words with this function
 
-    # Ignore any potential trailing non-number words
-    number_words = list(
-        itertools.takewhile(lambda w: w in number_conversions, words)
-    )
+    # Ignore any potential non-number words
+    number_words = [w for w in words if str(w) in number_conversions]
 
     # Somehow, no numbers were detected
     if len(number_words) == 0:
@@ -308,18 +307,17 @@ def parse_words_as_integer(words):
     normalized_number_values = []
     non_zero_found = False
     for n in number_values:
-        if not non_zero_found and n == "0":
+        if not non_zero_found and n == '0':
             continue
         non_zero_found = True
         normalized_number_values.append(n)
 
     # If the entire sequence was zeros, return single zero
     if len(normalized_number_values) == 0:
-        normalized_number_values = ["0"]
+        normalized_number_values = ['0']
 
     # Create merged number string and convert to int
-    return int("".join(normalized_number_values))
-
+    return int(''.join(normalized_number_values))
 
 def alternatives(options):
     return " (" + " | ".join(sorted(options)) + ")+"
