@@ -11,6 +11,8 @@ simple_keys = [
     'home', 'pageup', 'pagedown', 'end',
 ]
 alternate_keys = {
+
+
     'backspace': 'backspace',
     'delete': 'backspace',
     'forward delete': 'delete',
@@ -92,7 +94,7 @@ def press_keys(m):
 
 ctx = Context('basic_keys')
 ctx.keymap({
-    '(uppercase | ship) {basic_keys.alphabet}+ [(lowercase | sunk)]': uppercase_letters,
+    '(uppercase | ship | sky) {basic_keys.alphabet}+ [(lowercase | sunk)]': uppercase_letters,
     '{basic_keys.modifiers}* {basic_keys.alphabet}+': press_keys,
     '{basic_keys.modifiers}* {basic_keys.digits}+': press_keys,
     '{basic_keys.modifiers}* {basic_keys.keys}+': press_keys,
