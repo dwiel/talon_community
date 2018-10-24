@@ -93,7 +93,7 @@ ctx.keymap(
         "period <dgndictation> [over]": [". ", sentence_text],
         "more <dgndictation> [over]": [" ", text],
         "word <dgnwords>": word,
-        "(%s)+ [<dgndictation>] [over]" % (" | ".join(formatters)): FormatText,
+        "(%s)+ <dgndictation> [over]" % (" | ".join(formatters)): FormatText,
         "tarpy": [Key("tab"), Key("tab")],
         "trough": Key("alt-backspace"),
         "slap": [Key("cmd-right enter")],
