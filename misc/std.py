@@ -52,11 +52,10 @@ formatters = {
     "rot-thirteen": (False, rot13),
 }
 
-
 def FormatText(m):
     fmt = []
     for w in m._words:
-        if isinstance(w, Word):
+        if isinstance(w, Word) and w != 'over':
             fmt.append(w.word)
     words = parse_words(m)
     if not words:
@@ -66,6 +65,7 @@ def FormatText(m):
         if not words:
             return
 
+    print(words)
     tmp = []
     spaces = True
     for i, word in enumerate(words):
