@@ -113,6 +113,7 @@ mapping = {
     "doctor": "docker",
     "communities": "kubernetes",
     "shall": "shell",
+    "w get": "wget"
     "backslash": "\\",
     "jet tub": "github",
     "jet hub": "github",
