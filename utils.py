@@ -119,6 +119,9 @@ mapping = {
     "ron": "run",
     "thorpe": "\t",
     "tharp": "\t",
+
+    # python
+    "if not none": "if not None",
 }
 mappings = collections.defaultdict(dict)
 for k, v in mapping.items():
