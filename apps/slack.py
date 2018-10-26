@@ -29,7 +29,7 @@ keymap = {
     "next element": Key("tab"),
     "previous element": Key("shift-tab"),
     "(my stuff | activity)": Key("cmd-shift-m"),
-    "directory": Key("cmd-shift-e"),
+    "toggle directory": Key("cmd-shift-e"),
     "(starred [items] | stars)": Key("cmd-shift-s"),
     "unread [messages]": Key("cmd-j"),
     "(go | undo | toggle) full": Key("ctrl-cmd-f"),
