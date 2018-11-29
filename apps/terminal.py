@@ -66,7 +66,7 @@ keymap = {
     "shell kill": Key("ctrl-c"),
     "shell list [<dgndictation>]": ["ls ", text],
     "shell list all [<dgndictation>]": ["ls -la ", text],
-    "shell make (durr | dear) [<dgndictation>]": ["mkdir ", text],
+    "shell make (durr | dear | directory) [<dgndictation>]": ["mkdir ", text],
     "shell mipple [<dgndictation>]": ["mkdir -p ", text],
     "shell move [<dgndictation>]": ["mv ", text],
     "shell remove [<dgndictation>]": ["rm ", text],
@@ -80,6 +80,7 @@ keymap = {
     "shell mosh": "mosh ",
     "shell M player": "mplayer ",
     "shell nvidia S M I": "nvidia-smi ",
+    "shell R sync": "./src/dotfiles/sync_rsync ",
     # python
     "create virtual environment": ["virtualenv -p python3 venv", Key("enter")],
     "activate virtual environment": [
@@ -125,10 +126,10 @@ keymap = {
     "jet rebase [<dgndictation>]": ["git rebase ", text],
     "jet remove [<dgndictation>]": ["git rm ", text],
     "jet reset": "git reset ",
-    "jet reset hard": "git reset --hard",
+    "jet reset hard": "git reset --hard ",
     "jet show": "git show ",
     "jet stash": "git stash ",
-    "jet stash apply": "git stash apply",
+    "jet stash apply": "git stash apply ",
     "jet status": "git status ",
     # Tools
     "(grep | grip)": ["grep  .", Key("left left")],
@@ -152,9 +153,6 @@ keymap = {
     KUBERNETES_PREFIX + "set": "kubectl set ",
     KUBERNETES_PREFIX + "run-container": "kubectl run-container ",
     KUBERNETES_PREFIX + "get": "kubectl get ",
-    KUBERNETES_PREFIX + "get nodes": "kubectl get nodes",
-    KUBERNETES_PREFIX + "get jobs": "kubectl get jobs",
-    KUBERNETES_PREFIX + "get pods": "kubectl get pods",
     KUBERNETES_PREFIX + "explain": "kubectl explain ",
     KUBERNETES_PREFIX + "edit": "kubectl edit ",
     KUBERNETES_PREFIX + "delete": "kubectl delete ",
@@ -192,7 +190,17 @@ keymap = {
     # conda
     "conda install": "conda install ",
     "conda list": "conda list ",
+    # tmux
+    "tmux new session": "tmux ",
 }
+
+for action in ('get', 'delete', 'describe'):
+    for object in ('nodes', 'jobs', 'pods', ''):
+        if object:
+            object = object + ' '
+        command = f'{KUBERNETES_PREFIX} {action} {object}'
+        typed = f'kubectl {action} {object}'
+        keymap.update({command: typed})
 
 keymap.update({"pain " + str(i): Key("alt-" + str(i)) for i in range(10)})
 
