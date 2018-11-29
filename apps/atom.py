@@ -298,8 +298,8 @@ keymap = {
     "rename": command("autocomplete-python:rename"),
     "override method": command("autocomplete-python:override-method"),
     # symbols-view
-    "symbol": command("symbols-view:toggle-file-symbols"),
-    "symbol <dgndictation>": [
+    "go to symbol": command("symbols-view:toggle-file-symbols"),
+    "go to symbol <dgndictation>": [
         command("symbols-view:toggle-file-symbols"),
         lambda m: time.sleep(0.5),
         text,
