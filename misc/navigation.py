@@ -37,7 +37,7 @@ keymap = {
     "lefty": Key("cmd-left"),
     "crimp": Key("left"),
     "chris": Key("right"),
-    "(up | jeep)": Key("up"),
+    "jeep": Key("up"),
     "(down | dune | doom)": Key("down"),
     "scroll down": [Key("down")] * 30,
     "(doomway | scroll way down)": Key("cmd-down"),
