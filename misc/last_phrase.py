@@ -6,7 +6,7 @@ from talon.engine import engine
 from talon_init import TALON_HOME
 
 path = os.path.join(TALON_HOME, 'last_phrase')
-WEBVIEW = True
+WEBVIEW = False
 NOTIFY = True
 
 if WEBVIEW:
