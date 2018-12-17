@@ -109,6 +109,8 @@ keymap = {
         text,
     ],
     "jet commit all [<dgndictation>]": ['git commit -a -m ""', Key("left"), text],
+    "jet config [<dgndictation>]": ["git config ", text],
+    "jet config list [<dgndictation>]": ["git config --list ", text],
     "jet diff [<dgndictation>]": ["git diff ", text],
     "jet history": "git hist ",
     "jet (init | initialize)": "git init ",
@@ -121,7 +123,8 @@ keymap = {
         text,
     ],
     "jet push [<dgndictation>]": ["git push ", text],
-    "jet push force [<dgndictation>]": ["git push --force", text],
+    "jet push force [<dgndictation>]": ["git push --force ", text],
+    "jet push set up stream [<dgndictation>]": ["git push --set-upstream ", text],
     "jet rebase continue": "git rebase --continue",
     "jet rebase [<dgndictation>]": ["git rebase ", text],
     "jet remove [<dgndictation>]": ["git rm ", text],
@@ -130,6 +133,7 @@ keymap = {
     "jet show": "git show ",
     "jet stash": "git stash ",
     "jet stash apply": "git stash apply ",
+    "jet stash pop": "git stash pop ",
     "jet status": "git status ",
     # Tools
     "(grep | grip)": ["grep  .", Key("left left")],
@@ -142,7 +146,8 @@ keymap = {
     "pip install requirements": "pip install -r ",
     "pip install editable": "pip install -e ",
     "pip install this": "pip install -e .",
-    "pip install upgrade": "pip install --upgrade ",
+    "pip install local": "pip install -e .",
+    "pip [install] upgrade": "pip install --upgrade ",
     "pip uninstall": "pip uninstall ",
     "pip list": "pip list",
     # kubectl
@@ -191,7 +196,8 @@ keymap = {
     "conda install": "conda install ",
     "conda list": "conda list ",
     # tmux
-    "tmux new session": "tmux ",
+    "T mux new session": "tmux ",
+    "T mux scroll": [Key('ctrl-b'), Key('[')],
 }
 
 for action in ('get', 'delete', 'describe'):
