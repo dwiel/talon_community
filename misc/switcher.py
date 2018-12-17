@@ -72,6 +72,10 @@ def update_lists():
 
 def ui_event(event, arg):
     if event in ('app_activate', 'app_launch', 'app_close', 'win_open', 'win_close'):
+        # print(event, arg)
+        if event in ('win_open', 'win_closed'):
+            if arg.app.name == 'Amethyst':
+                return
         update_lists()
 
 ui.register('', ui_event)
