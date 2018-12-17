@@ -48,6 +48,7 @@ def command_line(command):
         press("escape", wait=2000)
         press("escape", wait=2000)
         press("escape", wait=2000)
+        time.sleep(0.1)
         press(':', wait=2000)
         time.sleep(0.1)
         for character in command:
@@ -104,6 +105,8 @@ ctx.keymap(
         # last pass
         # tridactyl
         "new personal tab": command_line('tabopen -c personal'),
-        "switch to personal [container]": command_line('composite get_current_url | tabopen -c personal'),
+        "(switch to personal [container] | personal container)": command_line('composite get_current_url | tabopen -c personal'),
+
+        "show add-ons": Key('cmd-shift-a'),
     }
 )
