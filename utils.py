@@ -7,6 +7,9 @@ from talon.voice import Str, Key, press
 from time import sleep
 
 mapping = {
+    "inc.": "incorporated",
+
+    "yamel": "yaml",
     "semicolon": ";",
     "new-line": "\n",
     "new-paragraph": "\n\n",
@@ -111,12 +114,15 @@ mapping = {
     "standard error": "stderr",
     "les": "less",
     "doctor": "docker",
+    "darker": "docker",
     "communities": "kubernetes",
     "shall": "shell",
     "w get": "wget",
     "backslash": "\\",
     "jet tub": "github",
+    "git tub": "github",
     "jet hub": "github",
+    "git hub": "github",
     "ron": "run",
     "thorpe": "\t",
     "tharp": "\t",
