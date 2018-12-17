@@ -13,7 +13,9 @@ def macro_record(j):
     global macro_recording
 
     if macro_recording:
-        if j["cmd"] == "p.end" and j["path"]:
+        # print(j)
+        # if j["cmd"] == "p.end" and j["path"]:
+        if j["cmd"] == "p.end":
             new = talon.last_actions
             if new != last_actions:
                 macro.extend(new)
