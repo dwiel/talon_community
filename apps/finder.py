@@ -11,16 +11,48 @@ def go_to_path(path):
 
 
 ctx = Context("Finder", bundle="com.apple.finder")
+
 ctx.keymap(
     {
         # actions
+        "select all": Key("cmd-a"),
+        "copy": Key("cmd-c"),
         "duplicate": Key("cmd-d"),
+        "eject": Key("cmd-e"),
+        "(search | find)": Key("cmd-f"),
+        "hide [finder]": Key("cmd-h"),
+        "hide (others | else)": Key("cmd-alt-h"),
+        "(hide | no) toolbar": Key("cmd-alt-t"),
+        "info": Key("cmd-i"),
+        "view [options]": Key("cmd-j"),
+        "connect [to server]": Key("cmd-k"),
+        "[(make | create)] (alias | shortcut)": Key("cmd-l"),
+        "minimize": Key("cmd-m"),
+        "new window": Key("cmd-n"),
+        "new folder": Key("cmd-shift-n"),
+        # NOT WORKING "new smart folder": Key("cmd-alt-n"),
         "collapse": Key("cmd-left"),
         "expand": Key("cmd-right"),
         "open": Key("cmd-down"),
+        "[show] original": Key("cmd-r"),
+        "add to side bar": Key("cmd-t"),
         "trash it": Key("cmd-backspace"),
-        "show package contents": Key("cmd-alt-o"),
+        "new tab": Key("cmd-alt-o"),
+        "paste": Key("cmd-v"),
+        "close": Key("cmd-w"),
+        # NOT WORKING "cut": Key("cmd-x"),
+        "undo": Key("cmd-z"),
+        "[finder] preferences": Key("cmd-,"),
+        "(icon | icons) [(mode | view)]": Key("cmd-1"),
+        "list [(mode | view)]": Key("cmd-2"),
+        "(column | columns) [(mode | view)]": Key("cmd-3"),
+        "cover [flow] [(mode | view)]": Key("cmd-4"),
+        "help": Key("cmd-?"),
         # navigation
+        "back": Key("cmd-["),
+        "(forward | next)": Key("cmd-]"),
+        "(up | (parent [folder]))": Key("cmd-up"),
+        "(cycle | switch) [window]": Key("cmd-`"),
         "computer": Key("cmd-shift-c"),
         "desktop": Key("cmd-shift-d"),
         "all files": Key("cmd-shift-f"),
@@ -34,5 +66,9 @@ ctx.keymap(
         "applications": Key("cmd-shift-a"),
         "developer": go_to_path("~/Developer"),
         "talon": go_to_path("~/.talon/user"),
+        # NOT WORKING "(delete | empty) trash": Key("cmd-shift-del"),
+        "spotlight [menu]": Key("cmd-space"),
+        "spotlight window": Key("cmd-alt-space"),
+        # NOT WORKING: Function key shorcuts (f8 through f12)
     }
 )
