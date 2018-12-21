@@ -32,6 +32,8 @@ KUBERNETES_PREFIX = "(cube | cube control)"
 
 keymap = {
     "(pain new | split vertical)": Key("cmd-d"),
+    # talon
+    "tail talon": "tail -f .talon/talon.log",
     # some habits die hard
     "troll char": Key("ctrl-c"),
     "reverse": Key("ctrl-r"),
@@ -102,6 +104,7 @@ keymap = {
     "jet checkout master": "git checkout master",
     "jet checkout [<dgndictation>]": ["git checkout ", text],
     "jet checkout branch [<dgndictation>]": ["git checkout -B ", text],
+    "jet cherry pick [<dgndictation>]": ["git cherry-pick ", text],
     "jet commit [<dgndictation>]": ['git commit -m ""', Key("left"), text],
     "jet commit amend [<dgndictation>]": [
         'git commit --amend -m ""',
