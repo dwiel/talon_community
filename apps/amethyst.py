@@ -1,6 +1,13 @@
 from talon import ui
 from talon.voice import Key, Context
 
+single_digits = "0123456789"
+NAMED_DESKTOPS = {digit: int(digit) for digit in single_digits}
+NAMED_DESKTOPS.update({
+    # "gmail": 1,
+    # "slack": 2,
+})
+
 ctx = Context(
     "amethyst", func=lambda app, win: bool(ui.apps(bundle="com.amethyst.Amethyst"))
 )
@@ -20,18 +27,23 @@ keymap = {
     "window shrink": Key("alt-shift-h"),
 }
 
-single_digits = "0123456789"
-keymap.update({"desk %s" % digit: Key("ctrl-%s" % digit) for digit in single_digits})
 keymap.update(
     {
-        "window move desk %s" % digit: Key("ctrl-alt-shift-%s" % digit)
-        for digit in single_digits
+        "desk %s" % name: Key("ctrl-%s" % NAMED_DESKTOPS[name])
+        for name in NAMED_DESKTOPS.keys()
+    }
+)
+
+keymap.update(
+    {
+        "window move desk %s" % name: Key("ctrl-alt-shift-%s" % NAMED_DESKTOPS[name])
+        for name in NAMED_DESKTOPS.keys()
     }
 )
 
 screen_mapping = {"1": "w", "2": "e", "3": "r", "4": "t"}
 keymap.update(
-    {"window screen %s" % digit: Key("ctrl-alt-shift-%s" % digit) for digit in "1234"}
+    {"window screen %s" % name: Key("ctrl-alt-shift-%s" % name) for name in "1234"}
 )
 
 ctx.keymap(keymap)
