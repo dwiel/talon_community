@@ -41,9 +41,12 @@ keymap.update(
     }
 )
 
-screen_mapping = {"1": "w", "2": "e", "3": "r", "4": "t"}
+screen_mapping = {"1": "w", "2": "e", "3": "r", "4": "q"}
 keymap.update(
-    {"window screen %s" % name: Key("ctrl-alt-shift-%s" % name) for name in "1234"}
+    {
+        "window screen %s" % name: Key("ctrl-alt-shift-%s" % screen_mapping[name])
+        for name in screen_mapping.keys()
+    }
 )
 
 ctx.keymap(keymap)
