@@ -314,6 +314,8 @@ keymap = {
     # project
     "add project": command("application:add-project-folder"),
     "remove project": command("tree view remove project folder"),
+    # blacken
+    "blacken": command("atom black blacken"),
 }
 
 ctx.keymap(keymap)
