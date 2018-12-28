@@ -23,7 +23,12 @@ ctx_network_graph = Context("github-network-graph",
                             func=lambda app, win:
                             win.title.startswith("Network Graph"))
 
+# USER-DEFINED VARIABLES
+
 repos = {"talon_community"}
+
+lag = 0.2
+using_tridactyl = True
 
 
 def in_repo_list(win_title):
@@ -31,25 +36,6 @@ def in_repo_list(win_title):
         if repo in win_title:
             return True
         return False
-
-# Source: https://help.github.com/articles/using-keyboard-shortcuts/
-#   To do:
-#       * Contexts & shorcuts for:
-#            * Source code browsing
-#            * Comments (markdown)
-#            * Project boards
-#            * Notifications
-#       * Make global (firefox.py) "page mode" and "tridactyl mode" rules
-#       * Test rule for "Add a single comment on a pull request diff"
-#
-#   Issues:
-#       * On Issues/Pull Requests List Pages, "cmd-/"
-#         conflicts w/ Firefox shortcuts
-#       * Need a better way to define "github-repo" context
-
-
-lag = 0.2
-using_tridactyl = True
 
 
 def normal_mode():
