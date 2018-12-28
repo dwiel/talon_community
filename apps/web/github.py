@@ -5,7 +5,7 @@ from talon import ctrl
 
 ctx_global = Context("github-sitewide", bundle="org.mozilla.firefox")
 ctx_repo = Context("github-repo",
-                   func=lambda app, win: win.title.startswith("dwiel"))
+                   func=lambda app, win: in_repo_list(win.title))
 ctx_editor = Context("github-code-editor",
                      func=lambda app, win: win.title.startswith("Editing"))
 ctx_issues_pull_lists = Context("github-issues-pull-requests_lists",
@@ -14,14 +14,23 @@ ctx_issues_pull_lists = Context("github-issues-pull-requests_lists",
                                 win.title.startswith("Pull Requests"))
 ctx_issues_pull = Context("github-issues-pull-requests",
                           func=lambda app, win:
-                          win.title.find(" Issue ") or
-                          win.title.find(" Pull Request "))
+                          " Issue " in win.title or
+                          " Pull Request " in win.title)
 ctx_pull_changes = Context("github-pull-request-changes",
                            func=lambda app, win:
-                           win.title.find(" Pull Request "))
+                           " Pull Request " in win.title)
 ctx_network_graph = Context("github-network-graph",
                             func=lambda app, win:
                             win.title.startswith("Network Graph"))
+
+repos = {"talon_community"}
+
+
+def in_repo_list(win_title):
+    for repo in repos:
+        if repo in win_title:
+            return True
+        return False
 
 # Source: https://help.github.com/articles/using-keyboard-shortcuts/
 #   To do:
