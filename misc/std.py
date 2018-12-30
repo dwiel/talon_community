@@ -9,15 +9,6 @@ from ..utils import parse_word, surround, text, sentence_text, word, parse_words
 from .basic_keys import alpha_alt
 
 
-def rot13(i, word, _):
-    out = ""
-    for c in word.lower():
-        if c in string.ascii_lowercase:
-            c = chr((((ord(c) - ord("a")) + 13) % 26) + ord("a"))
-        out += c
-    return out
-
-
 formatters = {
     "cram": (True, lambda i, word, _: word if i == 0 else word.capitalize()),
     "pathway": (True, lambda i, word, _: word if i == 0 else "/" + word),
@@ -49,7 +40,6 @@ formatters = {
     "string": (False, surround("'")),
     "posh": (False, surround("'")),
     "padded": (False, surround(" ")),
-    "rot-thirteen": (False, rot13),
 }
 
 
