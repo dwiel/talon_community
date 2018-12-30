@@ -8,7 +8,6 @@ ctx = Context("input")
 
 ctx.keymap(
     {
-        "tarpy": [Key("tab"), Key("tab")],
         "trough": Key("alt-backspace"),
         "slap": [Key("cmd-right enter")],
         "sky shock": Key("shift-enter"),
