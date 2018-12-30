@@ -5,7 +5,6 @@ from talon import ctrl, clip
 from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 
 from ..utils import parse_word, surround, text, sentence_text, word, parse_words, spoken_text
-from .basic_keys import alpha_alt
 
 
 def title_case_capitalise_word(index, word, _):
@@ -82,7 +81,7 @@ def FormatText(m):
     Str(sep.join(words))(None)
 
 
-ctx = Context("text_formatters")
+ctx = Context("formatters")
 
 ctx.keymap({
     "phrase <dgndictation> [over]": text,
