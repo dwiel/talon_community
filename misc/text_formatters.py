@@ -8,6 +8,16 @@ from ..utils import parse_word, surround, text, sentence_text, word, parse_words
 from .basic_keys import alpha_alt
 
 
+def title_case_capitalise_word(index, word, _):
+    words_to_keep_lowercase = (
+        'a,an,the,at,by,for,in,of,on,to,up,and,as,but,or,nor'.split(',')
+    )
+    if index == 0 or word not in words_to_keep_lowercase:
+        return word.capitalize()
+    else:
+        return word
+
+
 formatters = {
     "cram": (True, lambda i, word, _: word if i == 0 else word.capitalize()),
     "pathway": (True, lambda i, word, _: word if i == 0 else "/" + word),
@@ -31,7 +41,7 @@ formatters = {
     # spinal or kebab?
     "spine": (True, lambda i, word, _: word if i == 0 else "-" + word),
     # 'sentence':  (False, lambda i, word, _: word.capitalize() if i == 0 else word),
-    "title": (False, lambda i, word, _: word.capitalize()),
+    "title": (False, title_case_capitalise_word),
     "tridal": (False, lambda i, word, _: word.capitalize()),
     "allcaps": (False, lambda i, word, _: word.upper()),
     "dubstring": (False, surround('"')),
