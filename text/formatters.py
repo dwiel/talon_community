@@ -7,7 +7,7 @@ from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 from ..utils import parse_word, surround, text, sentence_text, word, parse_words, spoken_text
 
 
-def title_case_capitalise_word(index, word, _):
+def title_case_capitalize_word(index, word, _):
     words_to_keep_lowercase = (
         'a,an,the,at,by,for,in,of,on,to,up,and,as,but,or,nor'.split(',')
     )
@@ -40,7 +40,7 @@ formatters = {
     # spinal or kebab?
     "spine": (True, lambda i, word, _: word if i == 0 else "-" + word),
     # 'sentence':  (False, lambda i, word, _: word.capitalize() if i == 0 else word),
-    "title": (False, title_case_capitalise_word),
+    "title": (False, title_case_capitalize_word),
     "tridal": (False, lambda i, word, _: word.capitalize()),
     "allcaps": (False, lambda i, word, _: word.upper()),
     "dubstring": (False, surround('"')),
