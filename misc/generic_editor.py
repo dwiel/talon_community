@@ -260,7 +260,7 @@ def word_prev(m):
         press("shift-left")
 
 
-keymap = {
+ctx.keymap({
     # 'sprinkle' + optional_numerals: jump_to_bol,
     # 'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
     # 'dear' + optional_numerals: jump_to_eol_and(lambda: None),
@@ -283,6 +283,4 @@ keymap = {
     # 'sprinkoon' + numerals: jump_to_eol_and(lambda: press('enter')),
     "(indent | shabble)": Key("cmd-["),
     "(outdent | shabber)": Key("cmd-]"),
-}
-
-ctx.keymap(keymap)
+})

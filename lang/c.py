@@ -24,4 +24,7 @@ ctx.keymap({
 
     "indirect": "&",
     "dereference": "*",
+
+    # Other commands for convenience
+    "word streak": ["streq()", Key("left")],
 })
