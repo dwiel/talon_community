@@ -1,4 +1,5 @@
 from talon.voice import Word, Key, Context, Str, press
+from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 import string
 
 from ..utils import numerals, parse_words, text
@@ -34,6 +35,9 @@ keymap = {
     "(pain new | split vertical)": Key("cmd-d"),
     # talon
     "tail talon": "tail -f .talon/talon.log",
+    "cd talon home": "cd {}".format(TALON_HOME),
+    "cd talon user": "cd {}".format(TALON_USER),
+    "cd talon plugins": "cd {}".format(TALON_PLUGINS),
     # some habits die hard
     "troll char": Key("ctrl-c"),
     "reverse": Key("ctrl-r"),
@@ -157,6 +161,9 @@ keymap = {
     # tmux
     "T mux new session": "tmux ",
     "T mux scroll": [Key('ctrl-b'), Key('[')],
+    # other
+    "shell make": "make\n",
+    "shell jobs": "jobs\n",
 }
 
 for action in ('get', 'delete', 'describe'):

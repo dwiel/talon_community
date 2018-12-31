@@ -2,7 +2,6 @@ import os
 
 from talon.voice import Word, Context, Key, Rep, RepPhrase, Str, press
 from talon import ctrl, clip
-from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 
 ctx = Context("input")
 
@@ -16,15 +15,8 @@ ctx.keymap(
         "olly | ali": Key("cmd-a"),
         "(dot dot | dotdot)": "..",
         "(dot dot dot | dotdotdot)": "...",
-        "cd talon home": "cd {}".format(TALON_HOME),
-        "cd talon user": "cd {}".format(TALON_USER),
-        "cd talon plugins": "cd {}".format(TALON_PLUGINS),
-        "run make (durr | dear)": "mkdir ",
         "run (them | vim)": "vim ",
-        "run L S": "ls\n",
         "dot pie": ".py",
-        "run make": "make\n",
-        "run jobs": "jobs\n",
         "const": "const ",
         "static": "static ",
         "tip pent": "int ",
