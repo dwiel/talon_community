@@ -3,7 +3,7 @@ import string
 
 from ..utils import numerals, parse_words, text
 
-# TODO: move application specific commands into their own files: git, apt-get, etc
+# TODO: move application specific commands into their own files: apt-get, etc
 
 terminals = ("com.apple.Terminal", "com.googlecode.iterm2")
 ctx = Context("terminal", func=lambda app, win: any(t in app.bundle for t in terminals))
@@ -94,50 +94,6 @@ keymap = {
     "apt get install": "apt-get install ",
     "apt get update": "apt-get update ",
     "apt get upgrade": "apt-get upgrade ",
-    # git
-    "jet [<dgndictation>]": ["git ", text],
-    "jet add [<dgndictation>]": ["git add ", text],
-    "jet branch": "git branch",
-    "jet branch delete [<dgndictation>]": ["git branch -D ", text],
-    "jet branch all [<dgndictation>]": ["git branch -a ", text],
-    "jet clone [<dgndictation>]": ["git clone ", text],
-    "jet checkout master": "git checkout master",
-    "jet checkout [<dgndictation>]": ["git checkout ", text],
-    "jet checkout branch [<dgndictation>]": ["git checkout -B ", text],
-    "jet cherry pick [<dgndictation>]": ["git cherry-pick ", text],
-    "jet commit [<dgndictation>]": ['git commit -m ""', Key("left"), text],
-    "jet commit amend [<dgndictation>]": [
-        'git commit --amend -m ""',
-        Key("left"),
-        text,
-    ],
-    "jet commit all [<dgndictation>]": ['git commit -a -m ""', Key("left"), text],
-    "jet config [<dgndictation>]": ["git config ", text],
-    "jet config list [<dgndictation>]": ["git config --list ", text],
-    "jet diff [<dgndictation>]": ["git diff ", text],
-    "jet history": "git hist ",
-    "jet (init | initialize)": "git init ",
-    "jet log": "git log ",
-    "jet merge [<dgndictation>]": ["git merge ", text],
-    "jet move [<dgndictation>]": ["git mv ", text],
-    "jet pull [<dgndictation>]": ["git pull ", text],
-    "jet pull (base | re-base | rebase | re base) [<dgndictation>]": [
-        "git pull --rebase ",
-        text,
-    ],
-    "jet push [<dgndictation>]": ["git push ", text],
-    "jet push force [<dgndictation>]": ["git push --force ", text],
-    "jet push set up stream [<dgndictation>]": ["git push --set-upstream ", text],
-    "jet rebase continue": "git rebase --continue",
-    "jet rebase [<dgndictation>]": ["git rebase ", text],
-    "jet remove [<dgndictation>]": ["git rm ", text],
-    "jet reset": "git reset ",
-    "jet reset hard": "git reset --hard ",
-    "jet show": "git show ",
-    "jet stash": "git stash ",
-    "jet stash apply": "git stash apply ",
-    "jet stash pop": "git stash pop ",
-    "jet status": "git status ",
     # Tools
     "(grep | grip)": ["grep  .", Key("left left")],
     "gripper": ["grep -r  .", Key("left left")],
