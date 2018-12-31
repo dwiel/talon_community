@@ -64,7 +64,6 @@ ctx.keymap(
         "list in it": ["[]", Key("left")],
         "string utf8": "'utf8'",
         "state past": "pass",
-        "arrow": "->",
         "call": "()",
         "shebang bash": "#!/bin/bash -u\n",
         "new window": Key("cmd-n"),
