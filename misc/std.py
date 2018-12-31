@@ -1,3 +1,9 @@
+"""
+Since this file is called std, it may be tempting to dump more stuff here.
+Ideally, put any new commands in another file, so that related ones are grouped
+together, and files don't get massive.
+"""
+
 import os
 
 from talon.voice import Word, Context, Key, Rep, RepPhrase, Str, press
@@ -22,15 +28,6 @@ ctx.keymap(
         "tip pent": "int ",
         "tip char": "char ",
         "tip byte": "byte ",
-        "tip pent 64": "int64_t ",
-        "tip you went 64": "uint64_t ",
-        "tip pent 32": "int32_t ",
-        "tip you went 32": "uint32_t ",
-        "tip pent 16": "int16_t ",
-        "tip you went 16": "uint16_t ",
-        "tip pent 8": "int8_t ",
-        "tip you went 8": "uint8_t ",
-        "tip size": "size_t",
         "tip float": "float ",
         "tip double": "double ",
         "args": ["()", Key("left")],
@@ -45,14 +42,8 @@ ctx.keymap(
         "state for": "for ",
         "state switch": ["switch ()", Key("left")],
         "state case": ["case \nbreak;", Key("up")],
-        "state goto": "goto ",
         "state import": "import ",
         "state class": "class ",
-        "state include": "#include ",
-        "state include system": ["#include <>", Key("left")],
-        "state include local": ['#include ""', Key("left")],
-        "state type deaf": "typedef ",
-        "state type deaf struct": ["typedef struct {\n\n};", Key("up"), "\t"],
         "comment see": "// ",
         "comment py": "# ",
         "word queue": "queue",
@@ -75,8 +66,6 @@ ctx.keymap(
         "state past": "pass",
         "arrow": "->",
         "call": "()",
-        "indirect": "&",
-        "dereference": "*",
         "shebang bash": "#!/bin/bash -u\n",
         "new window": Key("cmd-n"),
         "next window": Key("cmd-`"),
