@@ -9,7 +9,6 @@ keymap = {
     # -> "Select the previous input source"
     "change language": Key("ctrl-space"),
     # Application navigation
-    "swick": Key("cmd-tab"),
     "new window": Key("cmd-n"),
     "(next window | gibby)": Key("cmd-`"),
     "(last window | shibby)": Key("cmd-shift-`"),
@@ -54,7 +53,8 @@ keymap = {
     "(shrish | shift right)": Key("shift-right"),
     # Application navigation
     "launcher": Key("cmd-space"),
-    "swick": Key("cmd-tab"),
+    "next app": Key("cmd-tab"),
+    "last app": Key("cmd-shift-tab"),
     "close tab": Key("cmd-w"),
     "close window": Key("cmd-shift-w"),
     "mission": lambda m: system("open -a 'Mission Control'"),
