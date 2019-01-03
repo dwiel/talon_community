@@ -61,8 +61,6 @@ ctx.keymap({
     "state for": "for ",
     "state switch": ["switch ()", Key("left")],
     "state case": ["case \nbreak;", Key("up")],
-    "state import": "import ",
-    "state class": "class ",
 
     # Other Keywords
     "const": "const ",

@@ -24,23 +24,13 @@ ctx.keymap(
         "(dot dot dot | dotdotdot)": "...",
         "run (them | vim)": "vim ",
         "dot pie": ".py",
-        "word queue": "queue",
-        "word eye": "eye",
-        "word bson": "bson",
-        "word iter": "iter",
-        "word cmd": "cmd",
-        "word dup": "dup",
-        "word (dickt | dictionary)": "dict",
-        "word shell": "shell",
-        "word talon": "talon",
-        "dunder in it": "__init__",
+        "dunder in it": "__init__",  # TODO: move into python file
         "string utf8": "'utf8'",
         "shebang bash": "#!/bin/bash -u\n",
-        "next tab": Key("cmd-shift-]"),
-        "new tab": Key("cmd-t"),
-        "(last | prevous | preev) tab": Key("cmd-shift-["),
-        "next space": Key("cmd-alt-ctrl-right"),
-        "last space": Key("cmd-alt-ctrl-left"),
+        "(prefies | preferences)": Key("cmd-,"),
+        "put computer to sleep": lambda m: os.system("pmset sleepnow"),
+
+        # TODO: find an appropriate place for this, remove duplicates of these commands
         "(marco | search)": Key("cmd-f"),
         "marneck": Key("cmd-g"),
         "marpreev": Key("cmd-shift-g"),
@@ -50,7 +40,21 @@ ctx.keymap(
             Key("cmd-f"),
             Key("enter"),
         ],
-        "(prefies | preferences)": Key("cmd-,"),
-        "put computer to sleep": lambda m: os.system("pmset sleepnow"),
+
+        # TODO: put into an appropriate file
+        "new tab": Key("cmd-t"),
+        "next tab": Key("cmd-shift-]"),
+        "(last | prevous | preev) tab": Key("cmd-shift-["),
+
+        # TODO: make vocab file? (see discussion in github issue #52)
+        "word queue": "queue",
+        "word eye": "eye",
+        "word bson": "bson",
+        "word iter": "iter",
+        "word cmd": "cmd",
+        "word dup": "dup",
+        "word (dickt | dictionary)": "dict",
+        "word shell": "shell",
+        "word talon": "talon",
     }
 )
