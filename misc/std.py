@@ -50,7 +50,7 @@ ctx.keymap(
             Key("cmd-f"),
             Key("enter"),
         ],
-        "prefies": Key("cmd-,"),
+        "(prefies | preferences)": Key("cmd-,"),
         "put computer to sleep": lambda m: os.system("pmset sleepnow"),
     }
 )

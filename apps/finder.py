@@ -42,7 +42,6 @@ ctx.keymap(
         "close": Key("cmd-w"),
         # NOT WORKING "cut": Key("cmd-x"),
         "undo": Key("cmd-z"),
-        "[finder] preferences": Key("cmd-,"),
         "(icon | icons) [(mode | view)]": Key("cmd-1"),
         "list [(mode | view)]": Key("cmd-2"),
         "(column | columns) [(mode | view)]": Key("cmd-3"),
