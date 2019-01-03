@@ -3,7 +3,7 @@ from talon import ctrl
 
 
 def context(app, win):
-    print(win.title)
+    # print(win.title)
     return win.title.endswith("- Google Docs") or "- Google Docs -" in win.title
 
 
