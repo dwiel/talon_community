@@ -260,7 +260,7 @@ ctx_repo.keymap(
         '[go to] (pull | pulls)[requests]': repo_goto_pull_requests,
         '[go to] projects': repo_goto_projects,
         '[go to] wiki': repo_goto_wiki,
-        'find [file]': repo_find_file,
+        'find file': repo_find_file,
         'switch [(branch | tag)]': repo_switch_branch
     }
 )
