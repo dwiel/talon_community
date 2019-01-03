@@ -161,7 +161,7 @@ alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789_"
 
 
 def word_neck(m):
-    print(m)
+    # print(m)
     word_index = text_to_number(m._words[1:])
     if not word_index:
         word_index = 1
@@ -187,24 +187,24 @@ def word_neck(m):
     while i < (len(is_word) - 1) and not is_word[i]:
         i += 1
 
-    print("a start", i)
+    # print("a start", i)
 
     while i < (len(is_word) - 1) and word_count < word_index:
-        print(i, is_word[i], word_count, word_index)
+        # print(i, is_word[i], word_count, word_index)
         if not is_word[i] and is_word[i + 1]:
             word_count += 1
         i += 1
     # warning: this is a hack, sorry
-    print("i", i)
+    # print("i", i)
     if i == 1 and is_word[0]:
         i = 0
     start_position = i
-    print(text_right[start_position:])
+    # print(text_right[start_position:])
     while i < len(is_word) and is_word[i]:
         i += 1
     end_position = i
 
-    print(start_position, end_position)
+    # print(start_position, end_position)
     # cursor over to the found word
     for i in range(0, start_position):
         press("right", wait=0)
@@ -242,17 +242,17 @@ def word_prev(m):
         i += 1
 
     while i < (len(is_word) - 1) and word_count < word_index:
-        print(i, is_word[i], word_count, word_index)
+        # print(i, is_word[i], word_count, word_index)
         if not is_word[i] and is_word[i + 1]:
             word_count += 1
         i += 1
     start_position = i
-    print(text_right[start_position:])
+    # print(text_right[start_position:])
     while i < len(is_word) and is_word[i]:
         i += 1
     end_position = i
 
-    print(start_position, end_position, text_right[start_position:end_position])
+    # print(start_position, end_position, text_right[start_position:end_position])
     # cursor over to the found word
     for i in range(0, start_position):
         press("left", wait=0)
