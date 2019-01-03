@@ -35,7 +35,7 @@ def in_repo_list(win_title):
     for repo in repos:
         if repo in win_title:
             return True
-        return False
+    return False
 
 
 def normal_mode():
