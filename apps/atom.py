@@ -261,6 +261,7 @@ keymap = {
     "split pain up": [Key("cmd-k"), Key("up")],
     "split pain down": [Key("cmd-k"), Key("down")],
     "(search all files | mark all)": Key("cmd-shift-f"),
+    "case sensitive": Key('alt-cmd-c'),
     "command pallet": Key(atom_command_pallet),
     "cursor center": command("center-line:toggle"),
     "cursor top": [command("center-line:toggle"), command("center-line:toggle")],
