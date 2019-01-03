@@ -1,11 +1,13 @@
 from talon.voice import Context, Key, press
 from talon import ctrl
 
-ctx = Context(
-    "google_docs",
-    func=lambda app, win: win.title.endswith("- Google Docs")
-    or "- Google Docs -" in win.title,
-)
+
+def context(app, win):
+    print(win.title)
+    return win.title.endswith("- Google Docs") or "- Google Docs -" in win.title
+
+
+ctx = Context("google_docs", func=context)
 ctx.keymap(
     {
         "copy": Key("cmd+c"),
@@ -24,9 +26,9 @@ ctx.keymap(
         "find and replace": Key("cmd+shift+h"),
         "find again": Key("cmd+g"),
         "find previous": Key("cmd+shift+g"),
-        "hide the menus ": Key("ctrl+shift+f"),
+        "hide [the] menus ": Key("ctrl+shift+f"),
         "[insert] page break": Key("cmd+enter"),
-        "search the menus": Key("alt+/"),
+        "(search [the] menus | command pallet)": Key("cmd+/"),
         "bold": Key("cmd+b"),
         "italicize": Key("cmd+i"),
         "underline": Key("cmd+u"),
@@ -438,5 +440,7 @@ ctx.keymap(
         "move focus out of document text": Key("cmd+alt+shift+m"),
         "return focus to document text": Key("esc"),
         "focus containing webpage": Key("ctrl+shift+esc"),
+
+        "show outline": [Key('ctrl-cmd-a'), Key('ctrl-cmd-h')],
     }
 )
