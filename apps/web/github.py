@@ -280,7 +280,7 @@ ctx_editor.keymap(
 
 ctx_issues_pull_lists.keymap(
     {
-        'create [issue] [pull request]': create_issue,
+        '(create | new) [issue] [pull request]': create_issue,
         '[filter] [by] author': filter_by_author,
         '[filter] [by] label': filter_by_label,
         '[filter] [by] milestone': filter_by_milestone,
