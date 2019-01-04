@@ -183,6 +183,12 @@ def set_assignee(m):
     press('a')
 
 
+def close_issue_and_submit_comment(m):
+    # NOTE: this only works if the cursor is in the comment you are submitting
+    press('cmd-shift-enter')
+    tridactyl_mode()
+
+
 # PULL REQUEST CHANGES METHODS
 
 def list_commits(m):
@@ -249,7 +255,7 @@ ctx_global.keymap(
     {
         'jet search': search,
         '(notes | notifications)': goto_notifications,
-        # '(hover)': hover
+        # '(hover)': hover,
     }
 )
 
@@ -261,7 +267,7 @@ ctx_repo.keymap(
         '[go to] projects': repo_goto_projects,
         '[go to] wiki': repo_goto_wiki,
         'find file': repo_find_file,
-        'switch [(branch | tag)]': repo_switch_branch
+        'switch [(branch | tag)]': repo_switch_branch,
     }
 )
 
@@ -274,7 +280,7 @@ ctx_editor.keymap(
         'replace all': Key('shift-cmd-alt-f'),
         '(go to | jump to) [line]': Key('alt-g'),
         'undo': Key('cmd-z'),
-        'redo': Key('cmd-y')
+        'redo': Key('cmd-y'),
     }
 )
 
@@ -285,7 +291,7 @@ ctx_issues_pull_lists.keymap(
         '[filter] [by] label': filter_by_label,
         '[filter] [by] milestone': filter_by_milestone,
         '[filter] [by] [(worker | assigned | assignee)]': filter_by_assignee,
-        'open [issue] [pull request]': open_issue
+        'open [issue] [pull request]': open_issue,
     }
 )
 
@@ -294,7 +300,8 @@ ctx_issues_pull.keymap(
         '[request] (reviewer | review)': request_reviewer,
         '[set] milestone': set_milestone,
         '[apply] label': apply_label,
-        'assign': set_assignee
+        'assign': set_assignee,
+        'close and comment': close_issue_and_submit_comment,
     }
 )
 
@@ -304,7 +311,7 @@ ctx_pull_changes.keymap(
         '[list] [changed] files': list_changed_files,
         'down': Key('j'),
         'up': Key('k'),
-        '[add] [diff] comment': Key('cmd-shift-enter')
+        '[add] [diff] comment': Key('cmd-shift-enter'),
     }
 )
 
