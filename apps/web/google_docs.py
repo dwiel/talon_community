@@ -1,3 +1,5 @@
+import time
+
 from talon.voice import Context, Key, press
 from talon import ctrl
 
@@ -16,7 +18,7 @@ ctx.keymap(
         "paste without formatting": Key("cmd+shift+v"),
         "undo": Key("cmd+z"),
         "redo": Key("cmd+shift+z"),
-        "insert or edit link": Key("cmd+k"),
+        "(insert | edit) link": Key("cmd+k"),
         "open link": Key("alt+enter"),
         "[show] [common] keyboard shortcuts": Key("cmd+/"),
         "save": Key("cmd+s"),
@@ -90,6 +92,14 @@ ctx.keymap(
         ),
         "context menu": Key("cmd+shift+\\"),
         "file menu": Key("ctrl+alt+f"),
+        "new (file | document | doc)": [
+            Key("ctrl-alt-f"),
+            Key("down"),
+            Key("down"),
+            Key("right"),
+            Key("enter"),
+        ],
+        "rename": [Key("ctrl-`"), lambda m: time.sleep(1), "rename", lambda m: time.sleep(1), Key("enter")],
         "edit menu": Key("ctrl+alt+e"),
         "view menu": Key("ctrl+alt+v"),
         "insert menu": Key("ctrl+alt+i"),
@@ -440,7 +450,6 @@ ctx.keymap(
         "move focus out of document text": Key("cmd+alt+shift+m"),
         "return focus to document text": Key("esc"),
         "focus containing webpage": Key("ctrl+shift+esc"),
-
-        "show outline": [Key('ctrl-cmd-a'), Key('ctrl-cmd-h')],
+        "show outline": [Key("ctrl-cmd-a"), Key("ctrl-cmd-h")],
     }
 )
