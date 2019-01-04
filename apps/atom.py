@@ -241,6 +241,7 @@ keymap = {
     "move line" + numerals: move_line,
     "crew <dgndictation>": find_next,
     "trail <dgndictation>": find_previous,
+    "replace next": Key('cmd-alt-e'),
     "shackle": Key("cmd-l"),
     "selrang" + numerals: select_lines,
     "shockey": Key("cmd-shift-enter"),
