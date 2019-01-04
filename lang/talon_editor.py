@@ -24,8 +24,8 @@ def format_text(fmt):
 
 ctx.keymap({
     "key {basic_keys.modifiers}* {basic_keys.keymap}": key,
-    "map <dgndictation>": ("'", text, "': ,", Key("left")),
-    "map string <dgndictation>": format_text("'{0}': '{0}',"),
+    "talon map <dgndictation>": ("'", text, "': ,", Key("left")),
+    "talon map string <dgndictation>": format_text("'{0}': '{0}',"),
     "dragon dictation": "<dgndictation>",
     "stir": ["Str()(None)"] + [Key("left")] * 7,
 })
