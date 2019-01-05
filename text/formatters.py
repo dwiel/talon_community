@@ -47,6 +47,7 @@ formatters = {
     "coif": (False, surround('"')),
     "string": (False, surround("'")),
     "posh": (False, surround("'")),
+    "tics": (False, surround("`")),
     "padded": (False, surround(" ")),
 }
 
