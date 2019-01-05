@@ -40,6 +40,7 @@ ctx.keymap({
     # git commands originally from terminal.py
     "jet [<dgndictation>]": ["git ", text],
     "jet add [<dgndictation>]": ["git add ", text],
+    "jet add partial [<dgndictation>]": ["git add -p ", text],
     "jet branch": "git branch",
     "jet branch delete [<dgndictation>]": ["git branch -D ", text],
     "jet branch all [<dgndictation>]": ["git branch -a ", text],
