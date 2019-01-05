@@ -7,7 +7,13 @@ def python(app, win):
 
 ctx = Context("python", func=python)
 
-ctx.keymap({"state any": ["any()", Key("left")]})
+ctx.keymap(
+    {
+        "state any": ["any()", Key("left")],
+        "dunder in it": "__init__",  # TODO: move into python file
+        "dot pie": ".py",
+    }
+)
 
 
 # TODO: defined function

@@ -43,6 +43,7 @@ keymap = {
     "scroll up": [Key("up")] * 30,
     "(jeepway | scroll way up)": Key("cmd-up"),
     # selecting
+    "olly | ali": Key("cmd-a"),
     "shreepway": Key("cmd-shift-up"),
     "shroomway": Key("cmd-shift-down"),
     "shreep": Key("shift-up"),
@@ -114,6 +115,11 @@ keymap = {
     "shrocky": Key("alt-shift-right"),
     "shlicky": Key("shift-left"),
     "shricky": Key("shift-right"),
+    # searching
+    "(marco | search)": Key("cmd-f"),
+    "marneck": Key("cmd-g"),
+    "marpreev": Key("cmd-shift-g"),
+    "marthis": [Key("alt-right"), Key("shift-alt-left"), Key("cmd-f"), Key("enter")],
 }
 
 ctx.keymap(keymap)
