@@ -1,13 +1,106 @@
-from talon.voice import Context, Key, press
-from talon import ctrl
+import string
+import urllib.parse
+import time
+
+from talon.voice import Context, Key, Str, press
+from talon import ctrl, clip
+
+from ..utils import select_single, numerals, delay
+from ..misc.basic_keys import get_keys
 
 ctx = Context(
     "google_sheets",
     func=lambda app, win: win.title.endswith("- Google Sheets")
     or "- Google Sheets -" in win.title,
 )
+
+
+def get_url():
+    # TODO: retrieve url in a more direct way
+    press("cmd-l")
+    time.sleep(0.25)
+    press("cmd-c")
+    time.sleep(0.25)
+    return clip.get()
+
+
+def update_range(column, row):
+    url = get_url()
+    print(("url", url))
+
+    # TODO: handle malformed URL (including the case where there is gibberish in the address bar)
+    updated_url = update_query_parameters(url, {"range": r"%s%s" % (column, row)})
+    print(("updated_url", updated_url))
+
+    # update the address bar with the updated URL
+    clip.set(updated_url)
+    time.sleep(0.25)
+    press("cmd-v")
+
+    # navigate to new URL
+    press("enter")
+
+
+def update_query_parameters(url, parameters):
+    url_parts = list(urllib.parse.urlparse(url))
+    query = dict(urllib.parse.parse_qsl(url_parts[4]))
+    query.update(parameters)
+
+    url_parts[4] = urllib.parse.urlencode(query)
+
+    # some manual modification because urllib insists on putting the fragment identifier after the query parameters, which is not what we want here
+    fragment = url_parts[5]
+    query_string = url_parts[4]
+    url_parts[4] = ""  #
+    url_parts[5] = url_parts[5].split("?")[0]
+    updated_url = urllib.parse.urlunparse(url_parts) + "?" + query_string
+
+    return updated_url
+
+
+# Talon Sheets command handlers
+def go_to_cell():
+    def _go_to_cell(m):
+        # TODO: support columns with multiple characters: AC
+        column = "".join(get_keys(m))
+        row = str(m._words[2])
+        update_range(column, row)
+
+    return _go_to_cell
+
+
+def go_to_named_cell():
+    def _go_to_named_cell(m):
+        # TODO: how to more easily express intended # of words in command?
+        region = str(m._words[1])
+        cell = region_map[region]
+
+        update_range(*cell)
+
+    return _go_to_named_cell
+
+
+## key can only be a single word for now
+# TODO: load this from a json file
+region_map = {
+    # example:
+    "home": ("A", "1")
+}
+
+alphabet = list(string.ascii_uppercase)
+regions = select_single([key for key in region_map.keys() if key not in alphabet])
+cycle_offsets = "[" + select_single(list(range(20))[1:]) + "]"
+cells = "{basic_keys.alphabet}+" + numerals
+
 ctx.keymap(
     {
+        # navigation by cell reference
+        "(view | go to | spring) " + cells: go_to_cell(),
+        "edit " + cells: [go_to_cell(), delay(1.0), Key("enter")],
+        # navigation by name, specified in map above (cell column names, e.g. A-Z, not allowed to avoid conflicting with above cell references)
+        "(view | go to | spring) " + regions: go_to_named_cell(),
+        "edit " + regions: [go_to_named_cell(), delay(1.0), Key("enter")],
+        # keyboard shortcut mappings
         "select column": Key("ctrl+space"),
         "select row": Key("shift+space"),
         "select all": Key("cmd+a"),
@@ -36,10 +129,10 @@ ctx.keymap(
         "center align": Key("cmd+shift+e"),
         "left align": Key("cmd+shift+l"),
         "right align": Key("cmd+shift+r"),
-        "apply top border": Key("alt+shift+1"),
-        "apply right border": Key("alt+shift+2"),
-        "apply bottom border": Key("alt+shift+3"),
-        "apply left border": Key("alt+shift+4"),
+        "apply (top border | border top)": Key("alt+shift+1"),
+        "apply (right border | border right)": Key("alt+shift+2"),
+        "apply (bottom border | border bottom)": Key("alt+shift+3"),
+        "apply (left border | border left)": Key("alt+shift+4"),
         "remove borders": Key("alt+shift+6"),
         "apply outer border": Key("alt+shift+7"),
         "insert link": Key("cmd+k"),
