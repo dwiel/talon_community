@@ -1,7 +1,6 @@
 import time
 
 from talon.voice import Key, press, Str, Context, Rule
-from ..misc import std
 from ..utils import (
     parse_words_as_integer,
     parse_words,
