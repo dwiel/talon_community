@@ -5,8 +5,8 @@ import time
 from talon.voice import Context, Key, Str, press
 from talon import ctrl, clip
 
-from ..utils import select_single, numerals, delay
-from ..misc.basic_keys import get_keys
+from ...utils import select_single, numerals, delay
+from ...misc.basic_keys import get_keys
 
 ctx = Context(
     "google_sheets",
@@ -129,12 +129,12 @@ ctx.keymap(
         "center align": Key("cmd+shift+e"),
         "left align": Key("cmd+shift+l"),
         "right align": Key("cmd+shift+r"),
-        "apply (top border | border top)": Key("alt+shift+1"),
-        "apply (right border | border right)": Key("alt+shift+2"),
-        "apply (bottom border | border bottom)": Key("alt+shift+3"),
-        "apply (left border | border left)": Key("alt+shift+4"),
-        "remove borders": Key("alt+shift+6"),
-        "apply outer border": Key("alt+shift+7"),
+        "[apply] (top border | border top)": Key("alt+shift+1"),
+        "[apply] (right border | border right)": Key("alt+shift+2"),
+        "[apply] (bottom border | border (bottom | below | under))": Key("alt+shift+3"),
+        "[apply] (left border | border left)": Key("alt+shift+4"),
+        "(remove borders | border remove)": Key("alt+shift+6"),
+        "[apply] (outer border | border outer)": Key("alt+shift+7"),
         "insert link": Key("cmd+k"),
         "insert time": Key("cmd+shift+;"),
         "insert date": Key("cmd+;"),
@@ -151,9 +151,11 @@ ctx.keymap(
         "move to end of row": Key("end"),
         "move to end of sheet": Key("cmd+end"),
         "scroll to active cell": Key("cmd+backspace"),
-        "move to next sheet": Key("cmd+shift+pagedown"),
-        "move to previous sheet": Key("cmd+shift+pageup"),
-        "display list of sheets": Key("alt+shift+k"),
+        "(move to next sheet | sheet next)": Key("cmd+shift+pagedown"),
+        "(move to previous sheet | sheet previous | sheet prev)": Key("cmd+shift+pageup"),
+        "(display list of sheets | sheet list)": Key("alt+shift+k"),
+        "sheet new": Key('shift-f11'),
+        "sheet rename": [Key('alt-shift-s'), Key('down'), delay(), Key('down'), delay(), Key('down'), delay(), Key('down'), delay(), Key('enter')],
         "open hyperlink": Key("alt+enter"),
         "open explore": Key("alt+shift+x"),
         "go to side panel": Key("cmd+alt+."),
