@@ -40,7 +40,7 @@ ctx.keymap(
         "new tab": Key("cmd-alt-o"),
         "paste": Key("cmd-v"),
         "close": Key("cmd-w"),
-        # NOT WORKING "cut": Key("cmd-x"),
+        "cut": Key("cmd-x"),
         "undo": Key("cmd-z"),
         "(icon | icons) [(mode | view)]": Key("cmd-1"),
         "list [(mode | view)]": Key("cmd-2"),
