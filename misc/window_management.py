@@ -18,8 +18,8 @@ def move_screen(off):
     if src_screen == dst_screen:
         return
 
-    src = src_screen.rect
-    dst = dst_screen.rect
+    src = src_screen.visible_rect
+    dst = dst_screen.visible_rect
     old = win.rect
     win.rect = ui.Rect(
         dst.left + (old.left - src.left) / src.width * dst.width,
@@ -32,7 +32,7 @@ def move_screen(off):
 def resize_window(x, y, w, h):
     print("Resizing: ", x, y, w, h)
     win = ui.active_window()
-    rect = win.screen.rect.copy()
+    rect = win.screen.visible_rect.copy()
     rect.x += rect.width * x
     rect.y += rect.height * y
     rect.width *= w
