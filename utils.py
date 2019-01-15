@@ -56,6 +56,8 @@ def parse_words(m, natural=False):
     else:
         return []
 
+    # split compound words like "pro forma" into two words.
+    words = sum([word.split(" ") for word in words], [])
     words = list(map(lambda current_word: parse_word(current_word, not natural), words))
     words = replace_words(words, mappings[2], 2)
     words = replace_words(words, mappings[3], 3)
@@ -244,8 +246,9 @@ optional_numerals = " (" + " | ".join(sorted(numeral_map.keys())) + ")*"
 def preserve_clipboard(fn):
     def wrapped_function(*args, **kwargs):
         old = clip.get()
-        fn(*args, **kwargs)
+        ret = fn(*args, **kwargs)
         clip.set(old)
+        return ret
 
     return wrapped_function
 
