@@ -58,6 +58,7 @@ shrink_map = {
     "convolution": "conv",
     "deconvolution": "deconv",
     "derivative": "deriv",
+    "destination": "dest",
     "distribution": "dist",
     "contribute": "contrib",
     "delete": "del",
