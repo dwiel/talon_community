@@ -8,7 +8,7 @@ ctx = Context(
 )
 ctx.keymap(
     {
-        "(new slide | slide next)": Key("ctrl+m"),
+        "(new slide | slide new)": Key("ctrl+m"),
         "(duplicate slide | slide duplicate)": [Key('cmd-alt-shift-f'), Key("cmd+d")],
         "undo": Key("cmd+z"),
         "redo": Key("cmd+y"),
