@@ -39,7 +39,7 @@ def set_url(url):
 
 def update_selected_cell(column, row):
     url = get_url()
-    updated_url = update_query_parameters(url, {"range": "%s%s%s%s" % (column, row)})
+    updated_url = update_query_parameters(url, {"range": "%s%s" % (column, row)})
     set_url(updated_url)
 
 def update_selected_cells(column, row, dest_column, dest_row):
