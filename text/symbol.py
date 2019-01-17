@@ -86,6 +86,7 @@ keymap = {
     "(enter | shock)": Key("enter"),
     "junk": Key("backspace"),
     "spunk": Key("delete"),
+    "sky turn": Key("shift-enter"),
 }
 
 ctx.keymap(keymap)

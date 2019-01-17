@@ -54,7 +54,7 @@ keymap = {
     "(shrish | shift right)": Key("shift-right"),
     # Application navigation
     "launcher": Key("cmd-space"),
-    "next app": Key("cmd-tab"),
+    "(next app | swick)": Key("cmd-tab"),
     "last app": Key("cmd-shift-tab"),
     "close tab": Key("cmd-w"),
     "close window": Key("cmd-shift-w"),
