@@ -81,5 +81,6 @@ ctx.keymap(
         "spotlight [menu]": Key("cmd-space"),
         "spotlight window": Key("cmd-alt-space"),
         # NOT WORKING: Function key shorcuts (f8 through f12)
+        "toggle hidden files": Key("cmd-shift-."),
     }
 )
