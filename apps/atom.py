@@ -309,7 +309,7 @@ keymap = {
     "go to definition": command("autocomplete-python:go-to-definition"),
     "show usages": command("autocomplete-python:show-usages"),
     "complete arguments": command("autocomplete-python:complete-arguments"),
-    "rename": command("autocomplete-python:rename"),
+    "python rename": command("autocomplete-python:rename"),
     "override method": command("autocomplete-python:override-method"),
     # symbols-view
     "go to symbol": command("symbols-view:toggle-file-symbols"),
