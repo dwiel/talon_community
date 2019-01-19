@@ -19,11 +19,10 @@ punctuation = set(".,-!?")
 
 def parse_word(word, force_lowercase=True):
     word = str(word).lstrip("\\").split("\\", 1)[0]
+
     if force_lowercase:
         word = word.lower()
-    # print(word)
     word = mapping.get(word, word)
-    # print(word)
 
     return word
 
@@ -247,10 +246,18 @@ def preserve_clipboard(fn):
     def wrapped_function(*args, **kwargs):
         old = clip.get()
         ret = fn(*args, **kwargs)
+        sleep(0.1)
         clip.set(old)
         return ret
 
     return wrapped_function
+
+
+@preserve_clipboard
+def paste_text(text):
+    clip.set(text)
+    sleep(0.1)
+    press('cmd-v')
 
 
 # The. following function is used to be able to repeat commands by following it by one or several numbers, e.g.:
