@@ -155,6 +155,7 @@ keymap = {
     KUBERNETES_PREFIX + "help": "kubectl help ",
     KUBERNETES_PREFIX + "plugin": "kubectl plugin ",
     KUBERNETES_PREFIX + "version": "kubectl version ",
+    KUBERNETES_PREFIX + "shell": ["kubectl exec -it  -- /bin/bash"] + [Key('left')] * 13,
     # conda
     "conda install": "conda install ",
     "conda list": "conda list ",
