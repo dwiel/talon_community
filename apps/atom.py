@@ -10,6 +10,7 @@ from ..utils import (
     text,
     m_to_number,
 )
+from .. import utils
 
 ctx = Context("atom", bundle="com.github.atom")
 
@@ -163,9 +164,9 @@ def change_pain(m):
 
 def command_from_palette(command):
     press(atom_command_pallet)
-    time.sleep(0.25)
-    Str(command)(None)
-    time.sleep(0.25)
+    time.sleep(0.2)
+    utils.paste_text(command)
+    time.sleep(0.1)
     press("enter")
 
 
