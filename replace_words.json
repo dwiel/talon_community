@@ -1,9 +1,16 @@
 {
+    "2d d": "2d",
+    "3d d": "3d",
     ".": "dot",
     "inc.": "incorporated",
     "file name": "filename",
 
     "talent": "talon",
+
+    "pitch deque": "pitch deck",
+
+    "ro": "row",
+    "bites": "bytes",
 
     "yamel": "yaml",
     "semicolon": ";",
@@ -54,6 +61,7 @@
     "poynter": "pointer",
     "numb": "num",
     "gnome": "num",
+    "Phnom": "num",
     "don": "done",
     "jet": "git",
     "g cloud": "gcloud",
@@ -112,6 +120,8 @@
     "les": "less",
     "doctor": "docker",
     "darker": "docker",
+    "daughter": "docker",
+    "docker file": "dockerfile",
     "communities": "kubernetes",
     "shall": "shell",
     "w get": "wget",
