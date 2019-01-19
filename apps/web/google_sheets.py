@@ -42,9 +42,12 @@ def update_selected_cell(column, row):
     updated_url = update_query_parameters(url, {"range": "%s%s" % (column, row)})
     set_url(updated_url)
 
+
 def update_selected_cells(column, row, dest_column, dest_row):
     url = get_url()
-    updated_url = update_query_parameters(url, {"range": "%s%s:%s%s" % (column, row, dest_column, dest_row)})
+    updated_url = update_query_parameters(
+        url, {"range": "%s%s:%s%s" % (column, row, dest_column, dest_row)}
+    )
     set_url(updated_url)
 
 
@@ -94,7 +97,15 @@ def select_cells(m):
         elif str(word) in basic_keys.digits:
             range[i]["row"] += str(word)
 
-    update_selected_cells(range[0]["column"], range[0]["row"], range[1]["column"], range[1]["row"])
+    update_selected_cells(
+        range[0]["column"], range[0]["row"], range[1]["column"], range[1]["row"]
+    )
+
+
+def select_column(m):
+    column = "".join(get_keys(m))
+    update_selected_cells(column, "", column, "")
+
 
 ## key can only be a single word for now
 # TODO: load this from a json file
@@ -106,7 +117,8 @@ region_map = {
 alphabet = list(string.ascii_uppercase)
 regions = select_single([key for key in region_map.keys() if key not in alphabet])
 cycle_offsets = "[" + select_single(list(range(20))[1:]) + "]"
-cells = "{basic_keys.alphabet}+" + numerals
+column = "{basic_keys.alphabet}+"
+cells = column + numerals
 
 ctx.keymap(
     {
@@ -119,6 +131,7 @@ ctx.keymap(
         # keyboard shortcut mappings
         "(select range | selrang)" + cells + cells: select_cells,
         "select column": Key("ctrl+space"),
+        "select column " + column: select_column,
         "select row": Key("shift+space"),
         "select all": Key("cmd+a"),
         "undo": Key("cmd+z"),
