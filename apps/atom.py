@@ -223,6 +223,13 @@ def code_snippet_naked(m):
     press("tab")
 
 
+@utils.preserve_clipboard
+def duplicate(m):
+    press("cmd-x")
+    press("cmd-v")
+    press("cmd-v")
+
+
 keymap = {
     "sprinkle" + optional_numerals: jump_to_bol,
     # 'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
@@ -231,7 +238,7 @@ keymap = {
     "smear" + optional_numerals: jump_to_eol_and(jump_to_nearly_end_of_line),
     "trundle": toggle_comments,
     "trundle" + numerals: jump_to_bol_and(toggle_comments),
-    "jolt": Key("cmd-x cmd-v cmd-v"),
+    "jolt": duplicate,
     "snipline" + optional_numerals: jump_to_bol_and(snipline),
     "cut line" + optional_numerals: cut_line,
     "paste line" + optional_numerals: paste_line,
