@@ -329,6 +329,8 @@ keymap = {
     "remove project": command("tree view remove project folder"),
     # blacken
     "blacken": command("atom black blacken"),
+    # reflow
+    "reflow": Key("cmd-alt-q"),
 }
 
 ctx.keymap(keymap)
