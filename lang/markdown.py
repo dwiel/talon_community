@@ -23,6 +23,10 @@ def markdown_complete(m):
 def markdown_incomplete(m):
     if len(m._words) > 2:
         jump_to_bol(m)
+    else:
+        # lefty
+        press("cmd-left")
+
     press("right")
     press("right")
     press("right")
