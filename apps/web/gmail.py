@@ -28,5 +28,16 @@ def send_to_page(string=None):
                 press(character)
     return function
 
+def compose(m):
+    page_mode()
+
 ctx = Context("gmail", func=lambda app, win: win.title.endswith("- Gmail"))
-ctx.keymap({"inbox": send_to_page("gi")})
+ctx.keymap(
+    {
+        "inbox": send_to_page("gi"),
+        "help" : key('shift-?'),
+        "search mail" : Key('/')
+        "compose" : Key('c'),
+        "compose new tab" : Key('d'),      
+    }
+)
