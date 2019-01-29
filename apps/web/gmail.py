@@ -20,12 +20,19 @@ def page_mode_context():
     yield
     normal_mode()
 
-def send_to_page(string=None):
+def send_string_to_page(string=None):
     def function(m):
         with page_mode_context():
             time.sleep(0.3)
             for character in string:
                 press(character)
+    return function
+
+def send_key_to_page(key=None):
+    def function(m):
+        with page_mode_context():
+            time.sleep(0.3)
+            press(key)
     return function
 
 def compose(m):
@@ -34,10 +41,10 @@ def compose(m):
 ctx = Context("gmail", func=lambda app, win: win.title.endswith("- Gmail"))
 ctx.keymap(
     {
-        "inbox": send_to_page("gi"),
-        "help" : key('shift-?'),
-        "search mail" : Key('/')
-        "compose" : Key('c'),
-        "compose new tab" : Key('d'),      
+        "inbox": send_string_to_page("gi"),
+        "help" : send_key_to_page('shift-?'),
+        "search mail" : send_key_to_page('/')
+        "compose" : send_key_to_page('c'),
+        "compose new tab" : send_key_to_page('d'),      
     }
 )
