@@ -165,21 +165,5 @@ ctx.keymap(
         "open move to" : send_key_to_page('v'),
         "open label as" : send_key_to_page('l'),
         "open keyboard shortcut help" : send_key_to_page('?'),
-
-
-
-
-
-sasabrihya
-salma
-
-
-
-
-
-
-
-
-
     }
 )
