@@ -12,6 +12,10 @@ Notes:
 
 - At the moment, it does not disable the microphone in Dragon so if the
   microphone is awake, you must put it to sleep by saying "Go to sleep".
+- There is a bug in Talon which means the microphone will not be re-enabled if
+  you release the modifier keys before the main key in TRIGGER_KEY
+  https://github.com/talonvoice/talon/issues/83 (this comment was added on
+  Feburary 5, 2019)
 '''
 
 from talon import tap
