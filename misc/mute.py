@@ -1,3 +1,19 @@
+'''
+This script provides a quick way for disabling and re-enabling Talon.
+
+The intended use cases include:
+
+- Someone starts talking to you and you want to quickly disable the microphone
+  to prevent random commands from being run
+- You are working with someone, and so are switching between talking to them
+  and dictating talon commands (e.g. by pair programming on your computer).
+
+Notes:
+
+- At the moment, it does not disable the microphone in Dragon so if the
+  microphone is awake, you must put it to sleep by saying "Go to sleep".
+'''
+
 from talon import tap
 from talon_plugins import speech
 from talon import voice
