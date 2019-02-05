@@ -10,6 +10,9 @@ The intended use cases include:
 
 Notes:
 
+- Due to this script using the same mechanism to disable the microphone as the
+  misc/speech_toggle.py script, you can press and release the TRIGGER_KEY to
+  enable the microphone rather than saying "Talon wake".
 - At the moment, it does not disable the microphone in Dragon so if the
   microphone is awake, you must put it to sleep by saying "Go to sleep".
 - There is a bug in Talon which means the microphone will not be re-enabled if
