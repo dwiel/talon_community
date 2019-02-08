@@ -1,3 +1,15 @@
+"""
+line numbers: https://chrome.google.com/webstore/detail/line-numbers-for-google-d/mblodabbcapnkgcfnddfpfaamjckjlik?hl=en
+go to line number
+snipline [#]
+cellrang
+wordneck/wordprev
+crew/trail
+cell crew/cell trail
+cursor center/top/bottom
+`menu share`
+"""
+
 import time
 
 from talon.voice import Context, Key, press
@@ -24,7 +36,7 @@ ctx.keymap(
         "save": Key("cmd+s"),
         "print": Key("cmd+p"),
         "open": Key("cmd+o"),
-        "find": Key("cmd+f"),
+        # "find": Key("cmd+f"),
         "find and replace": Key("cmd+shift+h"),
         "find again": Key("cmd+g"),
         "find (previous | prev)": Key("cmd+shift+g"),
@@ -44,7 +56,7 @@ ctx.keymap(
         "decrease font size": Key("cmd+shift+<"),
         "increase [paragraph] indentation": Key("cmd+]"),
         "decrease [paragraph] indentation": Key("cmd+["),
-        "[apply] normal [text] style": Key("cmd+alt+o"),
+        "[apply] normal (text | style)": Key("cmd+alt+0"),
         "[apply] heading [style] 1": Key("cmd+alt+1"),
         "[apply] heading [style] 2": Key("cmd+alt+2"),
         "[apply] heading [style] 3": Key("cmd+alt+3"),
@@ -99,7 +111,13 @@ ctx.keymap(
             Key("right"),
             Key("enter"),
         ],
-        "rename": [Key("ctrl-`"), lambda m: time.sleep(1), "rename", lambda m: time.sleep(1), Key("enter")],
+        "rename": [
+            Key("ctrl-`"),
+            lambda m: time.sleep(1),
+            "rename",
+            lambda m: time.sleep(1),
+            Key("enter"),
+        ],
         "edit menu": Key("ctrl+alt+e"),
         "view menu": Key("ctrl+alt+v"),
         "insert menu": Key("ctrl+alt+i"),
@@ -111,13 +129,13 @@ ctx.keymap(
         "input tools menu": Key("cmd+alt+shift+k"),
         "toggle input controls": Key("cmd+shift+k"),
         "select all": Key("cmd+a"),
-        "extend selection one character left": Key("shift+left"),
-        "extend selection one character right": Key("shift+right"),
-        "extend selection one line up": Key("shift+up"),
-        "extend selection one line down": Key("shift+down"),
+        "extend selection [one] character left": Key("shift+left"),
+        "extend selection [one] character right": Key("shift+right"),
+        "extend selection [one] line up": Key("shift+up"),
+        "extend selection [one] line down": Key("shift+down"),
         "extend selection to the beginning of the line": Key("shift+home"),
-        "extend selection one paragraph up": Key("alt+shift+up"),
-        "extend selection one paragraph down": Key("alt+shift+down"),
+        "extend selection [one] paragraph up": Key("alt+shift+up"),
+        "extend selection [one] paragraph down": Key("alt+shift+down"),
         "extend selection to the end of the line": Key("shift+end"),
         "extend selection to the beginning of the document": Key("cmd+shift+up"),
         "extend selection to the end of the document": Key("cmd+shift+down"),
@@ -451,5 +469,8 @@ ctx.keymap(
         "return focus to document text": Key("esc"),
         "focus containing webpage": Key("ctrl+shift+esc"),
         "show outline": [Key("ctrl-cmd-a"), Key("ctrl-cmd-h")],
+        # "(search menus | command pallet)": Key('cmd-/'),
+        "snipline": [Key("cmd-left"), Key("cmd-shift-right"), Key("backspace")],
+        "snip bullet": [Key("cmd-left"), Key("cmd-shift-right"), Key("backspace"), Key("backspace"), Key("backspace"), Key("backspace")],
     }
 )
