@@ -1,0 +1,9 @@
+{
+    "home": 1,
+    "slack": 2,
+    "graph": 3,
+    "music": 6,
+    "coach": 7,
+    "voice": 9,
+    "sensors": 0
+}

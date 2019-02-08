@@ -1,19 +1,21 @@
-from talon import ui
+import os
+import json
+
+from talon import ui, resource
 from talon.voice import Key, Context
+
+from .. import utils
 
 single_digits = "0123456789"
 NAMED_DESKTOPS = {digit: int(digit) for digit in single_digits}
-NAMED_DESKTOPS.update({
-    # "gmail": 1,
-    # "slack": 2,
-})
+desktops_filename = utils.local_filename(__file__, "amethyst_named_desktops.json")
+NAMED_DESKTOPS.update(json.load(resource.open(desktops_filename)))
 
 ctx = Context(
     "amethyst", func=lambda app, win: bool(ui.apps(bundle="com.amethyst.Amethyst"))
 )
 
 keymap = {
-    # 'desk <dgndictation>': desk,
     "window next screen": Key("ctrl-alt-shift-l"),
     "window (previous|prev) screen": Key("ctrl-alt-shift-h"),
     "window next": Key("alt-shift-j"),
