@@ -2,10 +2,11 @@ import string
 import urllib.parse
 import time
 
+from talon import ui
 from talon.voice import Context, Key, Str, press
 from talon import ctrl, clip
 
-from ...utils import select_single, numerals, delay, preserve_clipboard
+from ...utils import select_single, numerals, delay, copy_selected, paste_text
 from ...misc.basic_keys import get_keys, alphabet
 from ...misc import basic_keys
 
@@ -15,35 +16,34 @@ ctx = Context(
     or "- Google Sheets -" in win.title,
 )
 
+# def get_url():
+#     # TODO: retrieve url in a more direct way
+#     press("cmd-l")
+#     time.sleep(0.25)
+#     copy_selected()
 
-@preserve_clipboard
 def get_url():
-    # TODO: retrieve url in a more direct way
-    press("cmd-l")
-    time.sleep(0.25)
-    press("cmd-c")
-    time.sleep(0.25)
-    return clip.get()
+    win = ui.active_window()
+    return win.children.find(AXTitle='Address and search bar')[0].AXValue
 
 
-@preserve_clipboard
 def set_url(url):
     # update the address bar with the updated URL
-    clip.set(url)
-    time.sleep(0.25)
-    press("cmd-v")
+    paste_text(url)
 
     # navigate to new URL
     press("enter")
 
 
 def update_selected_cell(column, row):
+    press("cmd-l")
     url = get_url()
     updated_url = update_query_parameters(url, {"range": "%s%s" % (column, row)})
     set_url(updated_url)
 
 
 def update_selected_cells(column, row, dest_column, dest_row):
+    press("cmd-l")
     url = get_url()
     updated_url = update_query_parameters(
         url, {"range": "%s%s:%s%s" % (column, row, dest_column, dest_row)}
@@ -107,6 +107,11 @@ def select_column(m):
     update_selected_cells(column, "", column, "")
 
 
+def select_row(m):
+    row = "".join(map(str, m._words[2:]))
+    update_selected_cells("", row, "", row)
+
+
 ## key can only be a single word for now
 # TODO: load this from a json file
 region_map = {
@@ -133,10 +138,11 @@ ctx.keymap(
         "select column": Key("ctrl+space"),
         "select column " + column: select_column,
         "select row": Key("shift+space"),
+        "select row " + numerals: select_row,
         "select all": Key("cmd+a"),
         "undo": Key("cmd+z"),
         "redo": Key("cmd+y"),
-        "find": Key("cmd+f"),
+        # "find": Key("cmd+f"),
         "find and replace": Key("cmd+shift+h"),
         "fill range": Key("cmd+enter"),
         "fill down": Key("cmd+d"),
@@ -147,7 +153,7 @@ ctx.keymap(
         "copy": Key("cmd+c"),
         "cut": Key("cmd+x"),
         "paste": Key("cmd+v"),
-        "paste values only": Key("cmd+shift+v"),
+        "(paste values only | paste without formatting)": Key("cmd+shift+v"),
         "show common keyboard shortcuts": Key("cmd+/"),
         "compact controls": Key("ctrl+shift+f"),
         "input tools (on | off)": Key("cmd+shift+k"),
