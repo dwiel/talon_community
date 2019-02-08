@@ -1,4 +1,5 @@
 import time
+import re
 
 from talon.voice import Key, press, Str, Context, Rule
 from ..utils import (
@@ -230,6 +231,34 @@ def duplicate(m):
     press("cmd-v")
 
 
+def replace_spaces_with_tabs(line):
+    return line.replace("    ", "\t")
+
+
+def replace_left_of_equals_with_return(m):
+    """
+    replace a line containing: a = b
+    with                     : return b
+    # TODO: create decorator: modify_current_line
+    """
+    # select line
+    press("cmd-l")
+
+    line = utils.copy_selected()
+    if "=" not in line:
+        return
+
+    m = re.search("(\s+).*=(.*)", line)
+    print(m.group(1))
+    print(m.group(2))
+    # line = 'return' + line[line.find('=')+1:]
+    line = m.group(1) + "return" + m.group(2) + "\n"
+    print(line)
+
+    utils.paste_text(line)
+    press("up")
+
+
 keymap = {
     "sprinkle" + optional_numerals: jump_to_bol,
     # 'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
@@ -331,6 +360,7 @@ keymap = {
     "blacken": command("atom black blacken"),
     # reflow
     "reflow": Key("cmd-alt-q"),
+    "replace [left of] equals [with] return": replace_left_of_equals_with_return,
 }
 
 ctx.keymap(keymap)
