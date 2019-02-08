@@ -168,7 +168,7 @@ keymap = {
 }
 
 for action in ('get', 'delete', 'describe'):
-    for object in ('nodes', 'jobs', 'pods', 'namespaces', ''):
+    for object in ('nodes', 'jobs', 'pods', 'namespaces', 'services', ''):
         if object:
             object = object + ' '
         command = f'{KUBERNETES_PREFIX} {action} {object}'
