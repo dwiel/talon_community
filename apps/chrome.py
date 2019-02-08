@@ -10,6 +10,11 @@ from talon.voice import Context, Key, Str, press
 context = Context("GoogleChrome", bundle="com.google.Chrome")
 
 
+def get_url(win):
+    return tuple(win.children.find(AXTitle='Address and search bar'))[0].AXValue
+    # win.children.find(AXTitle='Address and search bar')[0].AXValue
+
+
 def open_focus_devtools(m):
     press("cmd-shift-c")
 
@@ -69,8 +74,8 @@ context.keymap(
     {
         "(address bar | focus address | focus url | url)": focus_address_bar,
         "copy url": Key("escape y y"),
-        "back[ward]": back,
-        "forward": forward,
+        "go back": back,
+        "go forward": forward,
         "reload": Key("cmd-r"),
         "hard reload": Key("cmd-shift-r"),
         "new tab": Key("cmd-t"),
@@ -106,5 +111,11 @@ context.keymap(
         "mendeley": Key("cmd-shift-m"),
         # TODO: this should probably bem specific to the page
         "submit": Key("cmd-enter"),
+        # zotero
+        "zotero": Key('cmd-shift-z'),
+        # rearrange tabs: https://chrome.google.com/webstore/detail/rearrange-tabs/ccnnhhnmpoffieppjjkhdakcoejcpbga
+        "move tab left": Key('ctrl-shift-left'),
+        "move tab right": Key('ctrl-shift-right'),
+        "move tab left way": Key('ctrl-shift-down'),
     }
 )
