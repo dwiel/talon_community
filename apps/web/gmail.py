@@ -12,7 +12,8 @@ def normal_mode():
 def page_mode():
     normal_mode()
     # insert ignore mode
-    press("ctrl-alt-escape")
+    # press("ctrl-alt-escape")
+    press('i')
 
 @contextlib.contextmanager
 def page_mode_context():
