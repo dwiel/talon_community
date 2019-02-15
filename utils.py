@@ -13,7 +13,6 @@ from .bundle_groups import TERMINAL_BUNDLES, FILETYPE_SENSITIVE_BUNDLES
 VIM_IDENTIFIER = "(Vim)"
 
 TERMINAL_BUNDLES = ("com.apple.Terminal", "com.googlecode.iterm2")
-VIM_IDENTIFIER = "(Vim)"
 
 mapping = json.load(open(os.path.join(os.path.dirname(__file__), "replace_words.json")))
 mappings = collections.defaultdict(dict)
