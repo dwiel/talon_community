@@ -3,8 +3,15 @@ import time
 from talon.voice import Context, Key, press
 from talon import clip
 from .. import utils
+from ..utils import is_in_bundles
+from ..bundle_groups import BROWSER_BUNDLES
 
-ctx = Context("emoji")
+EMOJI_BUNDLES = (
+    "com.tinyspeck.slackmacgap",
+#    *BROWSER_BUNDLES,
+)
+
+ctx = Context("emoji",func=is_in_bundles(EMOJI_BUNDLES))
 
 emojis = {
     "thumbs up": ":+1:",

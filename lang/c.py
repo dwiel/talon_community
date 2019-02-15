@@ -1,8 +1,10 @@
 from talon.voice import Context, Key
 
-from ..utils import text
+from ..utils import is_filetype
 
-ctx = Context("c")
+FILETYPES=(".c",)
+
+ctx = Context("c", func=is_filetype(FILETYPES))
 
 ctx.keymap({
     "tip pent 64": "int64_t ",
