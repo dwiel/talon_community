@@ -1,12 +1,11 @@
 from talon.voice import Context, Key
 
+from ..utils import is_filetype
 
-def python(app, win):
-    return win.doc.endswith(".py")
+FILETYPES=(".py",)
 
-
-# ctx = Context("python", func=python)
-ctx = Context("python")
+ctx = Context("python", func=is_filetype(FILETYPES))
+# ctx = Context("python")
 
 ctx.keymap(
     {
@@ -16,7 +15,6 @@ ctx.keymap(
         "dot pipe": ".py",
     }
 )
-
 
 # TODO: defined function
 # TODO: defined class

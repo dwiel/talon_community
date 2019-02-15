@@ -41,11 +41,11 @@ def compose(m):
 ctx = Context("gmail", func=lambda app, win: win.title.endswith("- Gmail"))
 ctx.keymap(
     {
-        # Comompose and Chat Commands
+        # Compose and Chat Commands
         "inbox": send_string_to_page("gi"),
         "help" : send_key_to_page('shift-?'),
-        "search mail" : send_key_to_page('/')
-        "compose new tab" : send_key_to_page('d'),   
+        "search mail" : send_key_to_page('/'),
+        "compose new tab" : send_key_to_page('d'),
         "previous message" : send_key_to_page('p'),
         "next message" : send_key_to_page('n'),
         "focus main window" : send_key_to_page('shift-escape'),
@@ -80,7 +80,7 @@ ctx.keymap(
         "align left" : send_key_to_page('ctrl-shift-l'),
         "align center" : send_key_to_page('ctrl-shift-e'),
         "align right" : send_key_to_page('ctrl-shift-r'),
-        "remove formatting" : send_key_to_page('ctrl-\'),
+        "remove formatting" : send_key_to_page('ctrl-\\'),
         "previous font" : send_key_to_page('cmd-shift-5'),
         "next font" : send_key_to_page('cmd-shift-6'),
         "decrease text size" : send_key_to_page('cmd-shift--'),
@@ -96,7 +96,7 @@ ctx.keymap(
         "align left" : send_key_to_page('cmd-shift-l'),
         "align center" : send_key_to_page('cmd-shift-e'),
         "align right" : send_key_to_page('cmd-shift-r'),
-        "remove formatting" : send_key_to_page('cmd-\'),
+        "remove formatting" : send_key_to_page('cmd-\\'),
         # Actions
         "focus toolbar" : send_key_to_page(','),
         "select conversation" : send_key_to_page('x'),

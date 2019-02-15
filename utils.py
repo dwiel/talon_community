@@ -8,9 +8,11 @@ from time import sleep
 import json
 import os
 
+from .bundle_groups import TERMINAL_BUNDLES, FILETYPE_SENSITIVE_BUNDLES
+
+VIM_IDENTIFIER = "(Vim)"
 
 TERMINAL_BUNDLES = ("com.apple.Terminal", "com.googlecode.iterm2")
-VIM_IDENTIFIER = "(Vim)"
 
 mapping = json.load(open(os.path.join(os.path.dirname(__file__), "replace_words.json")))
 mappings = collections.defaultdict(dict)
@@ -273,8 +275,11 @@ def repeat_function(numberOfWordsBeforeNumber, keyCode, delay=0):
 def delay(amount=0.1):
     return lambda _: sleep(amount)
 
+def is_in_bundles(bundles):
+    return lambda app, win: any(b in app.bundle for b in bundles)
+
 def is_vim(app, win):
-    if any(t in app.bundle for t in TERMINAL_BUNDLES):
+    if is_in_bundles(TERMINAL_BUNDLES)(app, win):
         if VIM_IDENTIFIER in win.title:
             return True
     return False
@@ -282,3 +287,13 @@ def is_vim(app, win):
 def is_not_vim(app, win):
     return not is_vim(app, win)
 
+def is_filetype(extensions=()):
+    def matcher(app, win):
+        if is_in_bundles(FILETYPE_SENSITIVE_BUNDLES)(app, win):
+            if any(ext in win.title for ext in extensions):
+                return True
+            else:
+                return False
+        return True
+
+    return matcher

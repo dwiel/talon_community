@@ -2,12 +2,12 @@ from talon.voice import Word, Key, Context, Str, press
 from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 import string
 
-from ..utils import numerals, parse_words, text
+from ..utils import numerals, parse_words, text, is_in_bundles
+from ..bundle_groups import TERMINAL_BUNDLES
 
 # TODO: move application specific commands into their own files: apt-get, etc
 
-terminals = ("com.apple.Terminal", "com.googlecode.iterm2")
-ctx = Context("terminal", func=lambda app, win: any(t in app.bundle for t in terminals))
+ctx = Context("terminal", func=is_in_bundles(TERMINAL_BUNDLES))
 
 mapping = {"semicolon": ";", r"new-line": "\n", r"new-paragraph": "\n\n"}
 

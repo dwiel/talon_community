@@ -1,7 +1,7 @@
 from talon.voice import Context, Key
 from ..misc.switcher import switch_app
 
-ctx = Context("outlook")
+ctx = Context("outlook", bundle="com.microsoft.Outlook")
 
 ctx.keymap(
     {
