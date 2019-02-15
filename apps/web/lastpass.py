@@ -1,9 +1,11 @@
 from talon.voice import Context, Key
+from ...utils import is_in_bundles
+from ...bundle_groups import BROWSER_BUNDLES
 
 
 context = Context(
     "lastpass",
-    func=lambda app, win: app.bundle in ["com.google.Chrome", "org.mozilla.firefox"],
+    func=is_in_bundles(BROWSER_BUNDLES),
 )
 
 context.keymap(

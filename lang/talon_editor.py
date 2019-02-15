@@ -1,9 +1,11 @@
 from talon.voice import Context, Key, Str
 from ..misc import basic_keys
-from ..utils import parse_words, text
+from ..utils import parse_words, text, is_filetype
 import string
 
-ctx = Context("talon_editor")
+FILETYPES=(".py",)
+
+ctx = Context("talon_editor", func=is_filetype(FILETYPES))
 
 
 def key(m):
