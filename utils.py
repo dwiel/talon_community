@@ -12,6 +12,9 @@ from .bundle_groups import TERMINAL_BUNDLES, FILETYPE_SENSITIVE_BUNDLES
 
 VIM_IDENTIFIER = "(Vim)"
 
+TERMINAL_BUNDLES = ("com.apple.Terminal", "com.googlecode.iterm2")
+VIM_IDENTIFIER = "(Vim)"
+
 mapping = json.load(open(os.path.join(os.path.dirname(__file__), "replace_words.json")))
 mappings = collections.defaultdict(dict)
 for k, v in mapping.items():
@@ -290,7 +293,8 @@ def is_filetype(extensions=()):
         if is_in_bundles(FILETYPE_SENSITIVE_BUNDLES)(app, win):
             if any(ext in win.title for ext in extensions):
                 return True
-        return False
+            else:
+                 return False
+        return True
 
     return matcher
-
