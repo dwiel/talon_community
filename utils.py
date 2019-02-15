@@ -294,7 +294,7 @@ def is_filetype(extensions=()):
             if any(ext in win.title for ext in extensions):
                 return True
             else:
-                 return False
+                return False
         return True
 
     return matcher
