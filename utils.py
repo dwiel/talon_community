@@ -9,6 +9,9 @@ import json
 import os
 
 
+TERMINAL_BUNDLES = ("com.apple.Terminal", "com.googlecode.iterm2")
+VIM_IDENTIFIER = "(Vim)"
+
 mapping = json.load(open(os.path.join(os.path.dirname(__file__), "replace_words.json")))
 mappings = collections.defaultdict(dict)
 for k, v in mapping.items():
@@ -233,15 +236,6 @@ def optional(options):
     return " (" + " | ".join(sorted(map(str, options))) + ")*"
 
 
-numeral_map = dict((str(n), n) for n in range(0, 20))
-for n in [20, 30, 40, 50, 60, 70, 80, 90]:
-    numeral_map[str(n)] = n
-numeral_map["oh"] = 0  # synonym for zero
-
-numerals = " (" + " | ".join(sorted(numeral_map.keys())) + ")+"
-optional_numerals = " (" + " | ".join(sorted(numeral_map.keys())) + ")*"
-
-
 def preserve_clipboard(fn):
     def wrapped_function(*args, **kwargs):
         old = clip.get()
@@ -278,3 +272,13 @@ def repeat_function(numberOfWordsBeforeNumber, keyCode, delay=0):
 
 def delay(amount=0.1):
     return lambda _: sleep(amount)
+
+def is_vim(app, win):
+    if any(t in app.bundle for t in TERMINAL_BUNDLES):
+        if VIM_IDENTIFIER in win.title:
+            return True
+    return False
+
+def is_not_vim(app, win):
+    return not is_vim(app, win)
+

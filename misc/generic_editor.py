@@ -5,46 +5,18 @@ import time
 
 import talon.clip as clip
 from talon.voice import Key, press, Str, Context
-from ..utils import parse_words, join_words
+from ..utils import parse_words, join_words, numerals, optional_numerals, is_not_vim, text_to_number
 
-ctx = Context("generic_editor")  # , bundle='com.microsoft.VSCode')
+ctx = Context("generic_editor", func=is_not_vim)
 
-numeral_map = dict((str(n), n) for n in range(0, 20))
-for n in [20, 30, 40, 50, 60, 70, 80, 90]:
-    numeral_map[str(n)] = n
-numeral_map["oh"] = 0  # synonym for zero
-
-numerals = " (" + " | ".join(sorted(numeral_map.keys())) + ")+"
-optional_numerals = " (" + " | ".join(sorted(numeral_map.keys())) + ")*"
-
-
-def text_to_number(words):
-
-    tmp = [str(s).lower() for s in words]
-    words = [parse_word(word) for word in tmp]
-
-    result = 0
-    factor = 1
-    for word in reversed(words):
-        if word not in numerals:
-            raise Exception("not a number: {}".format(word))
-
-        result = result + factor * int(numeral_map[word])
-        factor = 10 * factor
-
-    return result
-
-
-def parse_word(word):
-    word = word.lstrip("\\").split("\\", 1)[0]
-    return word
-
-
-def jump_to_bol(m):
-    line = text_to_number(m)
+def jump_to_bol(words):
+    line = text_to_number(words)
     press("cmd-l")
     Str(str(line))(None)
     press("enter")
+
+def select_line(m):
+    jump_to_bol(m._words[1:])
 
 
 def jump_to_end_of_line():
@@ -79,14 +51,6 @@ def jump_to_eol_and(then):
         then()
 
     return fn
-
-
-def toggle_comments():
-    # works in VSCode with Finnish keyboard layout
-    # press('cmd-shift-7')
-
-    # does not work in VSCode, see https://github.com/talonvoice/talon/issues/3
-    press("cmd-/")
 
 
 def snipline():
@@ -262,26 +226,33 @@ def word_prev(m):
 
 
 ctx.keymap({
-    # 'sprinkle' + optional_numerals: jump_to_bol,
-    # 'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
-    # 'dear' + optional_numerals: jump_to_eol_and(lambda: None),
-    # 'smear' + optional_numerals: jump_to_eol_and(jump_to_nearly_end_of_line),
-    # 'trundle' + optional_numerals: jump_to_bol_and(toggle_comments),
-    # 'jolt': Key('ctrl-a cmd-left shift-down cmd-c down cmd-v' ),		# jsc simplified
-    # 'snipline' + optional_numerals: jump_to_bol_and(snipline),
-    # NB these do not work properly if there is a selection
+    # META
+    "sage": Key("cmd-s"),
+    "dizzle": Key("cmd-z"),
+    "rizzle": Key("cmd-shift-z"),
+
+    # MOTIONS
+    'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
+    'dear' + optional_numerals: jump_to_eol_and(lambda: None),
+    'smear' + optional_numerals: jump_to_eol_and(jump_to_nearly_end_of_line),
+    'sprinkoon' + numerals: jump_to_eol_and(lambda: press('enter')),
+    "shockey": Key("ctrl-a cmd-left enter up"),
+    "shockoon": Key("cmd-right enter"),
+
+    'jolt': Key('ctrl-a cmd-left shift-down cmd-c down cmd-v' ), # duplicate line
+
+    # DELETING
     "snipple": Key("shift-cmd-left delete"),
     "snipper": Key("shift-cmd-right delete"),
     "shackle": Key("cmd-right shift-cmd-left"),
+    'snipline' + optional_numerals: jump_to_bol_and(snipline),
+
+    # SELECTING
+    'sprinkle' + optional_numerals: select_line,
     "crew <dgndictation>": select_text_to_right_of_cursor,
     "trail <dgndictation>": select_text_to_left_of_cursor,
     "shift home": Key("shift-home"),
     "wordneck" + optional_numerals: word_neck,
     "wordprev" + optional_numerals: word_prev,
     "word this": [Key("alt-right"), Key("shift-alt-left")],
-    "shockey": Key("ctrl-a cmd-left enter up"),
-    "shockoon": Key("cmd-right enter"),
-    # 'sprinkoon' + numerals: jump_to_eol_and(lambda: press('enter')),
-    "(indent | shabble)": Key("cmd-["),
-    "(outdent | shabber)": Key("cmd-]"),
 })
