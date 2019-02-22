@@ -5,15 +5,24 @@ import time
 
 import talon.clip as clip
 from talon.voice import Key, press, Str, Context
-from ..utils import parse_words, join_words, numerals, optional_numerals, is_not_vim, text_to_number
+from ..utils import (
+    parse_words,
+    join_words,
+    numerals,
+    optional_numerals,
+    is_not_vim,
+    text_to_number,
+)
 
 ctx = Context("generic_editor", func=is_not_vim)
+
 
 def jump_to_bol(words):
     line = text_to_number(words)
     press("cmd-l")
     Str(str(line))(None)
     press("enter")
+
 
 def select_line(m):
     jump_to_bol(m._words[1:])
@@ -225,34 +234,32 @@ def word_prev(m):
         press("shift-left")
 
 
-ctx.keymap({
-    # META
-    "sage": Key("cmd-s"),
-    "dizzle": Key("cmd-z"),
-    "rizzle": Key("cmd-shift-z"),
-
-    # MOTIONS
-    'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
-    'dear' + optional_numerals: jump_to_eol_and(lambda: None),
-    'smear' + optional_numerals: jump_to_eol_and(jump_to_nearly_end_of_line),
-    'sprinkoon' + numerals: jump_to_eol_and(lambda: press('enter')),
-    "shockey": Key("ctrl-a cmd-left enter up"),
-    "shockoon": Key("cmd-right enter"),
-
-    'jolt': Key('ctrl-a cmd-left shift-down cmd-c down cmd-v' ), # duplicate line
-
-    # DELETING
-    "snipple": Key("shift-cmd-left delete"),
-    "snipper": Key("shift-cmd-right delete"),
-    "shackle": Key("cmd-right shift-cmd-left"),
-    'snipline' + optional_numerals: jump_to_bol_and(snipline),
-
-    # SELECTING
-    'sprinkle' + optional_numerals: select_line,
-    "crew <dgndictation>": select_text_to_right_of_cursor,
-    "trail <dgndictation>": select_text_to_left_of_cursor,
-    "shift home": Key("shift-home"),
-    "wordneck" + optional_numerals: word_neck,
-    "wordprev" + optional_numerals: word_prev,
-    "word this": [Key("alt-right"), Key("shift-alt-left")],
-})
+ctx.keymap(
+    {
+        # META
+        "sage": Key("cmd-s"),
+        "dizzle": Key("cmd-z"),
+        "rizzle": Key("cmd-shift-z"),
+        # MOTIONS
+        "spring" + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
+        "dear" + optional_numerals: jump_to_eol_and(lambda: None),
+        "smear" + optional_numerals: jump_to_eol_and(jump_to_nearly_end_of_line),
+        # 'sprinkoon' + numerals: jump_to_eol_and(lambda: press('enter')),
+        "shockey": Key("ctrl-a cmd-left enter up"),
+        "shockoon": Key("cmd-right enter"),
+        "jolt": Key("ctrl-a cmd-left shift-down cmd-c down cmd-v"),  # duplicate line
+        # DELETING
+        "snipple": Key("shift-cmd-left delete"),
+        "snipper": Key("shift-cmd-right delete"),
+        "shackle": Key("cmd-right shift-cmd-left"),
+        "snipline" + optional_numerals: jump_to_bol_and(snipline),
+        # SELECTING
+        "sprinkle" + optional_numerals: select_line,
+        "crew <dgndictation>": select_text_to_right_of_cursor,
+        "trail <dgndictation>": select_text_to_left_of_cursor,
+        "shift home": Key("shift-home"),
+        "wordneck" + optional_numerals: word_neck,
+        "wordprev" + optional_numerals: word_prev,
+        "word this": [Key("alt-right"), Key("shift-alt-left")],
+    }
+)
