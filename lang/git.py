@@ -42,6 +42,7 @@ ctx.keymap({
     "jet add [<dgndictation>]": ["git add ", text],
     "jet add partial [<dgndictation>]": ["git add -p ", text],
     "jet branch": "git branch",
+    "git branch set up stream to [<dgndictation>]": ["git branch --set-upstream-to=", text],
     "jet branch delete [<dgndictation>]": ["git branch -D ", text],
     "jet branch all [<dgndictation>]": ["git branch -a ", text],
     "jet clone [<dgndictation>]": ["git clone ", text],

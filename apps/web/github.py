@@ -307,7 +307,7 @@ ctx_issues_pull_lists.keymap(
 
 ctx_issues_pull.keymap(
     {
-        "[request] (reviewer | review)": request_reviewer,
+        "(request | assign) (reviewer | review)": request_reviewer,
         "[set] milestone": set_milestone,
         "[apply] label": apply_label,
         "assign": set_assignee,

@@ -112,6 +112,7 @@ shrink_map = {
     "develop": "dev",
     "developer": "dev",
     "development": "dev",
+    "dictionary": "dict",
     "directory": "dir",
     "divider": "div",
     "document": "doc",
@@ -169,6 +170,7 @@ shrink_map = {
     "utility": "util",
     "value": "val",
     "variable": "var",
+    "velocity": "vel",
     # months,
     "january": "jan",
     "february": "feb",
@@ -181,7 +183,6 @@ shrink_map = {
     "october": "oct",
     "november": "nov",
     "december": "dec",
-    "dictionary": "dict",
 }
 
 ctx.keymap({"shrink" + alternatives(shrink_map.keys()): shrink_word})

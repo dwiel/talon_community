@@ -8,6 +8,9 @@ UI_EVENTS = False
 def listener(topic, m):
     if topic == "cmd" and m["cmd"]["cmd"] == "g.load" and m["success"] == True:
         print("[grammar reloaded]")
+    elif topic == "cmd" and m["cmd"]['cmd'] == 'g.listset' and 'list' in m['cmd']:
+        m['cmd']['items'] = len(m['cmd']['items'])
+        print('here', topic, m)
     else:
         if CRAZY:
             print(topic, m)

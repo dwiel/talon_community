@@ -12,6 +12,17 @@
     "ro": "row",
     "bites": "bytes",
 
+    "sub-": "sub",
+
+    "aunt": "ant",
+
+    "a cell around her": "accelerometer",
+    "a celeron matter": "accelerometer",
+    "a celeron iter": "accelerometer",
+    "a seller almond or": "accelerometer",
+    "a celeron that are": "accelerometer",
+    "robot assist": "roboticist",
+
     "yamel": "yaml",
     "semicolon": ";",
     "new-line": "\n",
@@ -133,5 +144,7 @@
     "ron": "run",
     "thorpe": "\t",
     "tharp": "\t",
-    "if not none": "if not None"
+    "if not none": "if not None",
+
+    "shayna": "shaina"
 }

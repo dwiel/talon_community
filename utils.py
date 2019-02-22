@@ -20,9 +20,11 @@ for k, v in mapping.items():
 punctuation = set(".,-!?")
 
 
-def parse_word(word, force_lowercase=True):
-    word = str(word).lstrip("\\").split("\\", 1)[0]
+def local_filename(file, name):
+    return os.path.join(os.path.dirname(os.path.realpath(file)), name)
 
+
+def parse_word(word, force_lowercase=True):
     if force_lowercase:
         word = word.lower()
     word = mapping.get(word, word)
@@ -50,6 +52,10 @@ def replace_words(words, mapping, count):
     return new_words
 
 
+def remove_dragon_junk(word):
+    return str(word).lstrip("\\").split("\\", 1)[0]
+
+
 def parse_words(m, natural=False):
     if isinstance(m, list):
         words = m
@@ -59,10 +65,12 @@ def parse_words(m, natural=False):
         return []
 
     # split compound words like "pro forma" into two words.
+    words = list(map(remove_dragon_junk, words))
     words = sum([word.split(" ") for word in words], [])
     words = list(map(lambda current_word: parse_word(current_word, not natural), words))
     words = replace_words(words, mappings[2], 2)
     words = replace_words(words, mappings[3], 3)
+    words = replace_words(words, mappings[4], 4)
     return words
 
 
@@ -247,11 +255,20 @@ def preserve_clipboard(fn):
     return wrapped_function
 
 
-@preserve_clipboard
+# @preserve_clipboard
 def paste_text(text):
-    clip.set(text)
-    sleep(0.1)
-    press('cmd-v')
+    with clip.revert():
+        clip.set(text)
+        # sleep(0.1)
+        press("cmd-v")
+        sleep(0.1)
+
+
+@preserve_clipboard
+def copy_selected():
+    press("cmd-c")
+    sleep(0.25)
+    return clip.get()
 
 
 # The. following function is used to be able to repeat commands by following it by one or several numbers, e.g.:
