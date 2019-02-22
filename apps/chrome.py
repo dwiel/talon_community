@@ -11,7 +11,7 @@ context = Context("GoogleChrome", bundle="com.google.Chrome")
 
 
 def get_url(win):
-    return tuple(win.children.find(AXTitle='Address and search bar'))[0].AXValue
+    return tuple(win.children.find(AXTitle="Address and search bar"))[0].AXValue
     # win.children.find(AXTitle='Address and search bar')[0].AXValue
 
 
@@ -109,13 +109,13 @@ context.keymap(
         "paste": Key("cmd-v"),
         "paste same style": Key("cmd-alt-shift-v"),
         "mendeley": Key("cmd-shift-m"),
-        # TODO: this should probably bem specific to the page
+        # TODO: this should probably be specific to the page
         "submit": Key("cmd-enter"),
         # zotero
-        "zotero": Key('cmd-shift-z'),
+        "zotero": Key("cmd-shift-z"),
         # rearrange tabs: https://chrome.google.com/webstore/detail/rearrange-tabs/ccnnhhnmpoffieppjjkhdakcoejcpbga
-        "move tab left": Key('ctrl-shift-left'),
-        "move tab right": Key('ctrl-shift-right'),
-        "move tab left way": Key('ctrl-shift-down'),
+        "move tab left": Key("ctrl-shift-left"),
+        "move tab right": Key("ctrl-shift-right"),
+        "move tab left way": Key("ctrl-shift-down"),
     }
 )
