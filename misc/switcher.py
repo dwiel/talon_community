@@ -6,7 +6,7 @@ import os
 running = {}
 launch = {}
 
-def switch_app(m, name=None):
+def switch_app(m=None, name=None):
     if name is None:
         name = str(m['switcher.running'][0])
 
