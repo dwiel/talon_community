@@ -17,12 +17,13 @@ alternate_keys = {
 
     # voicecode alternates
     'tarp': 'tab',
-    'crimp': 'left',
+    '(crimp | lloyd )': 'left',
     'chris': 'right',
     'jeep': 'up',
-    'doom': 'down',
+    '(down | dune | doom)': 'down',
     'junk': 'backspace',
     'shock': 'enter',
+    'scrap': 'delete',
 }
 symbols = {
     # NOTE:  This should only contain symbols that do not require any modifier
@@ -30,7 +31,7 @@ symbols = {
     # require modifiers (e.g. ``"caret": "^"`) should belong in
     # ``text/symbol.py``.
     'back tick': '`', 'tick': '`',
-    'comma': ',',
+    ',': ',',
     'dot': '.', 'period': '.',
     'semi': ';', 'semicolon': ';',
     'quote': "'",

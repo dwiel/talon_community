@@ -1,73 +1,34 @@
 # https://github.com/JonathanNickerson/talon_voice_user_scripts
-# TODO tidy this file
 
 import time
 
 import talon.clip as clip
 from talon.voice import Key, press, Str, Context
-from ..utils import (
-    parse_words,
-    join_words,
-    numerals,
-    optional_numerals,
-    is_not_vim,
-    text_to_number,
-)
+from ..utils import parse_words, join_words, numeral_map, is_not_vim, text_to_number
 
 ctx = Context("generic_editor", func=is_not_vim)
-
-
-def jump_to_bol(words):
-    line = text_to_number(words)
-    press("cmd-l")
-    Str(str(line))(None)
-    press("enter")
+numeral_list = sorted(numeral_map.keys())
+ctx.set_list("n", numeral_list)
 
 
 def select_line(m):
-    jump_to_bol(m._words[1:])
+    for idx, word in enumerate(m._words):
+        if word in numeral_list:
+            line_no = text_to_number(m._words[idx:])
+            press("cmd-l")
+            Str(str(line_no))(None)
+            time.sleep(0.1)
+            press("enter")
+            break
 
 
-def jump_to_end_of_line():
-    press("cmd-right")
-
-
-def jump_to_beginning_of_text():
-    press("cmd-left")
-
-
-def jump_to_nearly_end_of_line():
-    press("left")
-
-
-def jump_to_bol_and(then):
+def select_line_and_press(keys=()):
     def fn(m):
-        if len(m._words) > 1:
-            jump_to_bol(m._words[1:])
-        else:
-            press("ctrl-a")
-            press("cmd-left")
-        then()
+        select_line(m)
+        for key in keys:
+            press(key)
 
     return fn
-
-
-def jump_to_eol_and(then):
-    def fn(m):
-        if len(m._words) > 1:
-            jump_to_bol(m._words[1:])
-        press("cmd-right")
-        then()
-
-    return fn
-
-
-def snipline():
-    press("shift-cmd-right")
-    press("delete")
-    press("delete")
-    press("ctrl-a")
-    press("cmd-left")
 
 
 def find_next(m):
@@ -134,10 +95,15 @@ alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789_"
 
 
 def word_neck(m):
-    # print(m)
-    word_index = text_to_number(m._words[1:])
-    if not word_index:
-        word_index = 1
+    word_index = 1
+    for idx, word in enumerate(m._words):
+        if word in numeral_list:
+            word_index = text_to_number(m._words[idx:])
+            break
+
+    if word_index is 1:
+        press("alt-shift-right")
+        return
 
     old = clip.get()
     press("shift-right", wait=2000)
@@ -187,9 +153,15 @@ def word_neck(m):
 
 
 def word_prev(m):
-    word_index = text_to_number(m._words[1:])
-    if not word_index:
-        word_index = 1
+    word_index = 1
+    for idx, word in enumerate(m._words):
+        if word in numeral_list:
+            word_index = text_to_number(m._words[idx:])
+            break
+
+    if word_index is 1:
+        press("alt-shift-left")
+        return
 
     old = clip.get()
     press("shift-right", wait=2000)
@@ -236,30 +208,57 @@ def word_prev(m):
 
 ctx.keymap(
     {
-        # META
-        "sage": Key("cmd-s"),
-        "dizzle": Key("cmd-z"),
-        "rizzle": Key("cmd-shift-z"),
+        # meta
+        "(save it | sage)": Key("cmd-s"),
+        "(undo it | dizzle)": Key("cmd-z"),
+        "(redo it | rizzle)": Key("cmd-shift-z"),
+        # clipboard
+        "([clip] cut | snatch)": Key("cmd-x"),
+        "([clip] copy | stoosh)": Key("cmd-c"),
+        "([clip] paste | spark)": Key("cmd-v"),
         # MOTIONS
-        "spring" + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
-        "dear" + optional_numerals: jump_to_eol_and(lambda: None),
-        "smear" + optional_numerals: jump_to_eol_and(jump_to_nearly_end_of_line),
-        # 'sprinkoon' + numerals: jump_to_eol_and(lambda: press('enter')),
-        "shockey": Key("ctrl-a cmd-left enter up"),
-        "shockoon": Key("cmd-right enter"),
-        "jolt": Key("ctrl-a cmd-left shift-down cmd-c down cmd-v"),  # duplicate line
-        # DELETING
-        "snipple": Key("shift-cmd-left delete"),
-        "snipper": Key("shift-cmd-right delete"),
-        "shackle": Key("cmd-right shift-cmd-left"),
-        "snipline" + optional_numerals: jump_to_bol_and(snipline),
-        # SELECTING
-        "sprinkle" + optional_numerals: select_line,
-        "crew <dgndictation>": select_text_to_right_of_cursor,
-        "trail <dgndictation>": select_text_to_left_of_cursor,
-        "shift home": Key("shift-home"),
-        "wordneck" + optional_numerals: word_neck,
-        "wordprev" + optional_numerals: word_prev,
-        "word this": [Key("alt-right"), Key("shift-alt-left")],
+        "(go word left | fame | peg)": Key("alt-left"),
+        "(go word right | fish | fran)": Key("alt-right"),
+        "(go after line end | derek)": Key("cmd-right space"),
+        "(go line start | spring | lefty) {generic_editor.n}*": select_line_and_press(
+            ("ctrl-a", "cmd-left")
+        ),
+        "(go line end | dear | ricky) {generic_editor.n}*": select_line_and_press(
+            ("cmd-right")
+        ),
+        "(go before line end | smear) {generic_editor.n}*": select_line_and_press(
+            ("cmd-right", "left")
+        ),
+        "(new line below | sprinkoon | slap) {generic_editor.n}*": select_line_and_press(
+            ("cmd-right", "enter")
+        ),
+        "(new line above | shockey | shocker)": Key("ctrl-a cmd-left enter up"),
+        "(duplicate line | jolt)": Key("ctrl-a cmd-left shift-down cmd-c down cmd-v"),
+        # deleting
+        "(delete around this | slurp)": Key("backspace delete"),
+        "(delete line left | snip left | snipple)": Key("shift-cmd-left delete"),
+        "(delete line right | snip right | snipper)": Key("shift-cmd-right delete"),
+        "(delete [this] line | snipline ) {generic_editor.n}*": select_line_and_press(
+            ("shift-cmd-right", "delete", "delete", "ctrl-a", "cmd-left")
+        ),
+        "(delete word left | trough | steffi | carmex)": Key("alt-backspace"),
+        "(delete word right | stippy | kite)": Key("alt-delete"),
+        "(delete [this] word | slurpies)": Key("alt-backspace alt-delete"),
+        # selecting
+        "(select [this] line | sprinkle) {generic_editor.n}*": select_line,
+        "(select find right | crew) <dgndictation>": select_text_to_right_of_cursor,
+        "(select find left | trail) <dgndictation>": select_text_to_left_of_cursor,
+        "(select this word | word this)": [Key("alt-right"), Key("shift-alt-left")],
+        "(select this line | sprinkle | shackle)": Key("cmd-right shift-cmd-left"),
+        "(select above | shift home)": Key("shift-home"),
+        "(select up | shreep)": Key("shift-up"),
+        "(select down | shroom)": Key("shift-down"),
+        "(select all | olly | ali)": Key("cmd-a"),
+        "(select left | shrim | shlicky)": Key("shift-left"),
+        "(select right | shrish | shricky)": Key("shift-right"),
+        "(select word below | wordneck | scram {generic_editor.n}*)": word_neck,
+        "(select word above | wordpreev | scrish {generic_editor.n}*)": word_prev,
+        "(select line left | lecksy)": Key("cmd-shift-left"),
+        "(select line right | ricksy)": Key("cmd-shift-right"),
     }
 )
