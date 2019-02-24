@@ -2,7 +2,7 @@ from talon.voice import Context, Key, press
 import talon.clip as clip
 from ..utils import text, parse_words, parse_words_as_integer, insert, word, join_words, is_filetype
 
-FILETYPES=(".html",)
+FILETYPES=(".html", ".jsx")
 
 context = Context('html', func=is_filetype(FILETYPES))
 
