@@ -11,26 +11,6 @@ numeral_list = sorted(numeral_map.keys())
 ctx.set_list("n", numeral_list)
 
 
-def select_line(m):
-    for idx, word in enumerate(m._words):
-        if word in numeral_list:
-            line_no = text_to_number(m._words[idx:])
-            press("cmd-l")
-            Str(str(line_no))(None)
-            time.sleep(0.1)
-            press("enter")
-            break
-
-
-def select_line_and_press(keys=()):
-    def fn(m):
-        select_line(m)
-        for key in keys:
-            press(key)
-
-    return fn
-
-
 def find_next(m):
     press("cmd-f")
     Str(str(m.dgndictation[0]._words[0]))(None)
@@ -213,43 +193,34 @@ ctx.keymap(
         "(undo it | dizzle)": Key("cmd-z"),
         "(redo it | rizzle)": Key("cmd-shift-z"),
         # clipboard
-        "([clip] cut | snatch)": Key("cmd-x"),
-        "([clip] copy | stoosh)": Key("cmd-c"),
-        "([clip] paste | spark)": Key("cmd-v"),
+        "(clip cut | snatch)": Key("cmd-x"),
+        "(clip copy | stoosh)": Key("cmd-c"),
+        "(clip paste | spark)": Key("cmd-v"),
         # MOTIONS
         "(go word left | fame | peg)": Key("alt-left"),
         "(go word right | fish | fran)": Key("alt-right"),
-        "(go after line end | derek)": Key("cmd-right space"),
-        "(go line start | spring | lefty) {generic_editor.n}*": select_line_and_press(
-            ("ctrl-a", "cmd-left")
-        ),
-        "(go line end | dear | ricky) {generic_editor.n}*": select_line_and_press(
-            ("cmd-right")
-        ),
-        "(go before line end | smear) {generic_editor.n}*": select_line_and_press(
-            ("cmd-right", "left")
-        ),
-        "(new line below | sprinkoon | slap) {generic_editor.n}*": select_line_and_press(
-            ("cmd-right", "enter")
-        ),
-        "(new line above | shockey | shocker)": Key("ctrl-a cmd-left enter up"),
+        "(go line after end | derek)": Key("cmd-right space"),
+        "(go line start | lefty)": Key("ctrl-a cmd-left"),
+        "(go line end | ricky)": Key("cmd-right"),
+        "(go line before end | smear)": Key("cmd-right left"),
+        "(new line below | slap)": Key("cmd-right enter"),
+        "(new line above | shocker)": Key("ctrl-a cmd-left enter up"),
         "(duplicate line | jolt)": Key("ctrl-a cmd-left shift-down cmd-c down cmd-v"),
         # deleting
         "(delete around this | slurp)": Key("backspace delete"),
         "(delete line left | snip left | snipple)": Key("shift-cmd-left delete"),
         "(delete line right | snip right | snipper)": Key("shift-cmd-right delete"),
-        "(delete [this] line | snipline ) {generic_editor.n}*": select_line_and_press(
-            ("shift-cmd-right", "delete", "delete", "ctrl-a", "cmd-left")
+        "(delete [this] line | snipline )": Key(
+            "shift-cmd-right delete delete ctrl-a cmd-left"
         ),
         "(delete word left | trough | steffi | carmex)": Key("alt-backspace"),
         "(delete word right | stippy | kite)": Key("alt-delete"),
         "(delete [this] word | slurpies)": Key("alt-backspace alt-delete"),
         # selecting
-        "(select [this] line | sprinkle) {generic_editor.n}*": select_line,
         "(select find right | crew) <dgndictation>": select_text_to_right_of_cursor,
         "(select find left | trail) <dgndictation>": select_text_to_left_of_cursor,
-        "(select this word | word this)": [Key("alt-right"), Key("shift-alt-left")],
-        "(select this line | sprinkle | shackle)": Key("cmd-right shift-cmd-left"),
+        "(select this word | word this)": Key("alt-right shift-alt-left"),
+        "(select this line | shackle)": Key("cmd-right shift-cmd-left"),
         "(select above | shift home)": Key("shift-home"),
         "(select up | shreep)": Key("shift-up"),
         "(select down | shroom)": Key("shift-down"),

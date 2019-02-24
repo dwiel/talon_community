@@ -1,9 +1,8 @@
 import string
 import collections
-import itertools
 
 from talon import clip
-from talon.voice import Str, Key, press
+from talon.voice import Str, press
 from time import sleep
 import json
 import os
@@ -139,8 +138,9 @@ for n in range(1000, 10001, 1000):
 numeral_map["oh"] = 0  # synonym for zero
 numeral_map["and"] = None  # drop me
 
-numerals = " (" + " | ".join(sorted(numeral_map.keys())) + ")+"
-optional_numerals = " (" + " | ".join(sorted(numeral_map.keys())) + ")*"
+numeral_list = sorted(numeral_map.keys())
+numerals = " (" + " | ".join(numeral_list) + ")+"
+optional_numerals = " (" + " | ".join(numeral_list) + ")*"
 
 
 def text_to_number(words):
@@ -312,3 +312,11 @@ def is_filetype(extensions=()):
         return True
 
     return matcher
+
+def extract_num_from_m(m):
+    # loop identifies numbers in any message
+    number_words = [w for w in m._words if w in numeral_list]
+    if len(number_words) == 0:
+        raise ValueError("No number found")
+    return text_to_number(number_words)
+

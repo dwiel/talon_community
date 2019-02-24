@@ -28,6 +28,7 @@ The implementation of a flexible way to determine context activtion is a work in
 - Some users may need to change the , mapping from `"comma": ","` to `",": ","`.
 - Context names cannot have spaces
 - If your output is missing the odd random letter, try [patching Talon's default delay](https://talonvoice.slack.com/archives/C9MBPTXD4/p1550012706021300)
+- Refactoring is in progress and currently some commands in global contexts clash with others
 
 ## Script-specific notes
 
