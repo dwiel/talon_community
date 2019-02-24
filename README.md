@@ -1,4 +1,5 @@
 # talon_community
+
 A single source of application-specific scripts
 
 Clone a fork of this repository in a directory inside of your `user` directory, such as `community`.
@@ -12,3 +13,25 @@ Clone a fork of this repository in a directory inside of your `user` directory, 
 - use relative imports
 - spaces for indentation
 - follow `ctx = Context()`, `ctx.keymap({})` instead of using a separate dict unless you have a good reason
+
+## Context activation
+
+When adding new commands, try to scope their context as narowly as possible.
+
+The implementation of a flexible way to determine context activtion is a work in progress. For the time being:
+
+- For commands that apply to a number of bundles, use the bundle groups defined in bundle_groups.py
+- For commands that apply to specific file types, use the `is_filetype` helper in utils.py. This helper relies on the file type appearing in the window title. If you wish to use file type specific commands in an application that does not display the file type in the window title, either remove that application's bundle id from the file type sensitive bundles group, or add something that will match the window title to the list of file types for that context.
+
+## Gotchas
+
+- Some users may need to change the , mapping from `"comma": ","` to `",": ","`.
+- Context names cannot have spaces
+- If your output is missing the odd random letter, try [patching Talon's default delay](https://talonvoice.slack.com/archives/C9MBPTXD4/p1550012706021300)
+
+## Script-specific notes
+
+- `speech_toggle.py`: Note the 'dictation mode', which behaves similarly to dragon mode, but keeps Talon in control. It is a workaround for the inability of Dragon in 'dragon mode' to maintain focus on the front most application in some situations.
+- `keeper.py`: The `phrase` command will only preserve literally the first part of the utterance. Anything that might be a command after the first word will be interpreted as such. `keeper` tries to preserve everything.
+
+
