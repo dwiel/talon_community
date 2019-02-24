@@ -87,7 +87,7 @@ def previous_screen(m):
     move_screen(-1)
 
 
-ctx = Context('window_management')
+ctx = Context('window_snap')
 ctx.keymap({
     'snap left':         grid(1, 1, 2, 1),
     'snap right':        grid(2, 1, 2, 1),

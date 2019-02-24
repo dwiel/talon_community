@@ -11,12 +11,6 @@ def focus_address_bar(m=None):
     press("cmd-l")
 
 
-def jump_tab(m):
-    tab_number = parse_words_as_integer(m._words[1:])
-    if tab_number != None and tab_number > 0 and tab_number < 9:
-        press("cmd-%s" % tab_number)
-
-
 # Return focus from the devtools to the page
 def refocus_page(m=None):
     focus_address_bar()
@@ -66,18 +60,10 @@ ctx.keymap(
         "forward": forward,
         "reload": Key("cmd-r"),
         "hard reload": Key("cmd-shift-r"),
-        "new tab": Key("cmd-t"),
-        "close tab": Key("cmd-w"),
-        "(reopen | unclose) tab": Key("cmd-shift-t"),
-        "(next tab | goneck)": Key("cmd-shift-]"),
-        "((last | prevous | preev) tab | gopreev)": Key("cmd-shift-["),
-        "tab (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)": jump_tab,
-        "(end | rightmost) tab": Key("cmd-9"),
-        "marco": Key("cmd-f"),
-        "marneck": Key("cmd-g"),
         "(last | prevous)": Key("cmd-shift-g"),
         "toggle dev tools": Key("cmd-alt-i"),
         "command menu": Key("cmd-shift-p"),
+        "(reopen | unclose) tab": Key("cmd-shift-t"),
         # "next panel": next_panel,
         # "(last | prevous) panel": last_panel,
         # "show application [panel]": lambda m: show_panel("Application"),
@@ -102,7 +88,6 @@ ctx.keymap(
         "submit": Key("cmd-enter"),
         # t
         "switch mode": Key("ctrl-alt-escape"),
-        # last pass
         # tridactyl
         "new personal tab": command_line('tabopen -c personal'),
         "(switch to personal [container] | personal container)": command_line('composite get_current_url | tabopen -c personal'),
