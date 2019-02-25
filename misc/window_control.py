@@ -15,29 +15,29 @@ def jump_tab(m):
 ctx.keymap(
     {
         # tab control
-        "new tab": Key("cmd-t"),
+        "(open | new) tab": Key("cmd-t"),
         "close tab": Key("cmd-w"),
-        "(next tab | goneck)": Key("cmd-shift-]"),
-        "((previous | preev) tab | gopreev)": Key("cmd-shift-["),
-        "tab (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)": jump_tab,
-        "(end | rightmost) tab ": Key("cmd-9"),
+        "([switch] tab (right | next) | goneck)": Key("cmd-shift-]"),
+        "([switch] tab (left | previous | preev) | gopreev)": Key("cmd-shift-["),
+        "[switch] tab (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)": jump_tab,
+        "[switch] tab (end | rightmost)": Key("cmd-9"),
         # zooming
         "zoom in": Key("cmd-="),
         "zoom out": Key("cmd--"),
         "zoom normal": Key("cmd-0"),
         # window control
-        "new window": Key("cmd-n"),
-        "close window": Key("cmd-shift-w"),
-        "(next window | gibby)": Key("cmd-`"),
-        "((previous | preev) window | shibby)": Key("cmd-shift-`"),
-        "(switch space right | next space)": Key("ctrl-right"),
-        "(switch space left | (previous | preev) space)": Key("ctrl-left"),
+        "(open | new) window": Key("cmd-n"),
+        "window close": Key("cmd-shift-w"),
+        "([switch] window (next | right) | gibby)": Key("cmd-`"),
+        "([switch] window (left | previous | preev) | shibby)": Key("cmd-shift-`"),
+        "[switch] space (right | next)": Key("ctrl-right"),
+        "[switch] space (left | previous | preev)": Key("ctrl-left"),
         "(minimise window | curtail)": Key("cmd-m"),
-        "show all windows": Key("cmd-down"),
+        "show app windows": Key("ctrl-down"),
         # application navigation
-        "open launcher": Key("cmd-space"),
-        "(next app | swick)": Key("cmd-tab"),
-        "(previous | preev) app": Key("cmd-shift-tab"),
-        "mission control": lambda m: system("open -a 'Mission Control'"),
+        "[open] launcher": Key("cmd-space"),
+        "([switch] app (next | right) | swick)": Key("cmd-tab"),
+        "[switch] app (left | previous | preev)": Key("cmd-shift-tab"),
+        "[open] mission control": lambda m: system("open -a 'Mission Control'"),
     }
 )
