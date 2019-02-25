@@ -4,10 +4,9 @@ import time
 
 import talon.clip as clip
 from talon.voice import Key, press, Str, Context
-from ..utils import parse_words, join_words, numeral_map, is_not_vim, text_to_number
+from ..utils import parse_words, join_words, is_not_vim, numeral_list, extract_num_from_m
 
 ctx = Context("generic_editor", func=is_not_vim)
-numeral_list = sorted(numeral_map.keys())
 ctx.set_list("n", numeral_list)
 
 
@@ -75,15 +74,7 @@ alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789_"
 
 
 def word_neck(m):
-    word_index = 1
-    for idx, word in enumerate(m._words):
-        if word in numeral_list:
-            word_index = text_to_number(m._words[idx:])
-            break
-
-    if word_index is 1:
-        press("alt-shift-right")
-        return
+    word_index = extract_num_from_m(m)
 
     old = clip.get()
     press("shift-right", wait=2000)
@@ -133,15 +124,7 @@ def word_neck(m):
 
 
 def word_prev(m):
-    word_index = 1
-    for idx, word in enumerate(m._words):
-        if word in numeral_list:
-            word_index = text_to_number(m._words[idx:])
-            break
-
-    if word_index is 1:
-        press("alt-shift-left")
-        return
+    word_index = extract_num_from_m(m)
 
     old = clip.get()
     press("shift-right", wait=2000)
@@ -227,8 +210,10 @@ ctx.keymap(
         "(select all | olly | ali)": Key("cmd-a"),
         "(select left | shrim | shlicky)": Key("shift-left"),
         "(select right | shrish | shricky)": Key("shift-right"),
-        "(select word below | wordneck | scram {generic_editor.n}*)": word_neck,
-        "(select word above | wordpreev | scrish {generic_editor.n}*)": word_prev,
+        "(select word number {generic_editor.n}+ above | wordpreev {generic_editor.n}+)": word_prev,
+        "(select word number {generic_editor.n}+ below | wordneck {generic_editor.n}+)": word_neck,
+        "(select word left | scrish)": Key("alt-shift-left"),
+        "(select word right | scram)": Key("alt-shift-right"),
         "(select line left | lecksy)": Key("cmd-shift-left"),
         "(select line right | ricksy)": Key("cmd-shift-right"),
     }
