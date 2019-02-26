@@ -32,7 +32,7 @@ class AutoFormat:
         if self.caps:
             word = word[0].upper() + word[1:]
 
-        if self.space and word[0] not in punctuation and not "\n" in word:
+        if self.space and word[0] not in punctuation and "\n" not in word:
             insert(" ")
 
         insert(word)

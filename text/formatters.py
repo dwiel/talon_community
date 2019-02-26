@@ -1,8 +1,5 @@
-import os
-
-from talon.voice import Word, Context, Key, Rep, RepPhrase, Str, press
-from talon import ctrl, clip
-from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
+from talon.voice import Word, Context, Str, press
+from talon import clip
 
 from ..utils import (
     parse_word,
@@ -75,8 +72,8 @@ def FormatText(m):
 
     tmp = []
     spaces = True
-    for i, word in enumerate(words):
-        word = parse_word(word).lower()
+    for i, w in enumerate(words):
+        word = parse_word(w).lower()
         for name in reversed(fmt):
             smash, func = formatters[name]
             word = func(i, word, i == len(words) - 1)

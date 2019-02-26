@@ -1,4 +1,4 @@
-from talon.voice import Word, Context, Key, Rep, Str, press
+from talon.voice import Context
 from talon import ui
 import time
 import os
@@ -56,7 +56,7 @@ def update_lists():
             continue
         words = app.name.split(" ")
         for word in words:
-            if word and not word in new:
+            if word and word not in new:
                 new[word] = app.name
         new[app.name] = app.name
     running = new

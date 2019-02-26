@@ -277,7 +277,7 @@ def repeat_function(numberOfWordsBeforeNumber, keyCode, delay=0):
     def repeater(m):
         line_number = parse_words_as_integer(m._words[numberOfWordsBeforeNumber:])
 
-        if line_number == None:
+        if line_number is None:
             line_number = 1
 
         for i in range(0, line_number):

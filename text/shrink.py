@@ -1,16 +1,12 @@
-from talon.voice import Context, Key, Str
-from ..utils import alternatives, parse_word
+from talon.voice import Context, Str
+from ..utils import alternatives
 
 ctx = Context("words")
 
 
-last_word = None
-
-
 def shrink_word(m):
     word = str(m._words[1])
-    if not word in shrink_map:
-        last_word = word
+    if word not in shrink_map:
         raise Exception("%s not in shrink map" % word)
     Str(shrink_map[word])(None)
 

@@ -182,7 +182,7 @@ def jump_tab(m, tab_number=None):
     if tab_number is None:
         tab_number = parse_words_as_integer(m._words[1:])
 
-    if tab_number != None and tab_number > 0 and tab_number < 10:
+    if tab_number is not None and tab_number > 0 and tab_number < 10:
         press("cmd-%s" % tab_number)
 
 
@@ -190,7 +190,7 @@ def close_tab(m, tab_number=None):
     if tab_number is None:
         tab_number = parse_words_as_integer(m._words[2:])
 
-    if tab_number != None and tab_number > 0 and tab_number < 10:
+    if tab_number is not None and tab_number > 0 and tab_number < 10:
         press("cmd-%s" % tab_number)
         press("cmd-w")
 
@@ -248,7 +248,7 @@ def replace_left_of_equals_with_return(m):
     if "=" not in line:
         return
 
-    m = re.search("(\s+).*=(.*)", line)
+    m = re.search(r"(\s+).*=(.*)", line)
     print(m.group(1))
     print(m.group(2))
     # line = 'return' + line[line.find('=')+1:]

@@ -1,6 +1,5 @@
 from talon.voice import Context, talon, Key, Str, press
 from talon.engine import engine
-from ..utils import text_to_number
 
 macro = []
 last_actions = None
@@ -46,7 +45,7 @@ def macro_play(m):
 
     for item in macro:
         for action, rule in item:
-            act = action(rule) or (action, rule)
+            action(rule) or (action, rule)
 
 
 def macro_print(m):

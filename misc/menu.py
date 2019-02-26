@@ -54,7 +54,7 @@ return theListAsString
     for item in items:
         words = item.split(" ")
         for word in words:
-            if word and not word in new:
+            if word and word not in new:
                 new[word] = item
         new[item] = item
     if set(new.keys()) == set(menu_items.keys()):

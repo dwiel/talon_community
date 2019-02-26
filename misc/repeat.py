@@ -13,7 +13,7 @@ def repeat(m):
     #         * Prevent stacking of repetitions upon previous repetitions
     repeat_count = utils.m_to_number(m)
 
-    if repeat_count != None and repeat_count >= 2:
+    if repeat_count is not None and repeat_count >= 2:
         repeater = Rep(repeat_count - 1)
         repeater.ctx = talon
         return repeater(None)

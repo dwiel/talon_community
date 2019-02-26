@@ -7,7 +7,7 @@ UI_EVENTS = False
 
 
 def listener(topic, m):
-    if topic == "cmd" and m["cmd"]["cmd"] == "g.load" and m["success"] == True:
+    if topic == "cmd" and m["cmd"]["cmd"] == "g.load" and m["success"] is True:
         print("[grammar reloaded]")
     elif topic == "cmd" and m["cmd"]["cmd"] == "g.listset" and "list" in m["cmd"]:
         m["cmd"]["items"] = len(m["cmd"]["items"])
@@ -20,7 +20,7 @@ def listener(topic, m):
         elif topic == "phrase" and "words" in m and m["cmd"] != "p.hypothesis":
             try:
                 print(topic, m["phrase"], m["parsed"])
-            except:
+            except KeyError:
                 print(topic, m)
 
 

@@ -1,13 +1,11 @@
 import string
 import urllib.parse
-import time
 
 from talon import ui
-from talon.voice import Context, Key, Str, press
-from talon import ctrl, clip
-
-from ...utils import select_single, numerals, delay, copy_selected, paste_text
-from ...misc.basic_keys import get_keys, alphabet
+from talon.voice import Context, Key, press
+from talon import ctrl
+from ...utils import select_single, numerals, delay, paste_text
+from ...misc.basic_keys import get_keys
 from ...misc import basic_keys
 
 ctx = Context(
@@ -61,7 +59,7 @@ def update_query_parameters(url, parameters):
     url_parts[4] = url_parts[4].replace("%3A", ":")
 
     # some manual modification because urllib insists on putting the fragment identifier after the query parameters, which is not what we want here
-    fragment = url_parts[5]
+    # fragment = url_parts[5]
     query_string = url_parts[4]
     url_parts[4] = ""  #
     url_parts[5] = url_parts[5].split("?")[0]

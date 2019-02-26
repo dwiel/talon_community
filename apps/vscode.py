@@ -7,7 +7,7 @@ context = Context("VSCode", bundle="com.microsoft.VSCode")
 def jump_to_line(m):
     line_number = parse_words_as_integer(m._words[1:])
 
-    if line_number == None:
+    if line_number is None:
         return
 
     # Zeroth line should go to first line
@@ -22,7 +22,7 @@ def jump_to_line(m):
 def jump_tabs(m):
     line_number = parse_words_as_integer(m._words[1:])
 
-    if line_number == None:
+    if line_number is None:
         return
 
     for i in range(0, line_number):

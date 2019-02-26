@@ -66,7 +66,7 @@ def forward(m):
 
 def jump_tab(m):
     tab_number = parse_words_as_integer(m._words[1:])
-    if tab_number != None and tab_number > 0 and tab_number < 9:
+    if tab_number is not None and tab_number > 0 and tab_number < 9:
         press("cmd-%s" % tab_number)
 
 
