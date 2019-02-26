@@ -2,7 +2,7 @@ from talon.voice import Context, Key
 
 from ..utils import is_filetype
 
-FILETYPES=(".py",)
+FILETYPES = (".py",)
 
 ctx = Context("python", func=is_filetype(FILETYPES))
 # ctx = Context("python")

@@ -3,10 +3,7 @@ from ...utils import is_in_bundles
 from ...bundle_groups import BROWSER_BUNDLES
 
 
-context = Context(
-    "lastpass",
-    func=is_in_bundles(BROWSER_BUNDLES),
-)
+context = Context("lastpass", func=is_in_bundles(BROWSER_BUNDLES))
 
 context.keymap(
     {

@@ -1,4 +1,4 @@
-'''
+"""
 This script provides a quick way for disabling and re-enabling Talon.
 
 The intended use cases include:
@@ -19,14 +19,14 @@ Notes:
   you release the modifier keys before the main key in TRIGGER_KEY
   https://github.com/talonvoice/talon/issues/83 (this comment was added on
   Feburary 5, 2019)
-'''
+"""
 
 from talon import tap
 from talon_plugins import speech
 from talon import voice
 
 # Hold this key down to disable talon
-TRIGGER_KEY = 'shift-ctrl-a'
+TRIGGER_KEY = "shift-ctrl-a"
 
 
 def on_key(typ, e):

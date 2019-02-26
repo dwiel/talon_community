@@ -22,9 +22,10 @@ ctx = Context(
 #     time.sleep(0.25)
 #     copy_selected()
 
+
 def get_url():
     win = ui.active_window()
-    return win.children.find(AXTitle='Address and search bar')[0].AXValue
+    return win.children.find(AXTitle="Address and search bar")[0].AXValue
 
 
 def set_url(url):

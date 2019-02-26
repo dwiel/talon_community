@@ -471,6 +471,13 @@ ctx.keymap(
         "show outline": [Key("ctrl-cmd-a"), Key("ctrl-cmd-h")],
         # "(search menus | command pallet)": Key('cmd-/'),
         "snipline": [Key("cmd-left"), Key("cmd-shift-right"), Key("backspace")],
-        "snip bullet": [Key("cmd-left"), Key("cmd-shift-right"), Key("backspace"), Key("backspace"), Key("backspace"), Key("backspace")],
+        "snip bullet": [
+            Key("cmd-left"),
+            Key("cmd-shift-right"),
+            Key("backspace"),
+            Key("backspace"),
+            Key("backspace"),
+            Key("backspace"),
+        ],
     }
 )

@@ -290,8 +290,10 @@ def repeat_function(numberOfWordsBeforeNumber, keyCode, delay=0):
 def delay(amount=0.1):
     return lambda _: sleep(amount)
 
+
 def is_in_bundles(bundles):
     return lambda app, win: any(b in app.bundle for b in bundles)
+
 
 def is_vim(app, win):
     if is_in_bundles(TERMINAL_BUNDLES)(app, win):
@@ -299,8 +301,10 @@ def is_vim(app, win):
             return True
     return False
 
+
 def is_not_vim(app, win):
     return not is_vim(app, win)
+
 
 def is_filetype(extensions=()):
     def matcher(app, win):
@@ -313,10 +317,10 @@ def is_filetype(extensions=()):
 
     return matcher
 
+
 def extract_num_from_m(m):
     # loop identifies numbers in any message
     number_words = [w for w in m._words if w in numeral_list]
     if len(number_words) == 0:
         raise ValueError("No number found")
     return text_to_number(number_words)
-

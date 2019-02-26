@@ -6,9 +6,10 @@ from ..apps.atom import jump_to_bol
 from ..utils import optional_numerals, is_filetype
 
 
-FILETYPES=(".md",)
+FILETYPES = (".md",)
 
 ctx = Context("markdown", func=is_filetype(FILETYPES))
+
 
 def markdown_complete(m):
     if len(m._words) > 2:

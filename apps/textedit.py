@@ -5,6 +5,7 @@ from ..utils import numeral_list, extract_num_from_m
 ctx = Context("textedit", bundle="com.apple.TextEdit")
 ctx.set_list("n", numeral_list)
 
+
 def select_line(m):
     line_no = extract_num_from_m(m)
     press("cmd-l")

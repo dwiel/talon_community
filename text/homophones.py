@@ -94,7 +94,9 @@ table .count {
 </style>
 """
 
-phones_template = css_template + """
+phones_template = (
+    css_template
+    + """
 <div class="contents">
 <h3>homophones</h3>
 <table>
@@ -105,6 +107,7 @@ phones_template = css_template + """
 </table>
 </div>
 """
+)
 
 
 def close_homophones():
@@ -179,9 +182,7 @@ def raise_homophones(m, force_raise=False, is_selection=False):
     webview.render(phones_template, homophones=active_word_list)
     webview.show()
 
-    keymap = {
-        "(cancel | 0)": lambda x: close_homophones(),
-    }
+    keymap = {"(cancel | 0)": lambda x: close_homophones()}
 
     def capitalize(x):
         return x[0].upper() + x[1:]
@@ -200,26 +201,32 @@ def raise_homophones(m, force_raise=False, is_selection=False):
     )
     keymap.update(
         {
-            "(ship | title) %s" % (i + 1): lambda m: make_selection(m, is_selection, capitalize)
+            "(ship | title) %s"
+            % (i + 1): lambda m: make_selection(m, is_selection, capitalize)
             for i in valid_indices
         }
     )
     keymap.update(
         {
-            "(yeller | upper | uppercase) %s" % (i + 1): lambda m: make_selection(m, is_selection, uppercase)
+            "(yeller | upper | uppercase) %s"
+            % (i + 1): lambda m: make_selection(m, is_selection, uppercase)
             for i in valid_indices
         }
     )
     keymap.update(
         {
-            "(lower | lowercase) %s" % (i + 1): lambda m: make_selection(m, is_selection, lowercase)
+            "(lower | lowercase) %s"
+            % (i + 1): lambda m: make_selection(m, is_selection, lowercase)
             for i in valid_indices
         }
     )
     pick_context.keymap(keymap)
     pick_context.load()
 
-help_template = css_template + """
+
+help_template = (
+    css_template
+    + """
 <div class="contents">
 <h3>homophones help</h3>
 <table>
@@ -233,22 +240,29 @@ help_template = css_template + """
 </table>
 </div>
 """
+)
+
 
 def homophones_help(m):
     webview.render(help_template)
     webview.show()
 
-    keymap = {
-        "(cancel | exit)": lambda x: close_homophones(),
-    }
+    keymap = {"(cancel | exit)": lambda x: close_homophones()}
     pick_context.keymap(keymap)
     pick_context.load()
 
-context.keymap({
-    '(phones | homophones) help': homophones_help,
-    'phones {homophones.canonical}': raise_homophones,
-    'phones': lambda m: raise_homophones(m, is_selection=True),
-    'force phones {homophones.canonical}': lambda m: raise_homophones(m, force_raise=True),
-    'force phones': lambda m: raise_homophones(m, force_raise=True, is_selection=True),
-})
-context.set_list('canonical', canonical)
+
+context.keymap(
+    {
+        "(phones | homophones) help": homophones_help,
+        "phones {homophones.canonical}": raise_homophones,
+        "phones": lambda m: raise_homophones(m, is_selection=True),
+        "force phones {homophones.canonical}": lambda m: raise_homophones(
+            m, force_raise=True
+        ),
+        "force phones": lambda m: raise_homophones(
+            m, force_raise=True, is_selection=True
+        ),
+    }
+)
+context.set_list("canonical", canonical)

@@ -1,7 +1,4 @@
-TERMINAL_BUNDLES = (
-    "com.apple.Terminal",
-    "com.googlecode.iterm2",
-)
+TERMINAL_BUNDLES = ("com.apple.Terminal", "com.googlecode.iterm2")
 
 EDITOR_BUNDLES = (
     "com.microsoft.VSCode",
@@ -22,14 +19,10 @@ EDITOR_BUNDLES = (
     "com.google.android.studio",
 )
 
-BROWSER_BUNDLES = (
-    "org.mozilla.firefox",
-    "com.google.Chrome",
-)
+BROWSER_BUNDLES = ("org.mozilla.firefox", "com.google.Chrome")
 
 FILETYPE_SENSITIVE_BUNDLES = (
     # *BROWSER_BUNDLES,
     *EDITOR_BUNDLES,
     *TERMINAL_BUNDLES,
 )
-

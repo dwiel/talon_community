@@ -87,17 +87,19 @@ def previous_screen(m):
     move_screen(-1)
 
 
-ctx = Context('window_snap')
-ctx.keymap({
-    'snap left':         grid(1, 1, 2, 1),
-    'snap right':        grid(2, 1, 2, 1),
-    'snap top':          grid(1, 1, 1, 2),
-    'snap bottom':       grid(1, 2, 1, 2),
-    'snap top left':     grid(1, 1, 2, 2),
-    'snap top right':    grid(2, 1, 2, 2),
-    'snap bottom left':  grid(1, 2, 2, 2),
-    'snap bottom right': grid(2, 2, 2, 2),
-    'snap screen':       grid(1, 1, 1, 1),
-    'snap next':         next_screen,
-    'snap last':         previous_screen,
-})
+ctx = Context("window_snap")
+ctx.keymap(
+    {
+        "snap left": grid(1, 1, 2, 1),
+        "snap right": grid(2, 1, 2, 1),
+        "snap top": grid(1, 1, 1, 2),
+        "snap bottom": grid(1, 2, 1, 2),
+        "snap top left": grid(1, 1, 2, 2),
+        "snap top right": grid(2, 1, 2, 2),
+        "snap bottom left": grid(1, 2, 2, 2),
+        "snap bottom right": grid(2, 2, 2, 2),
+        "snap screen": grid(1, 1, 1, 1),
+        "snap next": next_screen,
+        "snap last": previous_screen,
+    }
+)

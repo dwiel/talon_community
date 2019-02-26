@@ -4,7 +4,13 @@ import time
 
 import talon.clip as clip
 from talon.voice import Key, press, Str, Context
-from ..utils import parse_words, join_words, is_not_vim, numeral_list, extract_num_from_m
+from ..utils import (
+    parse_words,
+    join_words,
+    is_not_vim,
+    numeral_list,
+    extract_num_from_m,
+)
 
 ctx = Context("generic_editor", func=is_not_vim)
 ctx.set_list("n", numeral_list)

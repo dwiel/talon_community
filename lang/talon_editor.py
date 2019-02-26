@@ -3,7 +3,7 @@ from ..misc import basic_keys
 from ..utils import parse_words, text, is_filetype
 import string
 
-FILETYPES=(".py",)
+FILETYPES = (".py",)
 
 ctx = Context("talon_editor", func=is_filetype(FILETYPES))
 
@@ -24,10 +24,12 @@ def format_text(fmt):
     return wrapper
 
 
-ctx.keymap({
-    "key {basic_keys.modifiers}* {basic_keys.keymap}": key,
-    "talon map <dgndictation>": ("'", text, "': ,", Key("left")),
-    "talon map string <dgndictation>": format_text("'{0}': '{0}',"),
-    "dragon dictation": "<dgndictation>",
-    "stir": ["Str()(None)"] + [Key("left")] * 7,
-})
+ctx.keymap(
+    {
+        "key {basic_keys.modifiers}* {basic_keys.keymap}": key,
+        "talon map <dgndictation>": ("'", text, "': ,", Key("left")),
+        "talon map string <dgndictation>": format_text("'{0}': '{0}',"),
+        "dragon dictation": "<dgndictation>",
+        "stir": ["Str()(None)"] + [Key("left")] * 7,
+    }
+)

@@ -7,6 +7,7 @@ ctx = Context("firefox", bundle="org.mozilla.firefox")
 
 # NOTE: run: bind --mode=ignore <Esc> composite unfocus | mode ignore
 
+
 def focus_address_bar(m=None):
     press("cmd-l")
 
@@ -43,14 +44,16 @@ def command_line(command):
         press("escape", wait=2000)
         press("escape", wait=2000)
         time.sleep(0.1)
-        press(':', wait=2000)
+        press(":", wait=2000)
         time.sleep(0.1)
         for character in command:
             press(character, wait=2000)
         # Str(command)(None)
         time.sleep(0.25)
         press("enter", wait=2000)
+
     return function
+
 
 ctx.keymap(
     {
@@ -89,9 +92,10 @@ ctx.keymap(
         # t
         "switch mode": Key("ctrl-alt-escape"),
         # tridactyl
-        "new personal tab": command_line('tabopen -c personal'),
-        "(switch to personal [container] | personal container)": command_line('composite get_current_url | tabopen -c personal'),
-
-        "show add-ons": Key('cmd-shift-a'),
+        "new personal tab": command_line("tabopen -c personal"),
+        "(switch to personal [container] | personal container)": command_line(
+            "composite get_current_url | tabopen -c personal"
+        ),
+        "show add-ons": Key("cmd-shift-a"),
     }
 )

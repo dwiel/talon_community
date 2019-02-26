@@ -8,10 +8,10 @@ from ..bundle_groups import BROWSER_BUNDLES
 
 EMOJI_BUNDLES = (
     "com.tinyspeck.slackmacgap",
-#    *BROWSER_BUNDLES,
+    #    *BROWSER_BUNDLES,
 )
 
-ctx = Context("emoji",func=is_in_bundles(EMOJI_BUNDLES))
+ctx = Context("emoji", func=is_in_bundles(EMOJI_BUNDLES))
 
 emojis = {
     "thumbs up": ":+1:",

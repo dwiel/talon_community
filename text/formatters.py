@@ -4,12 +4,20 @@ from talon.voice import Word, Context, Key, Rep, RepPhrase, Str, press
 from talon import ctrl, clip
 from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 
-from ..utils import parse_word, surround, text, sentence_text, word, parse_words, spoken_text
+from ..utils import (
+    parse_word,
+    surround,
+    text,
+    sentence_text,
+    word,
+    parse_words,
+    spoken_text,
+)
 
 
 def title_case_capitalize_word(index, word, _):
-    words_to_keep_lowercase = (
-        'a,an,the,at,by,for,in,of,on,to,up,and,as,but,or,nor'.split(',')
+    words_to_keep_lowercase = "a,an,the,at,by,for,in,of,on,to,up,and,as,but,or,nor".split(
+        ","
     )
     if index == 0 or word not in words_to_keep_lowercase:
         return word.capitalize()
@@ -84,11 +92,13 @@ def FormatText(m):
 
 ctx = Context("formatters")
 
-ctx.keymap({
-    "phrase <dgndictation> [over]": text,
-    "sentence <dgndictation> [over]": sentence_text,
-    "comma <dgndictation> [over]": [", ", spoken_text],
-    "period <dgndictation> [over]": [". ", sentence_text],
-    "word <dgnwords>": word,
-    "(%s)+ <dgndictation> [over]" % (" | ".join(formatters)): FormatText,
-})
+ctx.keymap(
+    {
+        "phrase <dgndictation> [over]": text,
+        "sentence <dgndictation> [over]": sentence_text,
+        "comma <dgndictation> [over]": [", ", spoken_text],
+        "period <dgndictation> [over]": [". ", sentence_text],
+        "word <dgnwords>": word,
+        "(%s)+ <dgndictation> [over]" % (" | ".join(formatters)): FormatText,
+    }
+)
