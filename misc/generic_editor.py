@@ -185,16 +185,20 @@ ctx.keymap(
         "(clip cut | snatch)": Key("cmd-x"),
         "(clip copy | stoosh)": Key("cmd-c"),
         "(clip paste | spark)": Key("cmd-v"),
-        # MOTIONS
+        # motions
         "(go word left | fame | peg)": Key("alt-left"),
         "(go word right | fish | fran)": Key("alt-right"),
         "(go line after end | derek)": Key("cmd-right space"),
         "(go line start | lefty)": Key("ctrl-a cmd-left"),
         "(go line end | ricky)": Key("cmd-right"),
         "(go line before end | smear)": Key("cmd-right left"),
-        "(new line below | slap)": Key("cmd-right enter"),
-        "(new line above | shocker)": Key("ctrl-a cmd-left enter up"),
-        "(duplicate line | jolt)": Key("ctrl-a cmd-left shift-down cmd-c down cmd-v"),
+        # insertions
+        "([insert] line break | sky turn)": Key("shift-enter"),
+        "([insert] new line below | slap)": Key("cmd-right enter"),
+        "([insert] new line above | shocker)": Key("ctrl-a cmd-left enter up"),
+        "([insert] duplicate line | jolt)": Key(
+            "ctrl-a cmd-left shift-down cmd-c down cmd-v"
+        ),
         # deleting
         "(delete around this | slurp)": Key("backspace delete"),
         "(delete line left | snip left | snipple)": Key("shift-cmd-left delete"),

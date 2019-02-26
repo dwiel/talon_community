@@ -12,6 +12,7 @@ alternate_keys = {
     "delete": "backspace",
     "forward delete": "delete",
     # voicecode alternates
+    "skoosh": "space",
     "tarp": "tab",
     "crimp": "left",
     "lloyd": "left",
@@ -40,6 +41,7 @@ symbols = {
     "semi": ";",
     "semicolon": ";",
     "quote": "'",
+    "quatchet": "'",
     "L square": "[",
     "left square": "[",
     "left square bracket": "[",
@@ -53,6 +55,7 @@ symbols = {
     "minus": "-",
     "dash": "-",
     "equals": "=",
+    "smaqual": "=",
 }
 modifiers = {
     "command": "cmd",
