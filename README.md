@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/dwiel/talon_community/tree/master.svg?style=svg)](https://circleci.com/gh/dwiel/talon_community/tree/master)
+
 # talon_community
 
 A single source of application-specific scripts
@@ -6,11 +8,13 @@ Clone a fork of this repository in a directory inside of your `user` directory, 
 
 ## Installation
 
-Run in the project root
+Rename `setup.py.bak` to `.py`. Run in the project root:
 
 ```
 python3 setup.py install
 ```
+
+Rename `setup.py` to `.bak` (to ensure it is not loaded by Talon).
 
 ## General Guidelines
 
