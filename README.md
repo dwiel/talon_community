@@ -8,13 +8,13 @@ Clone a fork of this repository in a directory inside of your `user` directory, 
 
 ## Installation
 
-Rename `setup.py.bak` to `.py`. Run in the project root:
+If you wish to develop on these scripts, run in the project root:
 
 ```
 python3 setup.py install
 ```
 
-Rename `setup.py` to `.bak` (to ensure it is not loaded by Talon).
+To install linters and formatter
 
 ## General Guidelines
 
