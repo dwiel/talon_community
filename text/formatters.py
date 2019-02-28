@@ -22,44 +22,65 @@ def title_case_capitalize_word(index, word, _):
         return word
 
 
-formatter_definitions = {
-    "(cram | camel)": (True, lambda i, word, _: word if i == 0 else word.capitalize()),
-    "pathway": (True, lambda i, word, _: word if i == 0 else "/" + word),
-    "dotsway": (True, lambda i, word, _: word if i == 0 else "." + word),
-    "yellsmash": (True, lambda i, word, _: word.upper()),
-    "(allcaps | yeller)": (False, lambda i, word, _: word.upper()),
-    "yellsnik": (
-        True,
-        lambda i, word, _: word.upper() if i == 0 else "_" + word.upper(),
-    ),
-    "dollcram": (True, lambda i, word, _: "$" + word if i == 0 else word.capitalize()),
-    "champ": (True, lambda i, word, _: word.capitalize() if i == 0 else " " + word),
-    "lowcram": (True, lambda i, word, _: "@" + word if i == 0 else word.capitalize()),
-    "(criff | criffed)": (True, lambda i, word, _: word.capitalize()),
-    "tridal": (False, lambda i, word, _: word.capitalize()),
-    "snake": (True, lambda i, word, _: word if i == 0 else "_" + word),
-    "dotsnik": (True, lambda i, word, _: "." + word if i == 0 else "_" + word),
-    "smash": (True, lambda i, word, _: word),
-    "(spine | kebab)": (True, lambda i, word, _: word if i == 0 else "-" + word),
-    "title": (False, title_case_capitalize_word),
-    "(dubstring | coif)": (False, surround('"')),
-    "(string | posh)": (False, surround("'")),
-    "(tics | glitch)": (False, surround("`")),
-    "padded": (False, surround(" ")),
-    "dunder": (False, surround("__")),
-    "angler": (False, surround("<", ">")),
-    "(list in it | index | brax)": (False, surround("[", "]")),
-    "(dickt in it | kirk)": (False, surround("{", "}")),
-    "precoif": (False, surround('("', '")')),
-    "(prex | args)": (False, surround("(", ")")),
-}
-
 # Handle ( x | y ) syntax in formatter definitions. Do not be deceived, this is not real
 # Talon syntax
-formatters = {}
-for k, v in formatter_definitions.items():
-    for cmd in k.strip("() ").split("|"):
-        formatters[cmd.strip()] = v
+def normalise_keys(dict):
+    normalised_dict = {}
+    for k, v in dict.items():
+        for cmd in k.strip("() ").split("|"):
+            normalised_dict[cmd.strip()] = v
+    return normalised_dict
+
+
+formatters = normalise_keys(
+    {
+        "(cram | camel)": (
+            True,
+            lambda i, word, _: word if i == 0 else word.capitalize(),
+        ),
+        "pathway": (True, lambda i, word, _: word if i == 0 else "/" + word),
+        "dotsway": (True, lambda i, word, _: word if i == 0 else "." + word),
+        "yellsmash": (True, lambda i, word, _: word.upper()),
+        "(allcaps | yeller)": (False, lambda i, word, _: word.upper()),
+        "yellsnik": (
+            True,
+            lambda i, word, _: word.upper() if i == 0 else "_" + word.upper(),
+        ),
+        "dollcram": (
+            True,
+            lambda i, word, _: "$" + word if i == 0 else word.capitalize(),
+        ),
+        "champ": (True, lambda i, word, _: word.capitalize() if i == 0 else " " + word),
+        "lowcram": (
+            True,
+            lambda i, word, _: "@" + word if i == 0 else word.capitalize(),
+        ),
+        "(criff | criffed)": (True, lambda i, word, _: word.capitalize()),
+        "tridal": (False, lambda i, word, _: word.capitalize()),
+        "snake": (True, lambda i, word, _: word if i == 0 else "_" + word),
+        "dotsnik": (True, lambda i, word, _: "." + word if i == 0 else "_" + word),
+        "smash": (True, lambda i, word, _: word),
+        "(spine | kebab)": (True, lambda i, word, _: word if i == 0 else "-" + word),
+        "title": (False, title_case_capitalize_word),
+    }
+)
+
+surrounders = normalise_keys(
+    {
+        "(dubstring | coif)": (False, surround('"')),
+        "(string | posh)": (False, surround("'")),
+        "(tics | glitch)": (False, surround("`")),
+        "padded": (False, surround(" ")),
+        "dunder": (False, surround("__")),
+        "angler": (False, surround("<", ">")),
+        "(index | brax)": (False, surround("[", "]")),
+        "(kirk)": (False, surround("{", "}")),
+        "precoif": (False, surround('("', '")')),
+        "(prex | args)": (False, surround("(", ")")),
+    }
+)
+
+formatters.update(surrounders)
 
 
 def FormatText(m):
@@ -106,6 +127,6 @@ ctx.keymap(
         "word <dgnwords>": word,
         "(%s)+ [<dgndictation>] [over]" % (" | ".join(formatters)): FormatText,
         # to match surrounder command + another command (i.e. not dgndictation)
-        "(%s)+" % (" | ".join(formatters)): FormatText,
+        "(%s)+" % (" | ".join(surrounders)): FormatText,
     }
 )
