@@ -47,4 +47,10 @@ The implementation of a flexible way to determine context activtion is a work in
 - `speech_toggle.py`: Note the 'dictation mode', which behaves similarly to dragon mode, but keeps Talon in control. It is a workaround for the inability of Dragon in 'dragon mode' to maintain focus on the front most application in some situations.
 - `keeper.py`: The `phrase` command will only preserve literally the first part of the utterance. Anything that might be a command after the first word will be interpreted as such. `keeper` tries to preserve everything.
 
+## Rules of precedence
+
+The following have been empirically determined, could change at any point, and are not to be relied on:
+
+ - Given two definitions for "foo" in the same keymap, the second will be used.
+ - Given definitions for, 1. "foo <dgngdictation>"  2. "foo" and 3. "bar", saying "foo bar" will trigger (2) then (3) and saying "foo baz" will trigger (1).
 

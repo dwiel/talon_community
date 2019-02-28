@@ -44,16 +44,6 @@ ctx.keymap(
         "[(op | logical | bitwise)] (right shift | shift right) equals": " >>= ",
         "[op] (arrow | lambo)": " -> ",
         "[op] fat (arrow | lambo)": " => ",
-        # Inside matchables
-        "(list in it | index | brax)": ["[]", Key("left")],
-        "angler": ["<>", Key("left")],
-        "coif": ['""', Key("left")],
-        "glitch": ["``", Key("left")],
-        "(dickt in it | kirk)": ["{}", Key("left")],
-        "precoif": ['("")', Key("left"), Key("left")],
-        "(prex | args)": ["()", Key("left")],
-        "posh": ["''", Key("left")],
-        "dunder": ["____", Key("left left")],
         # Completed matchables
         "(empty parens | call)": "()",
         "empty (dict | object)": "{}",

@@ -108,12 +108,12 @@ def word(m):
         pass
 
 
-def surround(by):
+def surround(left_surrounder, right_surrounder=None):
     def func(i, word, last):
         if i == 0:
-            word = by + word
+            word = left_surrounder + word
         if last:
-            word += by
+            word += right_surrounder or left_surrounder
         return word
 
     return func
