@@ -327,3 +327,13 @@ def extract_num_from_m(m, default=ValueError):
         else:
             return default
     return text_to_number(number_words)
+
+
+# Handle ( x | y ) syntax in dicts used to create keymaps indirectly.
+# Do not be deceived, this is not real Talon syntax and [] wont work
+def normalise_keys(dict):
+    normalised_dict = {}
+    for k, v in dict.items():
+        for cmd in k.strip("() ").split("|"):
+            normalised_dict[cmd.strip()] = v
+    return normalised_dict

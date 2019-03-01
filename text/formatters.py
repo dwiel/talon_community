@@ -2,6 +2,7 @@ from talon.voice import Word, Context, Str, press
 from talon import clip
 
 from ..utils import (
+    normalise_keys,
     parse_word,
     surround,
     text,
@@ -20,16 +21,6 @@ def title_case_capitalize_word(index, word, _):
         return word.capitalize()
     else:
         return word
-
-
-# Handle ( x | y ) syntax in formatter definitions. Do not be deceived, this is not real
-# Talon syntax
-def normalise_keys(dict):
-    normalised_dict = {}
-    for k, v in dict.items():
-        for cmd in k.strip("() ").split("|"):
-            normalised_dict[cmd.strip()] = v
-    return normalised_dict
 
 
 formatters = normalise_keys(
@@ -74,7 +65,7 @@ surrounders = normalise_keys(
         "dunder": (False, surround("__")),
         "angler": (False, surround("<", ">")),
         "(index | brax)": (False, surround("[", "]")),
-        "(kirk)": (False, surround("{", "}")),
+        "kirk": (False, surround("{", "}")),
         "precoif": (False, surround('("', '")')),
         "(prex | args)": (False, surround("(", ")")),
     }

@@ -1,28 +1,25 @@
 import time
 
-from talon.voice import Context, Key, press
+from talon.voice import Context, press
 from talon import clip
 from .. import utils
-from ..utils import is_in_bundles
+from ..utils import is_in_bundles, normalise_keys
 from ..bundle_groups import BROWSER_BUNDLES
 
-EMOJI_BUNDLES = (
-    "com.tinyspeck.slackmacgap",
-    #    *BROWSER_BUNDLES,
-)
+EMOJI_BUNDLES = ("com.tinyspeck.slackmacgap", *BROWSER_BUNDLES)
 
 ctx = Context("emoji", func=is_in_bundles(EMOJI_BUNDLES))
 
-emojis = {
-    "thumbs up": ":+1:",
-    "okay hand": ":ok_hand:",
-    "okay": ":ok_hand:",
-    "check": ":white_check_mark:",
-    "crossed fingers": ":crossed_fingers:",
-    "fingers": ":crossed_fingers:",
-    "fingers": ":crossed_fingers:",
-    "pray": ":pray:",
-}
+emojis = normalise_keys(
+    {
+        "thumbs up": ":+1:",
+        "(okay hand | okay)": ":ok_hand:",
+        "check": ":white_check_mark:",
+        "crossed fingers": ":crossed_fingers:",
+        "fingers": ":crossed_fingers:",
+        "pray": ":pray:",
+    }
+)
 
 
 def react(m):
