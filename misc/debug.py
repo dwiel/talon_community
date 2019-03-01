@@ -1,27 +1,73 @@
 from talon.engine import engine
-from talon import ui, voice
+from talon import ui, voice, tap
+import os
 
-CRAZY = False
-VERBOSE = True
-UI_EVENTS = False
+SAMPLE_DRAGON_KEY = "f1"
+
+# Note: order of handlers matters
+APPLIED_HANDLERS = (
+    "include_unhandled",
+    "hide_grammar",
+    "abbr_listset",
+    "ignore_successful_listset",
+    "ignore_ui_event",
+    "simplify_parse_result",
+    "ignore_successful_reload",
+)
+
+handlers = {
+    "include_unhandled": {"format": lambda m: m},
+    "hide_grammar": {
+        "topic": ("cmd",),
+        "event": ("g.load",),
+        "cond": lambda m: m["success"] is True,
+        "format": lambda m: m["cmd"].update({"data": "*hidden*"}) or m,
+    },
+    "abbr_listset": {
+        "topic": ("cmd",),
+        "event": ("g.listset",),
+        "cond": lambda m: "list" in m["cmd"],
+        "format": lambda m: m["cmd"].update({"items": len(m["cmd"]["items"])}) or m,
+    },
+    "ignore_successful_listset": {
+        "topic": ("cmd",),
+        "event": ("g.listset",),
+        "cond": lambda m: m["success"] is True,
+        "format": lambda m: "",
+    },
+    "ignore_successful_reload": {
+        "topic": ("cmd",),
+        "event": ("g.unload", "g.load", "g.listset", "g.update"),
+        "cond": lambda m: m["success"] is True,
+        "format": lambda m: "",
+    },
+    "ignore_ui_event": {"topic": ("ui",), "format": lambda m: ""},
+    "simplify_parse_result": {
+        "topic": ("phrase",),
+        "event": ("p.end",),
+        "cond": lambda m: "words" in m,
+        "format": lambda m: str(m["phrase"]) + " " + str(m["parsed"]),
+    },
+}
 
 
 def listener(topic, m):
-    if topic == "cmd" and m["cmd"]["cmd"] == "g.load" and m["success"] is True:
-        print("[grammar reloaded]")
-    elif topic == "cmd" and m["cmd"]["cmd"] == "g.listset" and "list" in m["cmd"]:
-        m["cmd"]["items"] = len(m["cmd"]["items"])
-        print("here", topic, m)
-    else:
-        if CRAZY:
-            print(topic, m)
-        elif VERBOSE and topic == "cmd" and m["cmd"]["cmd"] != "g.listset":
-            print(topic, m)
-        elif topic == "phrase" and "words" in m and m["cmd"] != "p.hypothesis":
-            try:
-                print(topic, m["phrase"], m["parsed"])
-            except KeyError:
-                print(topic, m)
+    try:
+        event = (
+            m.get("cmd") if isinstance(m.get("cmd"), str) else m.get("cmd").get("cmd")
+        )
+    except (KeyError, AttributeError):
+        event = m["event"]
+
+    new_m = None
+    for handler in APPLIED_HANDLERS:
+        h = handlers[handler]
+        if "topic" not in h or topic in h["topic"]:
+            if "event" not in h or event in h["event"]:
+                if "cond" not in h or h["cond"](m):
+                    new_m = h["format"](m)
+    if new_m:
+        print(topic, new_m)
 
 
 engine.register("", listener)
@@ -29,22 +75,15 @@ engine.register("", listener)
 
 def ui_event(event, arg):
     contexts = [ctx.name for ctx in voice.talon.active]
-    print(
-        "ui_event",
+    listener(
+        "ui",
         {"event": event, "arg": arg, "active": ui.active_app(), "contexts": contexts},
-    )
+    ),
 
 
-if UI_EVENTS:
-    ui.register("", ui_event)
-
-
-from talon import tap, ui
-import os
-
-
+# sample dragon process to send to aegis for debugging
 def on_key(typ, e):
-    if e == "f1":
+    if e == SAMPLE_DRAGON_KEY:
         dragon = ui.apps(bundle="com.dragon.dictate")[0]
         os.popen(f"sample {dragon.pid} > /tmp/dragon.sample")
         e.block()
