@@ -2,7 +2,7 @@ import string
 import collections
 
 from talon import clip
-from talon.voice import Str, press
+from talon.voice import Context, Str, press
 from time import sleep
 import json
 import os
@@ -102,7 +102,9 @@ def sentence_text(m):
 
 def word(m):
     try:
-        text = join_words(list(map(parse_word, m.dgnwords[0]._words)))
+        text = join_words(
+            map(lambda w: parse_word(remove_dragon_junk(w)), m.dgnwords[0]._words)
+        )
         insert(text.lower())
     except AttributeError:
         pass
@@ -139,8 +141,11 @@ numeral_map["oh"] = 0  # synonym for zero
 numeral_map["and"] = None  # drop me
 
 numeral_list = sorted(numeral_map.keys())
-numerals = " (" + " | ".join(numeral_list) + ")+"
-optional_numerals = " (" + " | ".join(numeral_list) + ")*"
+
+ctx = Context("n")
+ctx.set_list("all", numeral_list)
+numerals = " {n.all}+"
+optional_numerals = " {n.all}*"
 
 
 def text_to_number(words):
@@ -150,8 +155,7 @@ def text_to_number(words):
     result = 0
     factor = 1
     for word in reversed(words):
-        print("{} {} {}".format(result, factor, word))
-        if word not in numerals:
+        if word not in numeral_list:
             raise Exception("not a number: {}".format(words))
 
         number = numeral_map[word]
@@ -164,23 +168,6 @@ def text_to_number(words):
         else:
             result = result + factor * number
         factor = (10 ** len(str(number))) * factor
-    return result
-
-
-def m_to_number(m):
-    tmp = [str(s).lower() for s in m._words]
-    words = [parse_word(word) for word in tmp]
-
-    result = 0
-    factor = 1
-    for word in reversed(words):
-        if word not in numerals:
-            # we consumed all the numbers and only the command name is left.
-            break
-
-        result = result + factor * int(numeral_map[word])
-        factor = 10 * factor
-
     return result
 
 

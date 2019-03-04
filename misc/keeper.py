@@ -1,5 +1,5 @@
-from talon.voice import Context, Key, engine, Str
-from ..utils import parse_word
+from talon.voice import Context, engine
+from ..utils import remove_dragon_junk, insert, join_words
 
 ctx = Context("keeper")
 
@@ -8,8 +8,7 @@ def keeper(j):
     if j["cmd"] == "p.end" and j["grammar"] == "talon":
         phrase = j["phrase"]
         if phrase and phrase[0] == "keeper":
-            # Str(' '.join(map(parse_word, phrase[1:])))(None)
-            Str(" ".join(phrase[1:]))(None)
+            insert(join_words(map(remove_dragon_junk, phrase[1:])))(None)
             j["cmd"] = "p.skip"
 
 

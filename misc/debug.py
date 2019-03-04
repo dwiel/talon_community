@@ -6,7 +6,7 @@ SAMPLE_DRAGON_KEY = "f1"
 
 # Note: order of handlers matters
 APPLIED_HANDLERS = (
-    "include_unhandled",
+    "catch_all",
     "hide_grammar",
     "abbr_listset",
     "ignore_successful_listset",
@@ -16,37 +16,32 @@ APPLIED_HANDLERS = (
 )
 
 handlers = {
-    "include_unhandled": {"format": lambda m: m},
+    "catch_all": {"format": lambda m: m},
     "hide_grammar": {
-        "topic": ("cmd",),
         "event": ("g.load",),
         "cond": lambda m: m["success"] is True,
         "format": lambda m: m["cmd"].update({"data": "*hidden*"}) or m,
     },
     "abbr_listset": {
-        "topic": ("cmd",),
         "event": ("g.listset",),
         "cond": lambda m: "list" in m["cmd"],
         "format": lambda m: m["cmd"].update({"items": len(m["cmd"]["items"])}) or m,
     },
     "ignore_successful_listset": {
-        "topic": ("cmd",),
         "event": ("g.listset",),
         "cond": lambda m: m["success"] is True,
         "format": lambda m: "",
     },
     "ignore_successful_reload": {
-        "topic": ("cmd",),
         "event": ("g.unload", "g.load", "g.listset", "g.update"),
         "cond": lambda m: m["success"] is True,
         "format": lambda m: "",
     },
     "ignore_ui_event": {"topic": ("ui",), "format": lambda m: ""},
     "simplify_parse_result": {
-        "topic": ("phrase",),
         "event": ("p.end",),
         "cond": lambda m: "words" in m,
-        "format": lambda m: str(m["phrase"]) + " " + str(m["parsed"]),
+        "format": lambda m: {k: m[k] for k in m if k in ("cmd", "phrase", "parsed")},
     },
 }
 
@@ -56,8 +51,11 @@ def listener(topic, m):
         event = (
             m.get("cmd") if isinstance(m.get("cmd"), str) else m.get("cmd").get("cmd")
         )
-    except (KeyError, AttributeError):
-        event = m["event"]
+    except (AttributeError):
+        try:
+            event = m.get("event")
+        except (AttributeError):
+            event = "unknown"
 
     new_m = None
     for handler in APPLIED_HANDLERS:

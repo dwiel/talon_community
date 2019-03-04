@@ -109,7 +109,7 @@ ctx.keymap(
         # Actions
         "focus toolbar": send_key_to_page(","),
         "select conversation": send_key_to_page("x"),
-        "(toggle star | rotate among superstars": send_key_to_page("s"),
+        "(toggle star | rotate among superstars)": send_key_to_page("s"),
         "archive": send_key_to_page("e"),
         "mute conversation": send_key_to_page("m"),
         "report spam": send_key_to_page("!"),

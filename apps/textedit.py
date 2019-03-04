@@ -1,9 +1,8 @@
 import time
 from talon.voice import press, Str, Context
-from ..utils import numeral_list, extract_num_from_m
+from ..utils import extract_num_from_m
 
 ctx = Context("textedit", bundle="com.apple.TextEdit")
-ctx.set_list("n", numeral_list)
 
 
 def select_line(m):
@@ -25,20 +24,20 @@ def select_line_and_press(keys=()):
 
 ctx.keymap(
     {
-        "(select line number | sprinkle) {textedit.n}+": select_line,
-        "(go line number {textedit.n}+ start | spring {textedit.n}+)": select_line_and_press(
+        "(select line number | sprinkle) {n.all}+": select_line,
+        "(go line number {n.all}+ start | spring {n.all}+)": select_line_and_press(
             ("ctrl-a", "cmd-left")
         ),
-        "(go line number {textedit.n}+ end | dear {textedit.n}+)": select_line_and_press(
+        "(go line number {n.all}+ end | dear {n.all}+)": select_line_and_press(
             ("cmd-right")
         ),
-        "(go line number {textedit.n}+ before end | smear {textedit.n}+)": select_line_and_press(
+        "(go line number {n.all}+ before end | smear {n.all}+)": select_line_and_press(
             ("cmd-right", "left")
         ),
-        "(new line below number {textedit.n}+ | sprinkoon) {textedit.n}+": select_line_and_press(
+        "(new line below number {n.all}+ | sprinkoon) {n.all}+": select_line_and_press(
             ("cmd-right", "enter")
         ),
-        "(delete line number | snipoon ) {textedit.n}+": select_line_and_press(
+        "(delete line number | snipoon ) {n.all}+": select_line_and_press(
             ("shift-cmd-right", "delete", "delete", "ctrl-a", "cmd-left")
         ),
     }

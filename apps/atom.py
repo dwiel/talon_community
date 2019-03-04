@@ -4,12 +4,10 @@ import re
 from talon.voice import Key, press, Str, Context, Rule
 from ..utils import (
     parse_words_as_integer,
-    parse_words,
     numeral_map,
     numerals,
     optional_numerals,
     text,
-    m_to_number,
 )
 from .. import utils
 
@@ -17,6 +15,23 @@ ctx = Context("atom", bundle="com.github.atom")
 
 atom_hotkey = "cmd-shift-ctrl-alt-t"
 atom_command_pallet = "cmd-shift-p"
+
+
+def m_to_number(m):
+    tmp = [str(s).lower() for s in m._words]
+    words = [parse_word(word) for word in tmp]
+
+    result = 0
+    factor = 1
+    for word in reversed(words):
+        if word not in numerals:
+            # we consumed all the numbers and only the command name is left.
+            break
+
+        result = result + factor * int(numeral_map[word])
+        factor = 10 * factor
+
+    return result
 
 
 class Struct:
