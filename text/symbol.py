@@ -11,7 +11,7 @@ keymap = {
     "(dollar [sign] | dolly)": "$",
     "(downscore | crunder)": "_",
     "colon": ":",
-    "([left] paren | precorp)": "(",
+    "(lparen | [left] paren | precorp )": "(",
     "(rparen | are paren | right paren | precose)": ")",
     "(brace | left brace | kirksorp)": "{",
     "(rbrace | are brace | right brace | kirkos)": "}",

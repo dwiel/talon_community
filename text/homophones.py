@@ -1,7 +1,7 @@
 from talon import app, clip, cron, resource
-from talon.engine import engine
-from talon.voice import Word, Key, Context, Str, press
+from talon.voice import Context, Str, press
 from talon.webview import Webview
+from ..misc.basic_keys import digits
 
 from ..utils import parse_word
 import os
@@ -126,6 +126,10 @@ def make_selection(m, is_selection, transform=lambda x: x):
     w = active_word_list[d - 1]
     if len(words) > 1:
         w = transform(w)
+    insert(w, is_selection)
+
+
+def insert(w, is_selection):
     if is_selection:
         clip.set(w)
         press("cmd-v", wait=0)
@@ -146,15 +150,17 @@ def raise_homophones(m, force_raise=False, is_selection=False):
     if is_selection:
         word = get_selection()
         word = word.strip()
+        digit = int(digits[m._words[1]]) if len(m._words) == 2 else None
+
     # elif hasattr(m, "dgndictation"):
     #     # this mode is currently disabled...
     #     # experimenting with using a canonical representation and not using
     #     # dgndictation
     #     word = str(m.dgndictation[0]._words[0])
     #     word = parse_word(word)
-    elif len(m._words) >= 2:
-        word = str(m._words[len(m._words) - 1])
-        word = parse_word(word)
+    else:
+        digit = int(digits[m._words[1]]) if str(m._words[1]) in digits else None
+        word = parse_word(m._words[(2 if digit else 1)])
 
     word = word.lower()
 
@@ -163,19 +169,16 @@ def raise_homophones(m, force_raise=False, is_selection=False):
         return
 
     active_word_list = all_homophones[word]
-    if (
-        is_selection
-        and len(active_word_list) == 2
-        and quick_replace
-        and not force_raise
-    ):
-        if word == active_word_list[0].lower():
-            new = active_word_list[1]
-        else:
-            new = active_word_list[0]
-        clip.set(new)
-        press("cmd-v", wait=0)
-        return
+    if quick_replace and not force_raise:
+        if not digit and len(active_word_list) == 2:
+            if word == active_word_list[0].lower():
+                new = active_word_list[1]
+            else:
+                new = active_word_list[0]
+            return insert(new, is_selection)
+        elif digit:
+            new = active_word_list[digit - 1]
+            return insert(new, is_selection)
 
     valid_indices = range(len(active_word_list))
 
@@ -254,9 +257,9 @@ def homophones_help(m):
 
 context.keymap(
     {
-        "(phones | homophones) help": homophones_help,
-        "phones {homophones.canonical}": raise_homophones,
-        "phones": lambda m: raise_homophones(m, is_selection=True),
+        "phones help": homophones_help,
+        "phones {basic_keys.digits}* {homophones.canonical}": raise_homophones,
+        "phones {basic_keys.digits}*": lambda m: raise_homophones(m, is_selection=True),
         "force phones {homophones.canonical}": lambda m: raise_homophones(
             m, force_raise=True
         ),
