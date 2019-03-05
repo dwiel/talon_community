@@ -318,9 +318,12 @@ def is_filetype(extensions=()):
     return matcher
 
 
-def extract_num_from_m(m):
+def extract_num_from_m(m, default=ValueError):
     # loop identifies numbers in any message
     number_words = [w for w in m._words if w in numeral_list]
     if len(number_words) == 0:
-        raise ValueError("No number found")
+        if default is ValueError:
+            raise ValueError("No number found")
+        else:
+            return default
     return text_to_number(number_words)

@@ -80,7 +80,7 @@ alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789_"
 
 
 def word_neck(m):
-    word_index = extract_num_from_m(m)
+    word_index = extract_num_from_m(m, 1)
 
     old = clip.get()
     press("shift-right", wait=2000)
@@ -130,7 +130,7 @@ def word_neck(m):
 
 
 def word_prev(m):
-    word_index = extract_num_from_m(m)
+    word_index = extract_num_from_m(m, 1)
 
     old = clip.get()
     press("shift-right", wait=2000)
@@ -220,8 +220,8 @@ ctx.keymap(
         "(select all | olly | ali)": Key("cmd-a"),
         "(select left | shrim | shlicky)": Key("shift-left"),
         "(select right | shrish | shricky)": Key("shift-right"),
-        "(select word number {generic_editor.n}+ above | wordpreev {generic_editor.n}+)": word_prev,
-        "(select word number {generic_editor.n}+ below | wordneck {generic_editor.n}+)": word_neck,
+        "(select word number {generic_editor.n}* above | wordpreev {generic_editor.n}*)": word_prev,
+        "(select word number {generic_editor.n}* below | wordneck {generic_editor.n}*)": word_neck,
         "(select word left | scrish)": Key("alt-shift-left"),
         "(select word right | scram)": Key("alt-shift-right"),
         "(select line left | lecksy)": Key("cmd-shift-left"),
