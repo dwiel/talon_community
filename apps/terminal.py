@@ -71,7 +71,12 @@ keymap = {
     "go back": "cd -\n",
     "dash <dgndictation> [over]": dash,
     "pseudo": "sudo ",
-    "(redo pseudo | pseudo [make me a] sandwich)": [Key("up"), Key("ctrl-a"), "sudo ", Key("enter")],
+    "(redo pseudo | pseudo [make me a] sandwich)": [
+        Key("up"),
+        Key("ctrl-a"),
+        "sudo ",
+        Key("enter"),
+    ],
     "shell C H mod": "chmod ",
     "shell clear": [Key("ctrl-c"), "clear\n"],
     "shell copy [<dgndictation>]": ["cp ", text],
