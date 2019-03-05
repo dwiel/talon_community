@@ -1,3 +1,5 @@
+import time
+
 from talon.voice import Word, Key, Context, Str, press
 from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 from talon import ctrl, ui
@@ -69,7 +71,7 @@ keymap = {
     "go back": "cd -\n",
     "dash <dgndictation> [over]": dash,
     "pseudo": "sudo ",
-    "redo pseudo": [Key("up"), Key("ctrl-a"), "sudo ", Key("enter")],
+    "(redo pseudo | pseudo [make me a] sandwich)": [Key("up"), Key("ctrl-a"), "sudo ", Key("enter")],
     "shell C H mod": "chmod ",
     "shell clear": [Key("ctrl-c"), "clear\n"],
     "shell copy [<dgndictation>]": ["cp ", text],
@@ -92,6 +94,9 @@ keymap = {
     "shell M player": "mplayer ",
     "shell nvidia S M I": "nvidia-smi ",
     "shell R sync": "./src/dotfiles/sync_rsync ",
+    "shell tail": "tail ",
+    "shell tail follow": "tail -f ",
+    "shall count lines": "wc -l ",
     # python
     "create virtual environment": ["virtualenv -p python3 venv", Key("enter")],
     "activate virtual environment": [
@@ -104,8 +109,9 @@ keymap = {
     "apt get update": "apt-get update ",
     "apt get upgrade": "apt-get upgrade ",
     # Tools
-    "(grep | grip)": ["grep  .", Key("left left")],
-    "gripper": ["grep -r  .", Key("left left")],
+    # "(grep | grip)": ["grep  .", Key("left left")],
+    "(grep | grip)": "grep ",
+    # "gripper": ["grep -r  .", Key("left left")],
     "pee socks": "ps aux ",
     "vi": "vi ",
     # python
@@ -182,7 +188,7 @@ for action in ("get", "delete", "describe"):
         typed = f"kubectl {action} {object}"
         keymap.update({command: typed})
 
-keymap.update({"pain " + str(i): Key("alt-" + str(i)) for i in range(10)})
+keymap.update({"(pain | bang) " + str(i): Key("alt-" + str(i)) for i in range(10)})
 
 ctx.keymap(keymap)
 
@@ -190,6 +196,8 @@ ctx.keymap(keymap)
 def shell_rerun(m):
     # switch_app(name='iTerm2')
     app = ui.apps(bundle="com.googlecode.iterm2")[0]
+    ctrl.key_press("c", ctrl=True, app=app)
+    time.sleep(0.05)
     ctrl.key_press("up", app=app)
     ctrl.key_press("enter", app=app)
 
