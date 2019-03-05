@@ -1,4 +1,4 @@
-from talon import app, clip, cron
+from talon import app, clip, cron, resource
 from talon.engine import engine
 from talon.voice import Word, Key, Context, Str, press
 from talon.webview import Webview
@@ -26,7 +26,7 @@ pick_context = Context("pick")
 
 phones = {}
 canonical = []
-with open(homophones_file, "r") as f:
+with resource.open(homophones_file, "r") as f:
     for h in f:
         h = h.rstrip()
         h = h.split(",")
