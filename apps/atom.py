@@ -151,6 +151,9 @@ def paste_line(m):
     jump_to_bol(m)
     press("cmd-left")
     press("cmd-v")
+    press("up")
+    press("cmd-right")
+    press("cmd-left")
 
 
 def change_pain(m):
