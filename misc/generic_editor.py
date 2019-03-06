@@ -232,8 +232,8 @@ ctx.keymap(
         "big word preev {generic_editor.n}*": big_word_prev,
         "big word neck {generic_editor.n}*": big_word_neck,
         "(select word number {generic_editor.n}* below | wordneck {generic_editor.n}*)": word_neck,
-        "(select word left | scrish)": Key("alt-shift-left"),
-        "(select word right | scram)": Key("alt-shift-right"),
+        "(select word left | scram)": Key("alt-shift-left"),
+        "(select word right | scrish)": Key("alt-shift-right"),
         "(select line left | lecksy)": Key("cmd-shift-left"),
         "(select line right | ricksy)": Key("cmd-shift-right"),
     }
