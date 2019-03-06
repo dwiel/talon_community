@@ -9,15 +9,14 @@ f_keys = {f"F {i}": f"f{i}" for i in range(1, 13)}
 
 simple_keys = normalise_keys(
     {
+        "(crimp | lloyd)": "left",
+        "chris": "right",
+        "jeep": "up",
+        "( dune | doom )": "down",
         "( backspace | junk )": "backspace",
         "(delete | forward delete | scrap | spunk)": "delete",
-        # voicecode alternates
         "(space | skoosh)": "space",
         "(tab | tarp)": "tab",
-        "(go left | crimp | lloyd)": "left",
-        "(go right | chris)": "right",
-        "(go up | jeep)": "up",
-        "( go down | dune | doom )": "down",
         "( enter | shock )": "enter",
         "( escape | randall )": "escape",
         "home": "home",
@@ -117,7 +116,7 @@ ctx.keymap(
         "{basic_keys.modifiers}* {basic_keys.alphabet}+": press_keys,
         "{basic_keys.modifiers}* {basic_keys.digits}+": press_keys,
         "{basic_keys.modifiers}* {basic_keys.keys}+": press_keys,
-        "{basic_keys.modifiers}+ {basic_keys.arrows}+": press_keys,
+        "(go | {basic_keys.modifiers}+) {basic_keys.arrows}+": press_keys,
     }
 )
 ctx.set_list("alphabet", alphabet.keys())
