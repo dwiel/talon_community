@@ -79,7 +79,11 @@ def select_text_to_right_of_cursor(m):
 alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789_"
 
 
-def word_neck(m):
+def big_word_neck(m):
+    return word_neck(m, valid_characters=set(alphanumeric) | set("/\-_."))
+
+
+def word_neck(m, valid_characters=alphanumeric):
     word_index = extract_num_from_m(m, 1)
 
     old = clip.get()
@@ -97,7 +101,7 @@ def word_neck(m):
     text_right = clip.get().lower()
     clip.set(old)
 
-    is_word = [character in alphanumeric for character in text_right]
+    is_word = [character in valid_characters for character in text_right]
     word_count = 1
     i = 0
     while i < (len(is_word) - 1) and not is_word[i]:
@@ -129,7 +133,11 @@ def word_neck(m):
         press("shift-right")
 
 
-def word_prev(m):
+def big_word_prev(m):
+    return word_prev(m, valid_characters=set(alphanumeric) | set("/\-_."))
+
+
+def word_prev(m, valid_characters=alphanumeric):
     word_index = extract_num_from_m(m, 1)
 
     old = clip.get()
@@ -149,7 +157,7 @@ def word_prev(m):
 
     text_right = list(reversed(text_right))
 
-    is_word = [character in alphanumeric for character in text_right]
+    is_word = [character in valid_characters for character in text_right]
     word_count = 1
     i = 0
     while i < (len(is_word) - 1) and not is_word[i]:
@@ -221,6 +229,8 @@ ctx.keymap(
         "(select left | shrim | shlicky)": Key("shift-left"),
         "(select right | shrish | shricky)": Key("shift-right"),
         "(select word number {generic_editor.n}* above | wordpreev {generic_editor.n}*)": word_prev,
+        "big word preev {generic_editor.n}*": big_word_prev,
+        "big word neck {generic_editor.n}*": big_word_neck,
         "(select word number {generic_editor.n}* below | wordneck {generic_editor.n}*)": word_neck,
         "(select word left | scrish)": Key("alt-shift-left"),
         "(select word right | scram)": Key("alt-shift-right"),
