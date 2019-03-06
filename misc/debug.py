@@ -37,3 +37,29 @@ def ui_event(event, arg):
 
 if UI_EVENTS:
     ui.register("", ui_event)
+
+
+from talon import tap, ui
+import os
+
+
+def on_key(typ, e):
+    if e == "f1":
+        dragon = ui.apps(bundle="com.dragon.dictate")[0]
+        os.popen(f"sample {dragon.pid} > /tmp/dragon.sample")
+        e.block()
+
+
+tap.register(tap.KEY | tap.HOOK, on_key)
+
+# from talon import canvas, ui
+#
+# def draw(c):
+#     rect = ui.active_window().rect
+#     paint = c.paint
+#     paint.style = paint.Style.STROKE
+#     paint.color = 'ff0000'
+#     c.draw_rect(rect)
+#     # print('active rect', rect)
+#
+# canvas.register('overlay', draw)
