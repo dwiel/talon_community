@@ -80,7 +80,7 @@ alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789_"
 
 
 def big_word_neck(m):
-    return word_neck(m, valid_characters=set(alphanumeric) | set("/\-_."))
+    return word_neck(m, valid_characters=set(alphanumeric) | set("/\\-_."))
 
 
 def word_neck(m, valid_characters=alphanumeric):
@@ -134,7 +134,7 @@ def word_neck(m, valid_characters=alphanumeric):
 
 
 def big_word_prev(m):
-    return word_prev(m, valid_characters=set(alphanumeric) | set("/\-_."))
+    return word_prev(m, valid_characters=set(alphanumeric) | set("/\\-_."))
 
 
 def word_prev(m, valid_characters=alphanumeric):
