@@ -92,7 +92,7 @@ def _load_saved_macros():
             saved_macros = json.load(f)
         saved_macros = {k: v for k, v in saved_macros.items() if k}
         return saved_macros
-    except:
+    except Exception:
         return {}
 
 
