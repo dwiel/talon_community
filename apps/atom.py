@@ -295,7 +295,7 @@ keymap = {
     "peach <dgndictation>": [Key("cmd-t"), text],
     "peachy <dgndictation>": [Key("cmd-t"), text, Key("enter")],
     "advanced open file": Key("cmd-alt-o"),
-    "pain" + numerals: change_pain,
+    "(pain | bang)" + numerals: change_pain,
     "tab" + numerals: jump_tab,
     "goneck": Key("cmd-shift-]"),
     "gopreev": Key("cmd-shift-["),
