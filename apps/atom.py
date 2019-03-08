@@ -369,6 +369,8 @@ keymap = {
     # reflow
     "reflow": Key("cmd-alt-q"),
     "replace [left of] equals [with] return": replace_left_of_equals_with_return,
+    # config
+    "edit snippets": command("application open snippets"),
 }
 
 ctx.keymap(keymap)
