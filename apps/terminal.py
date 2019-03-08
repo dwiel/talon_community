@@ -5,7 +5,7 @@ from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 from talon import ctrl, ui
 import string
 
-from ..utils import numerals, parse_words, text, is_in_bundles
+from ..utils import numerals, parse_words, text, is_in_bundles, insert
 from ..bundle_groups import TERMINAL_BUNDLES
 
 # TODO: move application specific commands into their own files: apt-get, etc
@@ -35,15 +35,27 @@ def dash(m):
 
 KUBERNETES_PREFIX = "(cube | cube control)"
 
+directory_shortcuts = {
+    "talon home": TALON_HOME,
+    "talon user": TALON_USER,
+    "talon plug-ins": TALON_PLUGINS,
+    "talon community": "~/.talon/user/talon_community",
+}
+
+
+def cd_directory_shortcut(m):
+    directory = directory_shortcuts[m[1]]
+    insert(f"cd {directory}; ls")
+    for _ in range(4):
+        press("left")
+
+
 keymap = {
     "lefty": Key("ctrl-a"),
     "ricky": Key("ctrl-e"),
     "(pain new | split vertical)": Key("cmd-d"),
     # talon
     "tail talon": "tail -f .talon/talon.log",
-    "cd talon home": "cd {}".format(TALON_HOME),
-    "cd talon user": "cd {}".format(TALON_USER),
-    "cd talon plugins": "cd {}".format(TALON_PLUGINS),
     # some habits die hard
     "troll char": Key("ctrl-c"),
     "reverse": Key("ctrl-r"),
@@ -65,6 +77,7 @@ keymap = {
         Key("left"),
         text,
     ],
+    "cd {terminal.directory_shortcuts}": cd_directory_shortcut,
     "(ls | run ellis | run alice)": "ls\n",
     "(la | run la)": "ls -la\n",
     # "durrup": "cd ..; ls\n",
@@ -196,6 +209,7 @@ for action in ("get", "delete", "describe"):
 keymap.update({"(pain | bang) " + str(i): Key("alt-" + str(i)) for i in range(10)})
 
 ctx.keymap(keymap)
+ctx.set_list("directory_shortcuts", directory_shortcuts.keys())
 
 
 def shell_rerun(m):
