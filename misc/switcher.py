@@ -43,6 +43,7 @@ ctx.keymap(
         "fox term": lambda x: switch_app(x, "iTerm2"),
         "fox skype": lambda x: switch_app(x, "Skype for Business"),
         "fox signal": lambda x: switch_app(x, "Signal"),
+        "system preferences": lambda x: switch_app(x, "System Preferences"),
     }
 )
 
