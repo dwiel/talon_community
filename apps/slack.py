@@ -66,7 +66,7 @@ keymap = {
     "([toggle] video)": Key("v"),
     "invite": Key("a"),
     # Miscellaneous
-    "shortcuts": Key("cmd-/"),
+    "keyboard shortcuts": Key("cmd-/"),
 }
 
 ctx.keymap(keymap)
