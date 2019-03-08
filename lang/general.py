@@ -45,7 +45,7 @@ ctx.keymap(
         "[op] (arrow | lambo)": " -> ",
         "[op] fat (arrow | lambo)": " => ",
         # Completed matchables
-        "(empty parens | call)": "()",
+        "empty parens": "()",
         "empty (dict | object)": "{}",
         "(empty array | brackers)": "[]",
         # Blocks

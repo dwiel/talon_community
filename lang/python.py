@@ -4,8 +4,8 @@ from ..utils import is_filetype, snake_text
 
 FILETYPES = (".py",)
 
-ctx = Context("python", func=is_filetype(FILETYPES))
-# ctx = Context("python")
+# ctx = Context("python", func=is_filetype(FILETYPES))
+ctx = Context("python")
 
 ctx.keymap(
     {

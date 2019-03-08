@@ -129,6 +129,7 @@ ctx.keymap(
         "input tools menu": Key("cmd+alt+shift+k"),
         "toggle input controls": Key("cmd+shift+k"),
         "select all": Key("cmd+a"),
+        "select line": [Key("cmd-left"), Key("shift-end")],
         "extend selection [one] character left": Key("shift+left"),
         "extend selection [one] character right": Key("shift+right"),
         "extend selection [one] line up": Key("shift+up"),

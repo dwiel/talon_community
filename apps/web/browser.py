@@ -1,5 +1,6 @@
 import time
 import re
+from decorator import decorator
 
 from talon.voice import press, Key
 from talon import ui

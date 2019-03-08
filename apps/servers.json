@@ -1,2 +1,5 @@
 {
+  "sentinel": "aipg-ra-skx-03.ra.intel.com",
+  "kubernetes": "aipg-ra-skx-03.ra.intel.com",
+  "titan": "nervana-titanxp10.fm.intel.com"
 }
