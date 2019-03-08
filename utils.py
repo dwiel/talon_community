@@ -1,7 +1,7 @@
 import string
 import collections
 
-from talon import clip
+from talon import clip, resource
 from talon.voice import Context, Str, press
 from time import sleep
 import json
@@ -11,7 +11,8 @@ from .bundle_groups import TERMINAL_BUNDLES, FILETYPE_SENSITIVE_BUNDLES
 
 VIM_IDENTIFIER = "(Vim)"
 
-mapping = json.load(open(os.path.join(os.path.dirname(__file__), "replace_words.json")))
+# mapping = json.load(open(os.path.join(os.path.dirname(__file__), "replace_words.json")))
+mapping = json.load(resource.open("replace_words.json"))
 mappings = collections.defaultdict(dict)
 for k, v in mapping.items():
     mappings[len(k.split(" "))][k] = v
@@ -88,6 +89,10 @@ def insert(s):
 
 def text(m):
     insert(join_words(parse_words(m)).lower())
+
+
+def snake_text(m):
+    insert(join_words(parse_words(m), sep="_").lower())
 
 
 def spoken_text(m):
