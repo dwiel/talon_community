@@ -468,7 +468,7 @@ ctx.keymap(
         "move focus out of document text": Key("cmd+alt+shift+m"),
         "return focus to document text": Key("esc"),
         "focus containing webpage": Key("ctrl+shift+esc"),
-        "show outline": [Key("ctrl-cmd-a"), Key("ctrl-cmd-h")],
+        "(show | view | toggle) outline [view]": [Key("ctrl-cmd-a"), Key("ctrl-cmd-h")],
         # "(search menus | command pallet)": Key('cmd-/'),
         "snipline": [Key("cmd-left"), Key("cmd-shift-right"), Key("backspace")],
         "snip bullet": [
