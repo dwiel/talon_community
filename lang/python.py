@@ -1,6 +1,6 @@
 from talon.voice import Context, Key
 
-from ..utils import is_filetype
+from ..utils import is_filetype, snake_text
 
 FILETYPES = (".py",)
 
@@ -13,6 +13,13 @@ ctx.keymap(
         "dunder in it": "__init__",
         "dot pie": ".py",
         "dot pipe": ".py",
+        "self assign <dgndictation> [over]": [
+            "self.",
+            snake_text,
+            " = ",
+            snake_text,
+            "\n",
+        ],
     }
 )
 
