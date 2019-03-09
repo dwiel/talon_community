@@ -37,32 +37,22 @@ COMMANDS = Struct(
 ############## support for parsing numbers as command postfix
 
 
-def text_to_number_wrapper(func):
-    def wrapper(*args, **kwargs):
-        if not kwargs and len(args) == 1:
-            if isinstance(args[0], Rule):
-                args = (extract_num_from_m(args[0]),) + args[1:]
-            else:
-                print("couldn't find number")
-        else:
-            print("couldn't find number")
-
-        func(*args, **kwargs)
-
-    return wrapper
-
-
 def parse_word(word):
     word = word.lstrip("\\").split("\\", 1)[0]
     return word
 
 
 ######### actions and helper functions
-@text_to_number_wrapper
-def jump_to_bol(line):
-    press("ctrl-g")
-    Str(str(line))(None)
-    press("enter")
+def jump_to_bol(m):
+    if isinstance(m, Rule):
+        line = extract_num_from_m(m, default=None)
+    else:
+        line = m
+
+    if line:
+        press("ctrl-g")
+        Str(str(line))(None)
+        press("enter")
 
 
 def jump_to_end_of_line():
@@ -371,6 +361,8 @@ keymap = {
     "replace [left of] equals [with] return": replace_left_of_equals_with_return,
     # config
     "edit snippets": command("application open snippets"),
+    "edit key map": command("application open keymap"),
+    "install packages": command("settings view install packages and themes"),
 }
 
 ctx.keymap(keymap)
