@@ -1,6 +1,7 @@
 import time
 
 from ..utils import parse_words_as_integer
+from .web import browser
 
 from talon.voice import Context, Key, Str, press
 
@@ -114,8 +115,10 @@ context.keymap(
         # zotero
         "zotero": Key("cmd-shift-z"),
         # rearrange tabs: https://chrome.google.com/webstore/detail/rearrange-tabs/ccnnhhnmpoffieppjjkhdakcoejcpbga
-        "move tab left": Key("ctrl-shift-left"),
-        "move tab right": Key("ctrl-shift-right"),
-        "move tab left way": Key("ctrl-shift-down"),
+        # "move tab left": Key("ctrl-shift-left"),
+        # "move tab right": Key("ctrl-shift-right"),
+        # "move tab left way": Key("ctrl-shift-down"),
+        "move tab left": browser.send_to_vimium("<<"),
+        "move tab right": browser.send_to_vimium(">>"),
     }
 )

@@ -7,6 +7,7 @@ from talon import ctrl
 from ...utils import select_single, numerals, delay, paste_text
 from ...misc.basic_keys import get_keys
 from ...misc import basic_keys
+from . import browser
 
 ctx = Context(
     "google_sheets",
@@ -269,11 +270,15 @@ ctx.keymap(
         "accessibility menu": Key("ctrl+alt+a"),
         "sheet menu": Key("alt+shift+s"),
         "context menu": Key("cmd+shift+\\"),
-        "insert (rows | row) above": Key("ctrl+alt+i r"),
-        "insert (rows | row) below": Key("ctrl+alt+i b"),
-        "insert (columns | column) [to the] left": Key("ctrl-alt-i c"),
-        "insert (columns | column) [to the] right": Key("ctrl+alt+i o"),
-        "delete (rows | row)": Key("ctrl+alt+e d"),
+        "insert (rows | row) above": browser.send_to_page(Key("ctrl+alt+i r")),
+        "insert (rows | row) below": browser.send_to_page(Key("ctrl+alt+i b")),
+        "insert (columns | column) [to the] left": browser.send_to_page(
+            Key("ctrl-alt-i c")
+        ),
+        "insert (columns | column) [to the] right": browser.send_to_page(
+            Key("ctrl+alt+i o")
+        ),
+        "delete (rows | row)": browser.send_to_page(Key("ctrl+alt+e d")),
         "delete (columns | column)": Key("cmd+alt+-"),
         "hide row": Key("cmd+alt+9"),
         "hide column": Key("cmd+alt+0"),

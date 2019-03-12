@@ -20,6 +20,8 @@ ctx.keymap(
             snake_text,
             "\n",
         ],
+        "star arguments": "*args",
+        "star star K wargs": "**kwargs",
     }
 )
 

@@ -211,9 +211,7 @@ ctx.keymap(
         "(delete around this | slurp)": Key("backspace delete"),
         "(delete line left | snip left | snipple)": Key("shift-cmd-left delete"),
         "(delete line right | snip right | snipper)": Key("shift-cmd-right delete"),
-        "(delete [this] line | snipline )": Key(
-            "shift-cmd-right delete delete ctrl-a cmd-left"
-        ),
+        "(delete [this] line)": Key("shift-cmd-right delete delete ctrl-a cmd-left"),
         "(delete word left | trough | steffi | carmex)": Key("alt-backspace"),
         "(delete word right | stippy | kite)": Key("alt-delete"),
         "(delete [this] word | slurpies)": Key("alt-backspace alt-delete"),

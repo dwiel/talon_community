@@ -1,5 +1,6 @@
 import time
 from talon.voice import Context, Key, press
+from . import browser
 
 BROWSERS = ["com.google.Chrome", "org.mozilla.firefox"]
 ctx_global = Context("github-sitewide", func=lambda app, win: app.bundle in BROWSERS)
@@ -25,11 +26,8 @@ ctx_network_graph = Context(
 
 # USER-DEFINED VARIABLES
 
-repos = {"talon_community", "atom-talon"}
-
+repos = {"talon_community", "atom-talon", "NervanaSystems/coach"}
 lag = 0.2
-using_tridactyl = False
-using_vimium = True
 
 
 def in_repo_list(win_title):
@@ -39,226 +37,185 @@ def in_repo_list(win_title):
     return False
 
 
-def normal_mode():
-    # get out of any text box
-    time.sleep(lag)
-    press("escape")
-    time.sleep(lag)
-
-
-def tridactyl_mode():
-    if using_tridactyl:
-        # normal_mode()
-        time.sleep(lag)
-        press("ctrl-alt-escape")
-        time.sleep(lag)
-
-
-def page_mode():
-    normal_mode()
-    if using_tridactyl:
-        press("ctrl-alt-escape")
-        time.sleep(lag)
-    elif using_vimium:
-        press("escape")
-        press("escape")
-        press("i")
-
-
 # SITE-WIDE METHODS
 
 
+@browser.send_to_page
 def search(m):
-    page_mode()
     press("/")
 
 
+@browser.send_to_page
 def goto_notifications(m):
-    page_mode()
     press("g")
     time.sleep(lag)
     press("n")
-    tridactyl_mode()
 
 
 # REPO METHODS
 
 
+@browser.send_to_page
 def repo_goto_code(m):
-    page_mode()
     press("g")
     time.sleep(lag)
     press("c")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def repo_goto_issues(m):
-    page_mode()
     press("g")
     time.sleep(lag)
     press("i")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def repo_goto_pull_requests(m):
-    page_mode()
     press("g")
     time.sleep(lag)
     press("p")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def repo_goto_projects(m):
-    page_mode()
     press("g")
     time.sleep(lag)
     press("b")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def repo_goto_wiki(m):
-    page_mode()
     press("g")
     time.sleep(lag)
     press("w")
-    tridactyl_mode()
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def repo_find_file(m):
-    page_mode()
     press("t")
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def repo_switch_branch(m):
-    page_mode()
     press("w")
 
 
 # ISSUES AND PULL REQUESTS LISTS METHODS
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def create_issue(m):
-    page_mode()
     press("c")
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def filter_by_author(m):
-    page_mode()
     press("u")
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def filter_by_label(m):
-    page_mode()
     press("l")
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def filter_by_milestone(m):
-    page_mode()
     press("m")
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def filter_by_assignee(m):
-    page_mode()
     press("a")
 
 
+@browser.send_to_page
 def open_issue(m):
-    page_mode()
     press("o")
-    tridactyl_mode()
 
 
 # ISSUES AND PULL REQUESTS METHODS
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def request_reviewer(m):
-    page_mode()
     press("q")
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def set_milestone(m):
-    page_mode()
     press("m")
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def apply_label(m):
-    page_mode()
     press("l")
 
 
+@browser.send_to_page(stay_in_page_mode=True)
 def set_assignee(m):
-    page_mode()
     press("a")
 
 
 def close_issue_and_submit_comment(m):
     # NOTE: this only works if the cursor is in the comment you are submitting
     press("cmd-shift-enter")
-    tridactyl_mode()
+    browser.tridactyl_mode()
 
 
 # PULL REQUEST CHANGES METHODS
 
 
+@browser.send_to_page
 def list_commits(m):
-    page_mode()
     press("c")
 
 
+@browser.send_to_page
 def list_changed_files(m):
-    page_mode()
     press("t")
 
 
 # NETWORK GRAPH METHODS
 
 
+@browser.send_to_page
 def scroll_left(m):
-    page_mode()
     press("h")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def scroll_right(m):
-    page_mode()
     press("l")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def scroll_down(m):
-    page_mode()
     press("j")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def scroll_up(m):
-    page_mode()
     press("k")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def scroll_left_most(m):
-    page_mode()
     press("shift-h")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def scroll_right_most(m):
-    page_mode()
     press("shift-l")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def scroll_down_most(m):
-    page_mode()
     press("shift-j")
-    tridactyl_mode()
 
 
+@browser.send_to_page
 def scroll_up_most(m):
-    page_mode()
     press("shift-k")
-    tridactyl_mode()
 
 
 ctx_global.keymap(
