@@ -1,42 +1,40 @@
 import time
-import re
-
-from talon import ui, clip
 from talon.voice import Context, Key, press
-
 from . import browser
 
 BROWSERS = ["com.google.Chrome", "org.mozilla.firefox"]
-ctx_global = Context(
-    "github-sitewide", func=browser.url_matches_func("https://github.com/.*")
-)
-ctx_repo = Context(
-    "github-repo", func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/.*")
-)
+ctx_global = Context("github-sitewide", func=lambda app, win: app.bundle in BROWSERS)
+ctx_repo = Context("github-repo", func=lambda app, win: in_repo_list(win.title))
 ctx_editor = Context(
-    "github-code-editor",
-    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/edit/.*"),
+    "github-code-editor", func=lambda app, win: win.title.startswith("Editing")
 )
 ctx_issues_pull_lists = Context(
     "github-issues-pull-requests_lists",
-    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/(pulls|issues)"),
+    func=lambda app, win: win.title.startswith("Issues")
+    or win.title.startswith("Pull Requests"),
 )
 ctx_issues_pull = Context(
     "github-issues-pull-requests",
-    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/issues"),
+    func=lambda app, win: " Issue " in win.title or " Pull Request " in win.title,
 )
 ctx_pull_changes = Context(
-    "github-pull-request-changes",
-    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/pulls"),
+    "github-pull-request-changes", func=lambda app, win: " Pull Request " in win.title
 )
 ctx_network_graph = Context(
-    "github-network-graph",
-    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/network"),
+    "github-network-graph", func=lambda app, win: win.title.startswith("Network Graph")
 )
 
 # USER-DEFINED VARIABLES
 
+repos = {"talon_community", "atom-talon", "NervanaSystems/coach"}
 lag = 0.2
+
+
+def in_repo_list(win_title):
+    for repo in repos:
+        if repo in win_title:
+            return True
+    return False
 
 
 # SITE-WIDE METHODS
@@ -100,13 +98,6 @@ def repo_find_file(m):
 @browser.send_to_page(stay_in_page_mode=True)
 def repo_switch_branch(m):
     press("w")
-
-
-def repo_copy_git_repo(m):
-    # git@github.com:vitchyr/rlkit.git
-    url = browser.get_url()
-    git_url = f"git@github.com:{re.fullmatch('https://github.com/([^/]*/[^/]*).*', url).group(1)}.git"
-    clip.set(git_url)
 
 
 # ISSUES AND PULL REQUESTS LISTS METHODS
@@ -227,13 +218,8 @@ def scroll_up_most(m):
     press("shift-k")
 
 
-ctx_global.keymap(
-    {
-        "jet search": search,
-        "(notes | notifications)": goto_notifications,
-        # '(hover)': hover,
-    }
-)
+# TODO: create a site wide context
+ctx_repo.keymap({})
 
 ctx_repo.keymap(
     {
@@ -242,9 +228,8 @@ ctx_repo.keymap(
         "[go to] (pull | pulls)[requests]": repo_goto_pull_requests,
         "[go to] projects": repo_goto_projects,
         "[go to] wiki": repo_goto_wiki,
-        "find file": repo_find_file,
+        "(find file | peach)": repo_find_file,
         "switch [(branch | tag)]": repo_switch_branch,
-        "(clone | copy) repo [url]": repo_copy_git_repo,
         # TODO: create a site wide context
         "jet search": search,
         "notifications": goto_notifications,
@@ -272,7 +257,7 @@ ctx_issues_pull_lists.keymap(
         "[filter] [by] label": filter_by_label,
         "[filter] [by] milestone": filter_by_milestone,
         "[filter] [by] [(worker | assigned | assignee)]": filter_by_assignee,
-        "open [issue] [pull request]": open_issue,
+        "open [(issue | pull request)]": open_issue,
     }
 )
 
