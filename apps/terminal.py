@@ -1,8 +1,9 @@
 import time
+import json
 
 from talon.voice import Word, Key, Context, Str, press
 from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
-from talon import ctrl, ui
+from talon import ctrl, ui, resource
 import string
 
 from ..utils import numerals, parse_words, text, is_in_bundles, insert
@@ -50,12 +51,36 @@ def cd_directory_shortcut(m):
         press("left")
 
 
+servers = json.load(resource.open("servers.json"))
+
+
+def get_server(m):
+    return servers[" ".join(m["global_terminal.servers"])]
+
+
+def mosh_servers(m):
+    insert(f"mosh {get_server(m)}")
+
+
+def ssh_servers(m):
+    insert(f"ssh {get_server(m)}")
+
+
+def name_servers(m):
+    insert(get_server(m))
+
+
+def ssh_copy_id_servers(m):
+    insert(f"mosh {get_server(m)}")
+
+
 keymap = {
     "lefty": Key("ctrl-a"),
     "ricky": Key("ctrl-e"),
     "(pain new | split vertical)": Key("cmd-d"),
     # talon
-    "tail talon": "tail -f .talon/talon.log",
+    "tail talon": "tail -f ~/.talon/talon.log",
+    "talon reple": "~/.talon/bin/repl",
     # some habits die hard
     "troll char": Key("ctrl-c"),
     "reverse": Key("ctrl-r"),
@@ -109,6 +134,10 @@ keymap = {
     "shell cat [<dgndictation>]": ["cat ", text],
     "shell X args [<dgndictation>]": ["xargs ", text],
     "shell mosh": "mosh ",
+    "shell mosh {global_terminal.servers}": mosh_servers,
+    "shell SSH {global_terminal.servers}": ssh_servers,
+    # "shell server {terminal.servers}": name_servers,
+    "shell SSH copy id {global_terminal.servers}": ssh_copy_id_servers,
     "shell M player": "mplayer ",
     "shell nvidia S M I": "nvidia-smi ",
     "shell R sync": "./src/dotfiles/sync_rsync ",
@@ -210,6 +239,7 @@ keymap.update({"(pain | bang) " + str(i): Key("alt-" + str(i)) for i in range(10
 
 ctx.keymap(keymap)
 ctx.set_list("directory_shortcuts", directory_shortcuts.keys())
+# ctx.set_list("servers", servers.keys())
 
 
 def shell_rerun(m):
@@ -222,7 +252,10 @@ def shell_rerun(m):
 
 
 global_ctx = Context("global_terminal")
-global_ctx.keymap({"shell rerun": shell_rerun})
+global_ctx.keymap(
+    {"shell rerun": shell_rerun, "shell server {global_terminal.servers}": name_servers}
+)
+global_ctx.set_list("servers", servers.keys())
 # module.exports = {
 #   permissions: "chmod "
 #   access: "chmod "
