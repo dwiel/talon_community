@@ -1,13 +1,36 @@
 import time
+import re
 from decorator import decorator
 
 from talon.voice import press, Key
+from talon import ui
 
 from ...utils import insert
 
 lag = 0.2
 using_tridactyl = False
 using_vimium = True
+BROWSERS = ["com.google.Chrome", "org.mozilla.firefox"]
+
+def get_url(win=None):
+    if win is None:
+        win = ui.active_window()
+
+    if win.app.bundle == "com.google.Chrome":
+        return win.children.find(AXTitle="Address and search bar")[0].AXValue
+    else:
+        raise ValueError("no method for getting url from not chrome yet")
+    # win.children.find(AXTitle='Address and search bar')[0].AXValue
+
+
+def url_matches_func(url_pattern):
+    def func(app, win):
+        if win.app.bundle == "com.google.Chrome":
+            return re.fullmatch(url_pattern, get_url(win))
+        else:
+            return False
+
+    return func
 
 
 def normal_mode():
@@ -40,7 +63,7 @@ def page_mode():
 def do(thing, *args, **kwargs):
     if isinstance(thing, str):
         insert(thing)
-    elif isinstance(thing, (Key)):
+    elif isinstance(thing, Key):
         thing(args[0])
     elif isinstance(thing, (list, tuple)):
         for element in thing:
@@ -49,15 +72,28 @@ def do(thing, *args, **kwargs):
         thing(*args, **kwargs)
 
 
-@decorator
+# @decorator
 def send_to_page(function=None, stay_in_page_mode=False):
-    def wrapper(*args, **kwargs):
-        page_mode()
-        do(function, *args, **kwargs)
-        if not stay_in_page_mode:
-            tridactyl_mode()
+    # @send_to_page(stay_in_page_mode=foo)
+    if function is None:
+        def wrapper_wrapper(function):
+            def wrapper(*args, **kwargs):
+                page_mode()
+                do(function, *args, **kwargs)
+                if not stay_in_page_mode:
+                    tridactyl_mode()
 
-    return wrapper
+            return wrapper
+        return wrapper_wrapper
+    # @send_to_page or send_to_page(Key('a'), ...)
+    else:
+        def wrapper(*args, **kwargs):
+            page_mode()
+            do(function, *args, **kwargs)
+            if not stay_in_page_mode:
+                tridactyl_mode()
+
+        return wrapper
 
 
 # @decorator
