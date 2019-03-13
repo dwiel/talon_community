@@ -12,6 +12,7 @@ using_tridactyl = False
 using_vimium = True
 BROWSERS = ["com.google.Chrome", "org.mozilla.firefox"]
 
+
 def get_url(win=None):
     if win is None:
         win = ui.active_window()
@@ -76,6 +77,7 @@ def do(thing, *args, **kwargs):
 def send_to_page(function=None, stay_in_page_mode=False):
     # @send_to_page(stay_in_page_mode=foo)
     if function is None:
+
         def wrapper_wrapper(function):
             def wrapper(*args, **kwargs):
                 page_mode()
@@ -84,9 +86,11 @@ def send_to_page(function=None, stay_in_page_mode=False):
                     tridactyl_mode()
 
             return wrapper
+
         return wrapper_wrapper
     # @send_to_page or send_to_page(Key('a'), ...)
     else:
+
         def wrapper(*args, **kwargs):
             page_mode()
             do(function, *args, **kwargs)
