@@ -17,7 +17,7 @@ mappings = collections.defaultdict(dict)
 for k, v in mapping.items():
     mappings[len(k.split(" "))][k] = v
 
-punctuation = set(".,-!?")
+punctuation = set(".,-!?/")
 
 
 def local_filename(file, name):
@@ -77,7 +77,7 @@ def parse_words(m, natural=False):
 def join_words(words, sep=" "):
     out = ""
     for i, word in enumerate(words):
-        if i > 0 and word not in punctuation:
+        if i > 0 and word not in punctuation and out[-1] not in ('/-'):
             out += sep
         out += str(word)
     return out
