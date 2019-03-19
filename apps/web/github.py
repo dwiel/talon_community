@@ -1,40 +1,42 @@
 import time
+import re
+
+from talon import clip
 from talon.voice import Context, Key, press
+
 from . import browser
 
 BROWSERS = ["com.google.Chrome", "org.mozilla.firefox"]
-ctx_global = Context("github-sitewide", func=lambda app, win: app.bundle in BROWSERS)
-ctx_repo = Context("github-repo", func=lambda app, win: in_repo_list(win.title))
+ctx_global = Context(
+    "github-sitewide", func=browser.url_matches_func("https://github.com/.*")
+)
+ctx_repo = Context(
+    "github-repo", func=browser.url_matches_func("https://github.com/[^/]+/[^/]+.*")
+)
 ctx_editor = Context(
-    "github-code-editor", func=lambda app, win: win.title.startswith("Editing")
+    "github-code-editor",
+    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/edit/.*"),
 )
 ctx_issues_pull_lists = Context(
     "github-issues-pull-requests_lists",
-    func=lambda app, win: win.title.startswith("Issues")
-    or win.title.startswith("Pull Requests"),
+    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/(pulls|issues)"),
 )
 ctx_issues_pull = Context(
     "github-issues-pull-requests",
-    func=lambda app, win: " Issue " in win.title or " Pull Request " in win.title,
+    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/issues"),
 )
 ctx_pull_changes = Context(
-    "github-pull-request-changes", func=lambda app, win: " Pull Request " in win.title
+    "github-pull-request-changes",
+    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/pulls"),
 )
 ctx_network_graph = Context(
-    "github-network-graph", func=lambda app, win: win.title.startswith("Network Graph")
+    "github-network-graph",
+    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/network"),
 )
 
 # USER-DEFINED VARIABLES
 
-repos = {"talon_community", "atom-talon", "NervanaSystems/coach"}
 lag = 0.2
-
-
-def in_repo_list(win_title):
-    for repo in repos:
-        if repo in win_title:
-            return True
-    return False
 
 
 # SITE-WIDE METHODS
