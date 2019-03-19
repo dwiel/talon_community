@@ -239,7 +239,7 @@ keymap = {
 }
 
 for action in ("get", "delete", "describe"):
-    for object in ("nodes", "jobs", "pods", "namespaces", "services", ""):
+    for object in ("nodes", "jobs", "pods", "namespaces", "services", "events", ""):
         if object:
             object = object + " "
         command = f"{KUBERNETES_PREFIX} {action} {object}"
