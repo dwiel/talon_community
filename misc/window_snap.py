@@ -14,10 +14,17 @@ Todo:
 """
 
 
+def sorted_screens():
+    """
+    return screens sorted by their left most edge, from left to right
+    """
+    return sorted(ui.screens(), key=lambda screen: screen.visible_rect.left)
+
+
 def move_screen(off):
     win = ui.active_window()
     src_screen = win.screen
-    screens = ui.screens()
+    screens = sorted_screens()
     dst_screen = screens[(screens.index(src_screen) + off) % len(screens)]
     if src_screen == dst_screen:
         return
@@ -42,10 +49,11 @@ def move_screen(off):
     win.rect = new_rectangle
     time.sleep(0.25)
     win.rect = new_rectangle
+    time.sleep(0.25)
+    win.rect = new_rectangle
 
 
 def resize_window(x, y, w, h):
-    print("Resizing: ", x, y, w, h)
     win = ui.active_window()
     rect = win.screen.visible_rect.copy()
     rect.x += rect.width * x
