@@ -1,7 +1,10 @@
-from talon.voice import Context, Key, Str
-from ..misc import basic_keys
-from ..utils import parse_words, text, is_filetype
 import string
+
+from talon.voice import Context, Key, Str, press
+from talon import clip
+
+from ..misc import basic_keys
+from ..utils import parse_words, text, is_filetype, paste_text
 
 FILETYPES = (".py",)
 
@@ -24,6 +27,19 @@ def format_text(fmt):
     return wrapper
 
 
+def add_alternative(m):
+    try:
+        with clip.capture() as s:
+            press("cmd-c")
+        existing = s.get()
+    except clip.NoChange:
+        return
+
+    paste_text(f"({existing} | )")
+    press('left')
+    text(m)
+
+
 ctx.keymap(
     {
         "key {basic_keys.modifiers}* {basic_keys.keymap}": key,
@@ -31,5 +47,6 @@ ctx.keymap(
         "talon map string <dgndictation>": format_text("'{0}': '{0}',"),
         "dragon dictation": "<dgndictation>",
         "stir": ["Str()(None)"] + [Key("left")] * 7,
+        "add alternative [<dgndictation>]": add_alternative,
     }
 )
