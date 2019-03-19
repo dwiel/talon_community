@@ -33,12 +33,24 @@ def url_matches_func(url_pattern):
     return func
 
 
+def focus_address_bar(m=None):
+    press("cmd-l")
+
+
 def normal_mode():
-    # get out of any text box
-    time.sleep(lag)
+    focus_address_bar(None)
+    time.sleep(0.1)
     press("escape")
     press("escape")
-    time.sleep(lag)
+    # time.sleep(0.1)
+    # This leaves the focus on the page at previous tab focused point, not the beginning of the page
+    press("tab")
+
+    # # get out of any text box
+    # time.sleep(lag)
+    # press("escape")
+    # press("escape")
+    # time.sleep(lag)
 
 
 def tridactyl_mode():
@@ -47,6 +59,8 @@ def tridactyl_mode():
         time.sleep(lag)
         press("ctrl-alt-escape")
         time.sleep(lag)
+    else:
+        press("escape")
 
 
 def page_mode():
@@ -55,8 +69,9 @@ def page_mode():
         press("ctrl-alt-escape")
         time.sleep(lag)
     elif using_vimium:
+        # google sheets can't handle multiple escapes here.
         press("escape")
-        press("escape")
+        time.sleep(lag)
         press("i")
 
 
