@@ -45,6 +45,7 @@ shrink_map = {
     "return": "ret",
     "package": "pkg",
     "python": "py",
+    "project": "proj",
     "random": "rand",
     "frequency": "freq",
     "operations": "ops",
