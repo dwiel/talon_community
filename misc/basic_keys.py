@@ -1,4 +1,4 @@
-from talon.voice import Context, press
+from talon.voice import Context, press, Key
 import string
 from ..utils import normalise_keys, insert
 
@@ -50,7 +50,7 @@ modifiers = normalise_keys(
     {
         "command": "cmd",
         "(control | troll)": "ctrl",
-        "shift": "shift",
+        "(shift | sky)": "shift",
         "(alt | option)": "alt",
     }
 )
@@ -102,6 +102,10 @@ def uppercase_letters(m):
 def press_keys(m):
     mods = get_modifiers(m)
     keys = get_keys(m)
+
+    if mods == ["shift"] and all(key in alphabet.values() for key in keys):
+        return uppercase_letters(m)
+
     if mods:
         press("-".join(mods + [keys[0]]))
         keys = keys[1:]
@@ -117,6 +121,9 @@ ctx.keymap(
         "{basic_keys.modifiers}* {basic_keys.digits}+": press_keys,
         "{basic_keys.modifiers}* {basic_keys.keys}+": press_keys,
         "(go | {basic_keys.modifiers}+) {basic_keys.arrows}+": press_keys,
+        "number {basic_keys.digits}+ [over]": press_keys,
+        "tarsh": Key("shift-tab"),
+        "tarpy": [Key("tab"), Key("tab")],
     }
 )
 ctx.set_list("alphabet", alphabet.keys())
