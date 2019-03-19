@@ -63,7 +63,9 @@ def focus_address_bar(m=None):
 def refocus_page(m):
     focus_address_bar(None)
     time.sleep(0.1)
-    # Escape button
+    press("escape")
+    press("escape")
+    # time.sleep(0.1)
     # This leaves the focus on the page at previous tab focused point, not the beginning of the page
     press("tab")
 
@@ -71,13 +73,18 @@ def refocus_page(m):
 def back(m):
     refocus_page(None)
     press("cmd-[")
-    refocus_page(None)
+    # refocus_page(None)
 
 
 def forward(m):
     refocus_page(None)
     press("cmd-]")
     refocus_page(None)
+
+
+def link(m):
+    refocus_page(None)
+    press("f")
 
 
 def jump_tab(m):
@@ -106,7 +113,7 @@ context.keymap(
         "tab (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)": jump_tab,
         "(end | rightmost) tab": Key("cmd-9"),
         "marco": Key("cmd-f"),
-        "next": Key("cmd-g"),
+        "marneck": Key("cmd-g"),
         "(last | prevous)": Key("cmd-shift-g"),
         "toggle dev tools": Key("cmd-alt-i"),
         "command menu": Key("cmd-shift-p"),
@@ -138,6 +145,8 @@ context.keymap(
         # "move tab left": Key("ctrl-shift-left"),
         # "move tab right": Key("ctrl-shift-right"),
         # "move tab left way": Key("ctrl-shift-down"),
+        # vimium
+        "link": link,
         "move tab left": browser.send_to_vimium("<<"),
         "move tab right": browser.send_to_vimium(">>"),
     }
