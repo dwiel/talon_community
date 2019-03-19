@@ -265,6 +265,8 @@ keymap = {
     "smear" + optional_numerals: jump_to_eol_and(jump_to_nearly_end_of_line),
     "trundle": toggle_comments,
     "trundle" + numerals: jump_to_bol_and(toggle_comments),
+    "indent": Key('cmd-]'),
+    "de-dent": Key('cmd-['),
     "jolt": duplicate,
     "snipline" + optional_numerals: jump_to_bol_and(snipline),
     "cut line" + optional_numerals: cut_line,
@@ -302,8 +304,8 @@ keymap = {
     "(search all files | mark all)": Key("cmd-shift-f"),
     "case sensitive": Key("alt-cmd-c"),
     "command pallet": Key(atom_command_pallet),
-    "cursor center": command("center-line:toggle"),
-    "cursor top": [command("center-line:toggle"), command("center-line:toggle")],
+    "(cursor | curr) (center | mid)": command("center-line:toggle"),
+    "(cursor | curr) top": [command("center-line:toggle"), command("center-line:toggle")],
     # 'cell pair': command('py-ast-edit:select-parent'),
     "(cell expand | cell pair)": Key("alt-up"),
     "cell contract": Key("alt-down"),
@@ -333,18 +335,19 @@ keymap = {
     "jet hub pull requests": command("open-on-github:pull-requests"),
     "jet hub branch compare": command("open-on-github:branch-compare"),
     # autocomplete-python
-    "go to definition": command("autocomplete-python:go-to-definition"),
+    "(go to | spring) (definition | def)": command("autocomplete-python:go-to-definition"),
     "show usages": command("autocomplete-python:show-usages"),
     "complete arguments": command("autocomplete-python:complete-arguments"),
     "python rename": command("autocomplete-python:rename"),
     "override method": command("autocomplete-python:override-method"),
     # symbols-view
-    "go to symbol": command("symbols-view:toggle-file-symbols"),
-    "go to symbol <dgndictation>": [
+    "(go to | spring) symbol": command("symbols-view:toggle-file-symbols"),
+    "(go to | spring) symbol <dgndictation>": [
         command("symbols-view:toggle-file-symbols"),
         lambda m: time.sleep(0.5),
         text,
         Key("enter"),
+        command("center-line:toggle"),
     ],
     # folding
     "fold all": command("editor:fold-all"),
@@ -352,13 +355,16 @@ keymap = {
     "fold [current row]": command("editor:fold-current-row"),
     "unfold [current row]": command("editor:unfold-current-row"),
     # project
-    "add project": command("application:add-project-folder"),
-    "remove project": command("tree view remove project folder"),
+    "add project [folder]": command("application:add-project-folder"),
+    "remove project [folder]": command("tree view remove project folder"),
     # blacken
     "blacken": command("atom black blacken"),
     # reflow
     "reflow": Key("cmd-alt-q"),
     "replace [left of] equals [with] return": replace_left_of_equals_with_return,
+    # cursor-history
+    "(cursor | curr) (previous | preev)": command("cursor history prev"),
+    "(cursor | curr) next": command("cursor history next"),
     # config
     "edit snippets": command("application open snippets"),
     "edit key map": command("application open keymap"),
