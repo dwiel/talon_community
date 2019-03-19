@@ -102,6 +102,13 @@ def repo_switch_branch(m):
     press("w")
 
 
+def repo_copy_git_repo(m):
+    # git@github.com:vitchyr/rlkit.git
+    url = browser.get_url()
+    git_url = f"git@github.com:{re.fullmatch('https://github.com/([^/]*/[^/]*).*', url).group(1)}.git"
+    clip.set(git_url)
+
+
 # ISSUES AND PULL REQUESTS LISTS METHODS
 
 
@@ -232,6 +239,7 @@ ctx_repo.keymap(
         "[go to] wiki": repo_goto_wiki,
         "(find file | peach)": repo_find_file,
         "switch [(branch | tag)]": repo_switch_branch,
+        "(clone | copy) repo [url]": repo_copy_git_repo,
         # TODO: create a site wide context
         "jet search": search,
         "notifications": goto_notifications,
