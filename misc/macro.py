@@ -18,11 +18,10 @@ def macro_record(j):
     global macro_recording
 
     if macro_recording:
-        if j["cmd"] == "p.end":
+        if j["cmd"] == "p.end" and j["grammar"] == "talon":
             new = talon.last_actions
-            if new != last_actions:
-                macro.extend(new)
-                last_actions = new
+            macro.extend(new)
+            last_actions = new
 
 
 def macro_start(m):
