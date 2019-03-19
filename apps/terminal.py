@@ -51,7 +51,11 @@ def cd_directory_shortcut(m):
         press("left")
 
 
-servers = json.load(resource.open("servers.json"))
+try:
+    servers = json.load(resource.open("servers.json"))
+except Exception as e:
+    print(f"error opening servers.json: {e}")
+    servers = {}
 
 
 def get_server(m):
@@ -74,10 +78,17 @@ def ssh_copy_id_servers(m):
     insert(f"mosh {get_server(m)}")
 
 
+def new_server(m):
+    press("cmd-d")
+    insert(f"ssh {get_server(m)}")
+    press("enter")
+
+
 keymap = {
     "lefty": Key("ctrl-a"),
     "ricky": Key("ctrl-e"),
     "(pain new | split vertical)": Key("cmd-d"),
+    "new {global_terminal.servers}": new_server,
     # talon
     "tail talon": "tail -f ~/.talon/talon.log",
     "talon reple": "~/.talon/bin/repl",
