@@ -1,6 +1,6 @@
 import time
 
-from talon import ui, tap
+from talon import ui
 from talon.voice import Context
 
 from ..config import config
