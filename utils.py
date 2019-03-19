@@ -10,6 +10,8 @@ import os
 from .bundle_groups import TERMINAL_BUNDLES, FILETYPE_SENSITIVE_BUNDLES
 
 VIM_IDENTIFIER = "(Vim)"
+INCLUDE_TEENS_IN_NUMERALS = False
+INCLUDE_TENS_IN_NUMERALS = False
 
 # mapping = json.load(open(os.path.join(os.path.dirname(__file__), "replace_words.json")))
 mapping = json.load(resource.open("replace_words.json"))
@@ -77,7 +79,7 @@ def parse_words(m, natural=False):
 def join_words(words, sep=" "):
     out = ""
     for i, word in enumerate(words):
-        if i > 0 and word not in punctuation and out[-1] not in ('/-'):
+        if i > 0 and word not in punctuation and out[-1] not in ("/-"):
             out += sep
         out += str(word)
     return out
@@ -135,9 +137,13 @@ def rot13(i, word, _):
     return out
 
 
-numeral_map = dict((str(n), n) for n in range(0, 20))
-for n in range(20, 101, 10):
-    numeral_map[str(n)] = n
+numeral_map = dict((str(n), n) for n in range(0, 10))
+if INCLUDE_TEENS_IN_NUMERALS:
+    for n in range(10, 20, 1):
+        numeral_map[str(n)] = n
+if INCLUDE_TENS_IN_NUMERALS:
+    for n in range(20, 101, 10):
+        numeral_map[str(n)] = n
 for n in range(100, 1001, 100):
     numeral_map[str(n)] = n
 for n in range(1000, 10001, 1000):
