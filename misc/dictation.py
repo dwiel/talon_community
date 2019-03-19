@@ -1,3 +1,11 @@
+"""
+when someone has the time to help debug, message aegis
+
+    aegis [11:40 AM]
+    You can do vars(user.whatever.speech_toggle.dictation_group) while you’re in dictation mode
+    Where whatever is the intermediate python
+"""
+
 from talon.voice import Str, Key
 from talon import ui
 
