@@ -3,7 +3,7 @@ import time
 from talon.voice import Context, press
 from talon import clip
 from .. import utils
-from ..utils import is_in_bundles, normalise_keys
+from ..utils import is_in_bundles, normalise_keys, paste_text
 from ..bundle_groups import BROWSER_BUNDLES
 
 EMOJI_BUNDLES = ("com.tinyspeck.slackmacgap", *BROWSER_BUNDLES)
@@ -18,6 +18,7 @@ emojis = normalise_keys(
         "crossed fingers": ":crossed_fingers:",
         "fingers": ":crossed_fingers:",
         "pray": ":pray:",
+        "shrug": lambda x: paste_text("¯\_(ツ)_/¯"),
     }
 )
 
