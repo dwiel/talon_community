@@ -6,9 +6,6 @@ A single source of application-specific scripts
 
 Clone a fork of this repository in a directory inside of your `user` directory, such as `community`.
 
-### lexjacobs fork notes:
-Alex is keeping master more or less in line with upstream/master. He is committing his incremental updates to the 'lex' branch
-
 ## Installation
 
 If you wish to develop on these scripts, run in the project root:
