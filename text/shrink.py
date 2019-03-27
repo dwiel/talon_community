@@ -1,7 +1,7 @@
 from talon.voice import Context, Str
 from ..utils import alternatives
 
-ctx = Context("words")
+ctx = Context("shrink")
 
 
 def shrink_word(m):
