@@ -93,13 +93,18 @@ templates = {
     <h3>contexts</h3>
     <div class="contents">
     <table>
-    {% for index, context in contexts.items() %}
+    {% for index, context in kwargs['contexts'] %}
         <tr>
             <td>{{ index }}</td><td>{{ context.name }}</td>
-            <td>{% if context in actives %}✅{% else %}❌{% endif %} </td>
+            <td>{% if context in kwargs['actives'] %}✅{% else %}❌{% endif %} </td>
         </tr>
     {% endfor %}
     </table>
+    <footer>
+    {% if kwargs['current_page'] %}
+        page {{ kwargs['current_page'] }} of {{ kwargs['total_pages'] }}
+    {% endif %}
+    </footer>
     </div>
     """,
 }
@@ -126,19 +131,43 @@ def create_context_mapping(context):
 
 
 def show_contexts(_):
-    contexts = OrderedDict()
+    contexts = []
 
     keymap = {"(0 | quit | exit | escape)": lambda x: close_webview()}
 
     # grab all contexts and bind each to numbers (only for the webview)
     for idx, context in enumerate(voice.talon.subs.values()):
-        contexts[idx + 1] = context
-        keymap.update({str(idx + 1): create_context_mapping(context)})
+        contexts.append((idx + 1, context))
+        keymap.update({"show " + str(idx + 1): create_context_mapping(context)})
+
+    pages = build_pages(contexts)
+    print(pages)
+
+    for idx, items in enumerate(pages):
+        page = idx + 1
+        keymap.update(
+            {
+                "page "
+                + str(page): create_render_page(
+                    templates["contexts"],
+                    contexts=items,
+                    actives=voice.talon.active,
+                    current_page=page,
+                    total_pages=len(pages),
+                )
+            }
+        )
+
+    render_page(
+        templates["contexts"],
+        contexts=pages[0],
+        actives=voice.talon.active,
+        current_page=1,
+        total_pages=len(pages),
+    )
 
     webview_context.keymap(keymap)
     webview_context.load()
-
-    webview.render(templates["contexts"], contexts=contexts, actives=voice.talon.active)
     webview.show()
 
 
@@ -202,6 +231,20 @@ def format_actions(actions):
     return [format_action(a) for a in actions]
 
 
+def build_pages(items):
+    total_pages = int(len(items) // MAX_ITEMS)
+    if len(items) % MAX_ITEMS > 0:
+        total_pages += 1
+
+    pages = []
+
+    # add elements to each page based on the page index
+    for page in range(1, total_pages + 1):
+        pages.append(items[((page - 1) * MAX_ITEMS) : (page * MAX_ITEMS)])
+
+    return pages
+
+
 def render_page(template, **kwargs):
     webview.render(template, kwargs=kwargs)
 
@@ -223,17 +266,9 @@ def show_commands(context):
         "down": Key("pgdown"),
     }
 
-    total_pages = int(len(mapping) // MAX_ITEMS)
-    if len(mapping) % MAX_ITEMS > 0:
-        total_pages += 1
+    pages = build_pages(mapping)
 
-    pages = []
-
-    # add elements to each page based on the page index
-    for page in range(1, total_pages + 1):
-        pages.append(mapping[((page - 1) * MAX_ITEMS) : (page * MAX_ITEMS)])
-
-        # create the commands to navigate through pages
+    # create the commands to navigate through pages
     for idx, items in enumerate(pages):
         page = idx + 1
         keymap.update(
@@ -244,7 +279,7 @@ def show_commands(context):
                     context_name=context.name,
                     mapping=items,
                     current_page=page,
-                    total_pages=total_pages,
+                    total_pages=len(pages),
                 )
             }
         )
@@ -252,9 +287,9 @@ def show_commands(context):
     render_page(
         templates["commands"],
         context_name=context.name,
-        mapping=pages[0],
+        mapping=(pages[0] if pages else []),
         current_page=1,
-        total_pages=total_pages,
+        total_pages=len(pages),
     )
 
     webview_context.keymap(keymap)
