@@ -6,7 +6,6 @@ from talon.voice import Context, Key
 from talon.webview import Webview
 from . import basic_keys
 
-
 # reusable constant for font size (in pixels), to use in calculations
 FONT_SIZE = 12
 # border spacing, in pixels
@@ -178,33 +177,29 @@ def find_and_show(m):
 
 
 def format_action(action):
-    actions = action if isinstance(action, (list, tuple)) else [action]
-
-    pretty = []
-    for action in actions:
-        if isinstance(action, talon.voice.Key):
-            keys = action.data.split(" ")
-            if len(keys) > 1 and len(set(keys)) == 1:
-                pretty.append(f"key({keys[0]}) * {len(keys)}")
-            else:
-                pretty.append(f"key({action.data})")
-        elif isinstance(action, talon.voice.Str):
-            pretty.append(f'"{action.data}"')
-        elif isinstance(action, talon.voice.Rep):
-            pretty.append(f'"{action.data}"')
-        elif isinstance(action, voice.RepPhrase):
-            pretty.append(f"repeat_phrase({action.data})")
-        elif isinstance(action, str):
-            pretty.append(f'"{action}"')
-        elif callable(action):
-            pretty.append(f"{action.__name__}()")
+    if isinstance(action, talon.voice.Key):
+        keys = action.data.split(" ")
+        if len(keys) > 1 and len(set(keys)) == 1:
+            return f"key({keys[0]}) * {len(keys)}"
         else:
-            pretty.append(str(action))
+            return f"key({action.data})"
+    elif isinstance(action, talon.voice.Str):
+        return f'"{action.data}"'
+    elif isinstance(action, talon.voice.Rep):
+        return f'"{action.data}"'
+    elif isinstance(action, voice.RepPhrase):
+        return f"repeat_phrase({action.data})"
+    elif isinstance(action, str):
+        return f'"{action}"'
+    elif callable(action):
+        return f"{action.__name__}()"
+    else:
+        return str(action)
 
-    if len(pretty) == 1:
-        pretty = pretty[0]
 
-    return pretty
+def format_actions(actions):
+    actions = actions if isinstance(actions, (list, tuple)) else [actions]
+    return [format_action(a) for a in actions]
 
 
 def render_page(context, mapping, current_page, total_pages):
@@ -226,7 +221,7 @@ def show_commands(context):
     mapping = []
     for trigger in context.triggers.keys():
         action = context.mapping[context.triggers[trigger]]
-        mapping.append((trigger, format_action(action)))
+        mapping.append((trigger, format_actions(action)))
 
     keymap = {
         "(0 | quit | exit | escape)": lambda x: close_webview(),
