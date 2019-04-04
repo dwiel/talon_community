@@ -220,8 +220,8 @@ def show_commands(context):
     # what you say is stored as a trigger
     mapping = []
     for trigger in context.triggers.keys():
-        action = context.mapping[context.triggers[trigger]]
-        mapping.append((trigger, format_actions(action)))
+        actions = context.mapping[context.triggers[trigger]]
+        mapping.append((trigger, format_actions(actions)))
 
     keymap = {
         "(0 | quit | exit | escape)": lambda x: close_webview(),
