@@ -74,16 +74,16 @@ templates = {
     """,
     "commands": css_template
     + """
-    <h3>{{ context_name }} commands</h3>
+    <h3>{{ kwargs['context_name'] }} commands</h3>
     <div class="contents" overflow=scroll max-height=8px>
     <table>
-    {% for trigger, mapped_to in mapping %}
+    {% for trigger, mapped_to in kwargs['mapping'] %}
         <tr><td>{{ trigger }}</td><td>{{ mapped_to|e }}</td></tr>
     {% endfor %}
     </table>
     <footer>
-    {% if current_page %}
-        page {{ current_page }} of {{ total_pages }}
+    {% if kwargs['current_page'] %}
+        page {{ kwargs['current_page'] }} of {{ kwargs['total_pages'] }}
     {% endif %}
     </footer>
     </div>
@@ -202,18 +202,12 @@ def format_actions(actions):
     return [format_action(a) for a in actions]
 
 
-def render_page(context, mapping, current_page, total_pages):
-    webview.render(
-        templates["commands"],
-        context_name=context.name,
-        mapping=mapping,
-        current_page=current_page,
-        total_pages=total_pages,
-    )
+def render_page(template, **kwargs):
+    webview.render(template, kwargs=kwargs)
 
 
-def create_render_page(context, items, current_page, total_pages):
-    return lambda _: render_page(context, items, current_page, total_pages)
+def create_render_page(template, **kwargs):
+    return lambda _: render_page(template, **kwargs)
 
 
 def show_commands(context):
@@ -243,10 +237,25 @@ def show_commands(context):
     for idx, items in enumerate(pages):
         page = idx + 1
         keymap.update(
-            {"page " + str(page): create_render_page(context, items, page, total_pages)}
+            {
+                "page "
+                + str(page): create_render_page(
+                    templates["commands"],
+                    context_name=context.name,
+                    mapping=items,
+                    current_page=page,
+                    total_pages=total_pages,
+                )
+            }
         )
 
-    render_page(context, pages[0], 1, total_pages)
+    render_page(
+        templates["commands"],
+        context_name=context.name,
+        mapping=pages[0],
+        current_page=1,
+        total_pages=total_pages,
+    )
 
     webview_context.keymap(keymap)
     webview_context.load()
