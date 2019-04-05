@@ -66,7 +66,7 @@ templates = {
     <h3>alphabet</h3>
     <div class="contents">
     <table>
-    {% for word, letter in alphabet %}
+    {% for word, letter in kwargs['alphabet'] %}
         <tr><td>{{ letter }}</td><td>{{ word }}</td></tr>
     {% endfor %}
     </table>
@@ -110,17 +110,44 @@ templates = {
 }
 
 
-def show_alphabet(_):
-    alphabet = list(zip(basic_keys.alpha_alt, string.ascii_lowercase))
-    webview_context.keymap({"cancel": lambda x: close_webview()})
+def render_page(template, **kwargs):
+    webview.render(template, kwargs=kwargs)
+
+
+def create_render_page(template, **kwargs):
+    return lambda _: render_page(template, **kwargs)
+
+
+def build_pages(items):
+    total_pages = int(len(items) // MAX_ITEMS)
+    if len(items) % MAX_ITEMS > 0:
+        total_pages += 1
+
+    pages = []
+
+    # add elements to each page based on the page index
+    for page in range(1, total_pages + 1):
+        pages.append(items[((page - 1) * MAX_ITEMS) : (page * MAX_ITEMS)])
+
+    return pages
+
+
+def render_webview(template, keymap, **kwargs):
+    keymap.update({"cancel": lambda x: close_webview()})
+    webview_context.keymap(keymap)
     webview_context.load()
-    webview.render(templates["alpha"], alphabet=alphabet)
+    render_page(template, **kwargs)
     webview.show()
 
 
 def close_webview():
     webview.hide()
     webview_context.unload()
+
+
+def show_alphabet(_):
+    alphabet = list(zip(basic_keys.alpha_alt, string.ascii_lowercase))
+    render_webview(templates["alpha"], {}, alphabet=alphabet)
 
 
 # needed because of how closures work in Python
@@ -153,18 +180,14 @@ def show_contexts(_):
             }
         )
 
-    render_page(
+    render_webview(
         templates["contexts"],
+        keymap,
         contexts=pages[0],
         actives=voice.talon.active,
         current_page=1,
         total_pages=len(pages),
     )
-
-    keymap.update({"cancel": lambda x: close_webview()})
-    webview_context.keymap(keymap)
-    webview_context.load()
-    webview.show()
 
 
 mapping = {
@@ -227,28 +250,6 @@ def format_actions(actions):
     return [format_action(a) for a in actions]
 
 
-def build_pages(items):
-    total_pages = int(len(items) // MAX_ITEMS)
-    if len(items) % MAX_ITEMS > 0:
-        total_pages += 1
-
-    pages = []
-
-    # add elements to each page based on the page index
-    for page in range(1, total_pages + 1):
-        pages.append(items[((page - 1) * MAX_ITEMS) : (page * MAX_ITEMS)])
-
-    return pages
-
-
-def render_page(template, **kwargs):
-    webview.render(template, kwargs=kwargs)
-
-
-def create_render_page(template, **kwargs):
-    return lambda _: render_page(template, **kwargs)
-
-
 def show_commands(context):
     # what you say is stored as a trigger
     mapping = []
@@ -261,32 +262,27 @@ def show_commands(context):
 
     # create the commands to navigate through pages
     for idx, items in enumerate(pages):
-        page = idx + 1
         keymap.update(
             {
                 "page "
-                + str(page): create_render_page(
+                + str(idx + 1): create_render_page(
                     templates["commands"],
                     context_name=context.name,
                     mapping=items,
-                    current_page=page,
+                    current_page=idx + 1,
                     total_pages=len(pages),
                 )
             }
         )
 
-    render_page(
+    render_webview(
         templates["commands"],
+        keymap,
         context_name=context.name,
         mapping=(pages[0] if pages else []),
         current_page=1,
         total_pages=len(pages),
     )
-
-    keymap.update({"cancel": lambda x: close_webview()})
-    webview_context.keymap(keymap)
-    webview_context.load()
-    webview.show()
 
 
 keymap = {
