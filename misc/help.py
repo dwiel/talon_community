@@ -269,7 +269,7 @@ def format_action(action):
 
 def format_actions(actions):
     actions = actions if isinstance(actions, (list, tuple)) else [actions]
-    return [format_action(a) for a in actions]
+    return ", ".join([format_action(a) for a in actions])
 
 
 def render_commands_webview(m):
