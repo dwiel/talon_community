@@ -50,6 +50,10 @@ css_template = (
         font-style: italic;
     }
 
+    .inactive {
+        color: #858e96;
+    }
+
     td {
         text-align: left;
         margin: 0;
@@ -104,12 +108,17 @@ templates = {
     <div class="contents">
     <table>
     {% for index, context in kwargs['contexts'] %}
+    {% if context in kwargs['actives'] %}
         <tr>
-            <td class="pick">🔊help {{ index }}</td><td>{{ context.name }}</td>
-            <td>{% if context in kwargs['actives'] %}✅{% else %}❌{% endif %} </td>
+            <td class="pick">🔊 help {{ index }}</td><td>{{ context.name }}</td>
         </tr>
+    {% else %}
+        <tr>
+            <td class="pick inactive">🔊 help{{ index }}</td><td class="inactive">{{ context.name }}</td>
+        </tr>
+    {% endif %}
     {% endfor %}
-    <tr><td colspan="3" class="pick cancel">🔊 cancel</td></tr>
+    <tr><td colspan="2" class="pick cancel">🔊 cancel</td></tr>
     </table>
     <footer>
     {% if kwargs['current_page'] %}
