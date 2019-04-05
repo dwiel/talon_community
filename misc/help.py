@@ -145,17 +145,17 @@ def close_webview():
     webview_context.unload()
 
 
-def show_alphabet(_):
+def render_alphabet_webview(_):
     alphabet = list(zip(basic_keys.alpha_alt, string.ascii_lowercase))
     render_webview(templates["alpha"], {}, alphabet=alphabet)
 
 
 # needed because of how closures work in Python
 def create_context_mapping(context):
-    return lambda _: show_commands(context)
+    return lambda _: render_commands_webview(context)
 
 
-def show_contexts(_):
+def render_contexts_webview(_):
     contexts = []
     keymap = {}
 
@@ -189,14 +189,20 @@ def show_contexts(_):
     )
 
 
-mapping = {
+# overrides handle edge cases:
+# - commonly misheard contexts
+# - context names that are homophones
+# - alternative pronunciations for convenience
+overrides = {
     "pearl": "perl",
-    "i term": "iterm",
+    "icontrol": "eyecontrol",
     "lack": "slack",
     "chrome": "googlechrome",
     "get": "git",
     "docs": "googledocs",
     "google docs": "googledocs",
+    "see": "c",
+    "adam": "atom",
 }
 
 
@@ -205,22 +211,19 @@ def clean_word(word):
     return str(word).split("\\", 1)[0]
 
 
-def find_and_show(m):
-    words = [clean_word(w) for w in m.dgndictation[0]._words]
-
+def normalize_words(words):
+    words = [clean_word(w) for w in words]
     find = "".join(words).lower().replace(" ", "")
-    find = mapping.get(find, find)
+    return overrides.get(find, find)
 
-    contexts = {k.lower(): v for k, v in voice.talon.subs.items()}
 
-    if find in contexts:
-        show_commands(contexts[find])
-        return
+def normalize_context(context):
+    return context.replace("_", "").lower()
 
-    # maybe context name is snake case
-    find = "_".join(words).lower()
-    if find in contexts:
-        show_commands(contexts[find])
+
+def get_context(m):
+    contexts = {normalize_context(k): v for k, v in voice.talon.subs.items()}
+    return contexts.get(normalize_words(m.dgndictation[0]._words))
 
 
 def format_action(action):
@@ -249,7 +252,11 @@ def format_actions(actions):
     return [format_action(a) for a in actions]
 
 
-def show_commands(context):
+def render_commands_webview(m):
+    context = get_context(m)
+    if not context:
+        return
+
     # what you say is stored as a trigger
     mapping = []
     for trigger in context.triggers.keys():
@@ -285,9 +292,9 @@ def show_commands(context):
 
 
 keymap = {
-    "help alphabet": show_alphabet,
-    "help [commands] <dgndictation>": find_and_show,
-    "help context": show_contexts,
+    "help alphabet": render_alphabet_webview,
+    "help [commands] <dgndictation>": render_commands_webview,
+    "help context": render_contexts_webview,
 }
 
 ctx.keymap(keymap)
