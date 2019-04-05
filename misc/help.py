@@ -112,10 +112,8 @@ templates = {
 
 def show_alphabet(_):
     alphabet = list(zip(basic_keys.alpha_alt, string.ascii_lowercase))
-
-    webview_context.keymap({"(0 | quit | exit | escape)": lambda x: close_webview()})
+    webview_context.keymap({"cancel": lambda x: close_webview()})
     webview_context.load()
-
     webview.render(templates["alpha"], alphabet=alphabet)
     webview.show()
 
@@ -132,16 +130,13 @@ def create_context_mapping(context):
 
 def show_contexts(_):
     contexts = []
+    keymap = {}
 
-    keymap = {"(0 | quit | exit | escape)": lambda x: close_webview()}
-
-    # grab all contexts and bind each to numbers (only for the webview)
     for idx, context in enumerate(voice.talon.subs.values()):
         contexts.append((idx + 1, context))
         keymap.update({"show " + str(idx + 1): create_context_mapping(context)})
 
     pages = build_pages(contexts)
-    print(pages)
 
     for idx, items in enumerate(pages):
         page = idx + 1
@@ -166,6 +161,7 @@ def show_contexts(_):
         total_pages=len(pages),
     )
 
+    keymap.update({"cancel": lambda x: close_webview()})
     webview_context.keymap(keymap)
     webview_context.load()
     webview.show()
@@ -199,7 +195,7 @@ def find_and_show(m):
         show_commands(contexts[find])
         return
 
-        # maybe context name is snake case
+    # maybe context name is snake case
     find = "_".join(words).lower()
     if find in contexts:
         show_commands(contexts[find])
@@ -260,13 +256,8 @@ def show_commands(context):
         actions = context.mapping[context.triggers[trigger]]
         mapping.append((trigger, format_actions(actions)))
 
-    keymap = {
-        "(0 | quit | exit | escape)": lambda x: close_webview(),
-        "up": Key("pgup"),
-        "down": Key("pgdown"),
-    }
-
     pages = build_pages(mapping)
+    keymap = {}
 
     # create the commands to navigate through pages
     for idx, items in enumerate(pages):
@@ -292,6 +283,7 @@ def show_commands(context):
         total_pages=len(pages),
     )
 
+    keymap.update({"cancel": lambda x: close_webview()})
     webview_context.keymap(keymap)
     webview_context.load()
     webview.show()
