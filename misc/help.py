@@ -166,15 +166,14 @@ def show_contexts(_):
     pages = build_pages(contexts)
 
     for idx, items in enumerate(pages):
-        page = idx + 1
         keymap.update(
             {
                 "page "
-                + str(page): create_render_page(
+                + str(idx + 1): create_render_page(
                     templates["contexts"],
                     contexts=items,
                     actives=voice.talon.active,
-                    current_page=page,
+                    current_page=idx + 1,
                     total_pages=len(pages),
                 )
             }
