@@ -9,7 +9,7 @@ from . import basic_keys
 # reusable constant for font size (in pixels), to use in calculations
 FONT_SIZE = 12
 # border spacing, in pixels
-BORDER_SIZE = 2
+BORDER_SIZE = int(FONT_SIZE / 6)
 
 main = ui.main_screen().visible_rect
 # need to account for header and footer / pagination links, hence '-2'
