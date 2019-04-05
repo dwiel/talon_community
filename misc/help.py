@@ -41,6 +41,15 @@ css_template = (
         width: 100%;
     }
 
+    .cancel {
+        text-align: center;
+    }
+
+    .pick {
+        font-weight: normal;
+        font-style: italic;
+    }
+
     td {
         text-align: left;
         margin: 0;
@@ -78,8 +87,9 @@ templates = {
     <div class="contents" overflow=scroll max-height=8px>
     <table>
     {% for trigger, mapped_to in kwargs['mapping'] %}
-        <tr><td>{{ trigger }}</td><td>{{ mapped_to|e }}</td></tr>
+        <tr><td class="pick">🔊 {{ trigger }}</td><td>{{ mapped_to|e }}</td></tr>
     {% endfor %}
+    <tr><td colspan="2" class="pick cancel">🔊 cancel</td></tr>
     </table>
     <footer>
     {% if kwargs['current_page'] %}
@@ -95,10 +105,11 @@ templates = {
     <table>
     {% for index, context in kwargs['contexts'] %}
         <tr>
-            <td>{{ index }}</td><td>{{ context.name }}</td>
+            <td class="pick">🔊help {{ index }}</td><td>{{ context.name }}</td>
             <td>{% if context in kwargs['actives'] %}✅{% else %}❌{% endif %} </td>
         </tr>
     {% endfor %}
+    <tr><td colspan="3" class="pick cancel">🔊 cancel</td></tr>
     </table>
     <footer>
     {% if kwargs['current_page'] %}
@@ -161,7 +172,7 @@ def render_contexts_webview(_):
 
     for idx, context in enumerate(voice.talon.subs.values()):
         contexts.append((idx + 1, context))
-        keymap.update({"show " + str(idx + 1): create_context_mapping(context)})
+        keymap.update({"help " + str(idx + 1): create_context_mapping(context)})
 
     pages = build_pages(contexts)
 
