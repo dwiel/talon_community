@@ -15,8 +15,7 @@ context = Context("GoogleChrome", bundle="com.google.Chrome")
 def get_url(win=None):
     if win is None:
         win = ui.active_window()
-    return tuple(win.children.find(AXTitle="Address and search bar"))[0].AXValue
-    # win.children.find(AXTitle='Address and search bar')[0].AXValue
+    return tuple(win.children.find(AXRole='AXTextField')[0].AXValue)[0].AXValue
 
 
 def set_url(url, win=None):
