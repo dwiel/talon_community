@@ -17,7 +17,21 @@ MAX_ITEMS = int(main.height // (FONT_SIZE + 2 * BORDER_SIZE) - 2)
 ctx = Context("help")
 webview_context = Context("web_view")
 
+
+def on_click(data):
+    if data["id"] == "cancel":
+        return close_webview()
+    elif "page" in data["id"]:
+        context, _, page = data["id"].split("-")
+        if context == "contexts":
+            return render_contexts_help(_, int(page))
+        return render_commands_webview(get_context(context), int(page))
+    else:
+        return render_commands_webview(voice.talon.subs.get(data["id"]))
+
+
 webview = Webview()
+webview.register("click", on_click)
 
 css_template = (
     """
@@ -49,7 +63,13 @@ css_template = (
         font-style: italic;
     }
 
-    .inactive {
+    .item:hover {
+        background-color: #858e96;
+        color: white;
+        cursor: pointer;
+    }
+
+    tr.inactive {
         color: #858e96;
     }
 
@@ -62,16 +82,19 @@ css_template = (
         white-space: nowrap;
     }
 
-    footer {
-        background-color: #696969;
+    button {
+        padding: 0;
+        border: none;
+        background: none;
         color: white;
-        font-weight: bold;
+        font-size: """
+    + str(round(FONT_SIZE * 0.8))
+    + """px;
     }
 </style>
 """
 )
 
-# TODO: use a master template
 templates = {
     "alpha": css_template
     + """
@@ -81,49 +104,56 @@ templates = {
     {% for word, letter in kwargs['alphabet'] %}
         <tr><td>{{ letter }}</td><td>{{ word }}</td></tr>
     {% endfor %}
+    <tr id="cancel" class="item events event-click"><td colspan="2" class="pick cancel">🔊 cancel</td></tr>
     </table>
     </div>
     """,
     "commands": css_template
     + """
-    <h3>{{ kwargs['context_name'] }} commands</h3>
+    <h3>
+    {% if kwargs['current_page'] | int > 1 %}
+        <button type="button" style="float: left" class="item events event-click" id="{{ kwargs['context_name'] }}-page-{{ kwargs['current_page'] | int - 1 }}">prev</button>
+    {% endif %}
+    {{ kwargs['context_name'] }} commands
+    {% if kwargs['total_pages'] | int > 1 %}
+        <small> - page {{ kwargs['current_page'] }} of {{ kwargs['total_pages'] }}</small>
+    {% endif %}
+    {% if kwargs['current_page'] | int < kwargs['total_pages'] %}
+        <button type="button" style="float: right" class="item events event-click" id="{{ kwargs['context_name'] }}-page-{{ kwargs['current_page'] | int + 1 }}">next</button>
+    {% endif %}
+    </h3>
     <div class="contents" overflow=scroll max-height=8px>
     <table>
     {% for trigger, mapped_to in kwargs['mapping'] %}
         <tr><td class="pick">🔊 {{ trigger }}</td><td>{{ mapped_to|e }}</td></tr>
     {% endfor %}
-    <tr><td colspan="2" class="pick cancel">🔊 cancel</td></tr>
+    <tr id="cancel" class="item events event-click"><td colspan="2" class="pick cancel">🔊 cancel</td></tr>
     </table>
-    <footer>
-    {% if kwargs['current_page'] %}
-        page {{ kwargs['current_page'] }} of {{ kwargs['total_pages'] }}
-    {% endif %}
-    </footer>
     </div>
     """,
     "contexts": css_template
     + """
-    <h3>contexts</h3>
+    <h3>
+    {% if kwargs['current_page'] | int > 1 %}
+        <button type="button" style="float: left" class="item events event-click" id="contexts-page-{{ kwargs['current_page'] | int - 1 }}"><</button>
+    {% endif %}
+    contexts
+    {% if kwargs['total_pages'] | int > 1 %}
+    <small> - {{ kwargs['current_page'] }} of {{ kwargs['total_pages'] }}</small>
+    {% endif %}
+    {% if kwargs['current_page'] | int < kwargs['total_pages'] %}
+        <button type="button" style="float: right" class="item events event-click" id="contexts-page-{{ kwargs['current_page'] | int + 1 }}">></button>
+    {% endif %}
+    </h3>
     <div class="contents">
     <table>
     {% for index, context in kwargs['contexts'] %}
-    {% if context in kwargs['actives'] %}
-        <tr>
-            <td class="pick">🔊 help {{ index }}</td><td>{{ context.name }}</td>
-        </tr>
-    {% else %}
-        <tr>
-            <td class="pick inactive">🔊 help{{ index }}</td><td class="inactive">{{ context.name }}</td>
-        </tr>
-    {% endif %}
+    <tr id="{{ context.name }}" class="item events event-click{% if context not in kwargs['actives'] %} inactive{% endif %}">
+        <td class="pick">🔊 help {{ index }}</td><td>{{ context.name }}</td>
+    </tr>
     {% endfor %}
-    <tr><td colspan="2" class="pick cancel">🔊 cancel</td></tr>
+    <tr id="cancel" class="item events event-click"><td colspan="2" class="pick cancel">🔊 cancel</td></tr>
     </table>
-    <footer>
-    {% if kwargs['current_page'] %}
-        page {{ kwargs['current_page'] }} of {{ kwargs['total_pages'] }}
-    {% endif %}
-    </footer>
     </div>
     """,
 }
@@ -164,7 +194,7 @@ def close_webview():
     webview_context.unload()
 
 
-def render_alphabet_webview(_):
+def render_alphabet_help(_):
     alphabet = list(zip(basic_keys.alpha_alt, string.ascii_lowercase))
     render_webview(templates["alpha"], {}, alphabet=alphabet)
 
@@ -174,7 +204,7 @@ def create_context_mapping(context):
     return lambda _: render_commands_webview(context)
 
 
-def render_contexts_webview(_):
+def render_contexts_help(_, target_page=1):
     contexts = []
     keymap = {}
 
@@ -201,9 +231,9 @@ def render_contexts_webview(_):
     render_webview(
         templates["contexts"],
         keymap,
-        contexts=pages[0],
+        contexts=pages[target_page - 1],
         actives=voice.talon.active,
-        current_page=1,
+        current_page=target_page,
         total_pages=len(pages),
     )
 
@@ -240,9 +270,9 @@ def normalize_context(context):
     return context.replace("_", "").lower()
 
 
-def get_context(m):
+def get_context(context_name):
     contexts = {normalize_context(k): v for k, v in voice.talon.subs.items()}
-    return contexts.get(normalize_words(m.dgndictation[0]._words))
+    return contexts.get(normalize_words(context_name))
 
 
 def format_action(action):
@@ -271,10 +301,15 @@ def format_actions(actions):
     return ", ".join([format_action(a) for a in actions])
 
 
-def render_commands_webview(m):
-    context = get_context(m)
+def render_commands_help(m):
+    context = get_context(m.dgndictation[0]._words)
     if not context:
         return
+
+    return render_commands_webview(context)
+
+
+def render_commands_webview(context, target_page=1):
 
     # what you say is stored as a trigger
     mapping = []
@@ -304,16 +339,16 @@ def render_commands_webview(m):
         templates["commands"],
         keymap,
         context_name=context.name,
-        mapping=(pages[0] if pages else []),
-        current_page=1,
+        mapping=(pages[target_page - 1] if pages else []),
+        current_page=target_page,
         total_pages=len(pages),
     )
 
 
 keymap = {
-    "help alphabet": render_alphabet_webview,
-    "help [commands] <dgndictation>": render_commands_webview,
-    "help context": render_contexts_webview,
+    "help alphabet": render_alphabet_help,
+    "help [commands] <dgndictation>": render_commands_help,
+    "help context": render_contexts_help,
 }
 
 ctx.keymap(keymap)
