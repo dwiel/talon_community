@@ -1,5 +1,4 @@
 import string
-from collections import OrderedDict
 import talon
 from talon import voice, ui
 from talon.voice import Context, Key
