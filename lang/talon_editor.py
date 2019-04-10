@@ -40,7 +40,7 @@ def add_alternative(m):
         return
 
     paste_text(f"({existing} | )")
-    press('left')
+    press("left")
     text(m)
 
 

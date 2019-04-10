@@ -265,8 +265,8 @@ keymap = {
     "smear" + optional_numerals: jump_to_eol_and(jump_to_nearly_end_of_line),
     "trundle": toggle_comments,
     "trundle" + numerals: jump_to_bol_and(toggle_comments),
-    "indent": Key('cmd-]'),
-    "de-dent": Key('cmd-['),
+    "indent": Key("cmd-]"),
+    "de-dent": Key("cmd-["),
     "jolt": duplicate,
     "snipline" + optional_numerals: jump_to_bol_and(snipline),
     "cut line" + optional_numerals: cut_line,
@@ -305,7 +305,10 @@ keymap = {
     "case sensitive": Key("alt-cmd-c"),
     "command pallet": Key(atom_command_pallet),
     "(cursor | curr) (center | mid)": command("center-line:toggle"),
-    "(cursor | curr) top": [command("center-line:toggle"), command("center-line:toggle")],
+    "(cursor | curr) top": [
+        command("center-line:toggle"),
+        command("center-line:toggle"),
+    ],
     # 'cell pair': command('py-ast-edit:select-parent'),
     "(cell expand | cell pair)": Key("alt-up"),
     "cell contract": Key("alt-down"),
@@ -335,7 +338,9 @@ keymap = {
     "jet hub pull requests": command("open-on-github:pull-requests"),
     "jet hub branch compare": command("open-on-github:branch-compare"),
     # autocomplete-python
-    "(go to | spring) (definition | def)": command("autocomplete-python:go-to-definition"),
+    "(go to | spring) (definition | def)": command(
+        "autocomplete-python:go-to-definition"
+    ),
     "show usages": command("autocomplete-python:show-usages"),
     "complete arguments": command("autocomplete-python:complete-arguments"),
     "python rename": command("autocomplete-python:rename"),
