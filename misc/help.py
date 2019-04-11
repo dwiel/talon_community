@@ -270,8 +270,10 @@ def normalize_context(context):
     return context.replace("_", "").lower()
 
 
+contexts = {normalize_context(k): v for k, v in voice.talon.subs.items()}
+
+
 def get_context(context_name):
-    contexts = {normalize_context(k): v for k, v in voice.talon.subs.items()}
     return contexts.get(normalize_words(context_name))
 
 
@@ -302,7 +304,7 @@ def format_actions(actions):
 
 
 def render_commands_help(m):
-    context = get_context(m.dgndictation[0]._words)
+    context = get_context(m["help.contexts"])
     if not context:
         return
 
@@ -347,8 +349,8 @@ def render_commands_webview(context, target_page=1):
 
 keymap = {
     "help alphabet": render_alphabet_help,
-    "help [commands] <dgndictation>": render_commands_help,
+    "help [commands] {help.contexts}": render_commands_help,
     "help context": render_contexts_help,
 }
-
+ctx.set_list("contexts", contexts.keys())
 ctx.keymap(keymap)
