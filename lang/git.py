@@ -57,6 +57,7 @@ ctx.keymap(
         ],
         PREFIX + "push [<dgndictation>]": ["git push ", text],
         PREFIX + "push force [<dgndictation>]": ["git push --force ", text],
+        PREFIX + "push force lease [<dgndictation>]": ["git push --force-with-lease ", text],
         PREFIX + "push set up stream [<dgndictation>]": ["git push --set-upstream ", text],
         PREFIX + "rebase continue": "git rebase --continue",
         PREFIX + "rebase [<dgndictation>]": ["git rebase ", text],
