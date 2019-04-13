@@ -59,6 +59,7 @@ ctx.keymap(
         PREFIX + "push force [<dgndictation>]": ["git push --force ", text],
         PREFIX + "push force lease [<dgndictation>]": ["git push --force-with-lease ", text],
         PREFIX + "push set up stream [<dgndictation>]": ["git push --set-upstream ", text],
+        PREFIX + "push set up new branch": "git push --set-upstream origin HEAD",
         PREFIX + "rebase continue": "git rebase --continue",
         PREFIX + "rebase [<dgndictation>]": ["git rebase ", text],
         PREFIX + "(remove | R M) [<dgndictation>]": ["git rm ", text],
