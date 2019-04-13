@@ -103,6 +103,11 @@ context.keymap(
         "(tag | ellie) span": CursorText("<span>{.}</span>"),
         "(tag | ellie) open span": "<span>",
         "(tag | ellie) close span": "</span>",
+        "(tag | ellie) table": CursorText("<table>{.}</table>"),
+        "(tag | ellie) table head": CursorText("<thead>{.}</thead>"),
+        "(tag | ellie) table body": CursorText("<tbody>{.}</tbody>"),
+        "(tag | ellie) table row": CursorText("<tr>{.}</tr>"),
+        "(tag | ellie) table cell": CursorText("<td>{.}</td>"),
         #  parse_words_as_integer doesn't seem to work so we'll do it the bad way for now
         # '(tag | ellie) heading <dgndictation>': ['<h', parse_words_as_integer, '></h', parse_words_as_integer, '>'],
         "(tag | ellie) heading one": CursorText("<h1>{.}</h1>"),
