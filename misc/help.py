@@ -238,15 +238,18 @@ def render_contexts_help(_, target_page=1):
     )
 
 
-# overrides handle edge cases:
+# alternatives handle edge cases:
 # - commonly misheard contexts
 # - context names that are homophones
 # - alternative pronunciations for convenience
-overrides = {
+
+# To add an alternative, add the preferred voice command as the key, and the
+# context name as defined in the module as the value
+alternatives = {
     "pearl": "perl",
-    "icontrol": "eyecontrol",
+    "icontrol": "eye_control",
     "lack": "slack",
-    "chrome": "googlechrome",
+    "chrome": "GoogleChrome",
     "get": "git",
     "docs": "googledocs",
     "google docs": "googledocs",
@@ -262,19 +265,24 @@ def clean_word(word):
 
 def normalize_words(words):
     words = [clean_word(w) for w in words]
-    find = "".join(words).lower().replace(" ", "")
-    return overrides.get(find, find)
+    return "".join(words).lower().replace(" ", "")
 
 
 def normalize_context(context):
     return context.replace("_", "").lower()
 
 
-contexts = {normalize_context(k): v for k, v in voice.talon.subs.items()}
+def contexts():
+    contexts = {normalize_context(k): v for k, v in voice.talon.subs.items()}
+
+    for k, v in alternatives.items():
+        if v in contexts:
+            contexts[k] = contexts[v]
+    return contexts
 
 
 def get_context(context_name):
-    return contexts.get(normalize_words(context_name))
+    return contexts().get(normalize_words(context_name))
 
 
 def format_action(action):
@@ -352,5 +360,5 @@ keymap = {
     "help [commands] {help.contexts}": render_commands_help,
     "help context": render_contexts_help,
 }
-ctx.set_list("contexts", contexts.keys())
+ctx.set_list("contexts", contexts().keys())
 ctx.keymap(keymap)
