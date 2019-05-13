@@ -1,12 +1,11 @@
 import time
-import json
 
-from talon.voice import Word, Key, Context, Str, press
+from talon.voice import Key, Context, Str, press
 from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
-from talon import ctrl, ui, resource
-import string
+from talon import ctrl, ui
 
-from ..utils import numerals, parse_words, text, is_in_bundles, insert
+from ..utils import parse_words, text, is_in_bundles, insert, load_config_json
+from ..misc.switcher import switch_app
 from ..bundle_groups import TERMINAL_BUNDLES
 
 # TODO: move application specific commands into their own files: apt-get, etc
@@ -29,6 +28,8 @@ def dash(m):
         press("-")
         Str(words[0])(None)
     else:
+        if words == ["michelle"]:
+            words = ["shell"]
         press("-")
         press("-")
         Str("-".join(words))(None)
@@ -37,10 +38,21 @@ def dash(m):
 KUBERNETES_PREFIX = "(cube | cube control)"
 
 directory_shortcuts = {
+    "up": "..",
+    "up up": "../..",
+    "up up up": "../../..",
+    "up up up up": "../../../..",
+    "up up up up up": "../../../../..",
+    "home": "~",
     "talon home": TALON_HOME,
     "talon user": TALON_USER,
     "talon plug-ins": TALON_PLUGINS,
     "talon community": "~/.talon/user/talon_community",
+    "source": "~/src",
+    "community rlkit": "~/src/rlkit",
+    "community rlkit rig": "/~/src/rlkit/examples/rig/pointmass",
+    "sandbox": "~/src/sandbox",
+    "D G I py": "~/src/dji-sdk-python",
 }
 
 
@@ -51,11 +63,11 @@ def cd_directory_shortcut(m):
         press("left")
 
 
-try:
-    servers = json.load(resource.open("servers.json"))
-except Exception as e:
-    print(f"error opening servers.json: {e}")
-    servers = {}
+def name_directory_shortcuts(m):
+    insert(directory_shortcuts[" ".join(m["terminal.directory_shortcuts"])])
+
+
+servers = load_config_json("servers.json")
 
 
 def get_server(m):
@@ -75,7 +87,7 @@ def name_servers(m):
 
 
 def ssh_copy_id_servers(m):
-    insert(f"mosh {get_server(m)}")
+    insert(f"ssh-copy-id {get_server(m)}")
 
 
 def new_server(m):
@@ -116,6 +128,7 @@ keymap = {
         text,
     ],
     "cd {terminal.directory_shortcuts}": cd_directory_shortcut,
+    "directory {terminal.directory_shortcuts}": name_directory_shortcuts,
     "(ls | run ellis | run alice)": "ls\n",
     "(la | run la)": "ls -la\n",
     # "durrup": "cd ..; ls\n",
@@ -128,6 +141,7 @@ keymap = {
         "sudo ",
         Key("enter"),
     ],
+    "pseudo shut down now": "sudo shutdown now",
     "shell C H mod": "chmod ",
     "shell clear": [Key("ctrl-c"), "clear\n"],
     "shell copy [<dgndictation>]": ["cp ", text],
@@ -143,20 +157,23 @@ keymap = {
     "shell enter": "ag -l | entr ",
     "shell enter 1": "ag -l . .. | entr ",
     "shell enter 2": "ag -l . ../.. | entr ",
+    "shell enter 3": "ag -l . ../../.. | entr ",
+    "shell enter 4": "ag -l . ../../../.. | entr ",
     "shell less [<dgndictation>]": ["less ", text],
     "shell cat [<dgndictation>]": ["cat ", text],
     "shell X args [<dgndictation>]": ["xargs ", text],
     "shell mosh": "mosh ",
-    "shell mosh {global_terminal.servers}": mosh_servers,
-    "shell SSH {global_terminal.servers}": ssh_servers,
+    "[shell] mosh {global_terminal.servers}": mosh_servers,
+    "[shell] S S H {global_terminal.servers}": ssh_servers,
     # "shell server {terminal.servers}": name_servers,
-    "shell SSH copy id {global_terminal.servers}": ssh_copy_id_servers,
+    "[shell] S S H copy I D {global_terminal.servers}": ssh_copy_id_servers,
     "shell M player": "mplayer ",
     "shell nvidia S M I": "nvidia-smi ",
     "shell R sync": "./src/dotfiles/sync_rsync ",
     "shell tail": "tail ",
     "shell tail follow": "tail -f ",
     "shall count lines": "wc -l ",
+    "shell L S U S B": "lsusb",
     # python
     "create virtual environment": ["virtualenv -p python3 venv", Key("enter")],
     "activate virtual environment": [
@@ -234,6 +251,8 @@ keymap = {
     "conda list": "conda list ",
     # tmux
     "T mux new session": "tmux ",
+    "T mux list": "tmux ls",
+    "T mux attach [<dgndictation>]": ["tmux a -t ", text],
     "T mux scroll": [Key("ctrl-b"), Key("[")],
     # other
     "shell make": "make\n",
@@ -241,7 +260,17 @@ keymap = {
 }
 
 for action in ("get", "delete", "describe"):
-    for object in ("nodes", "jobs", "pods", "namespaces", "services", "events", ""):
+    for object in (
+        "nodes",
+        "jobs",
+        "pods",
+        "namespaces",
+        "services",
+        "events",
+        "deployments",
+        "replicasets",
+        "",
+    ):
         if object:
             object = object + " "
         command = f"{KUBERNETES_PREFIX} {action} {object}"
@@ -264,33 +293,21 @@ def shell_rerun(m):
     ctrl.key_press("enter", app=app)
 
 
+def shell_new_server(m):
+    """
+    global command for swtching to iterm, creating a new pain and logging into
+    the specified server
+    """
+    switch_app("iTerm2")
+    new_server(m)
+
+
 global_ctx = Context("global_terminal")
 global_ctx.keymap(
-    {"shell rerun": shell_rerun, "shell server {global_terminal.servers}": name_servers}
+    {
+        "shell rerun": shell_rerun,
+        "shell server {global_terminal.servers}": name_servers,
+        "shell new {global_terminal.servers}": shell_new_server,
+    }
 )
 global_ctx.set_list("servers", servers.keys())
-# module.exports = {
-#   permissions: "chmod "
-#   access: "chmod "
-#   ownership: "chown "
-#   "change own": "chown "
-#   "change group": "chgrp "
-#   cat: "cat "
-#   chat: "cat " # dragon doesn't like the word 'cat'
-#   copy: "cp "
-#   "copy recursive": "cp -r "
-#   move: "mv "
-#   remove: "rm "
-#   "remove recursive": "rm -rf "
-#   "remove directory": "rmdir "
-#   "make directory": "mkdir "
-#   link: "ln "
-#   man: "man "
-#   list: "ls "
-#   "list all": "ls -al "
-#   ls: "ls "
-#
-#   "python reformat": "yapf -i "
-#   "enter": "ag -l | entr "
-#   "enter to": "ag -l . ../.. | entr "
-# }
