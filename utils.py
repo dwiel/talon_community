@@ -55,7 +55,23 @@ def replace_words(words, mapping, count):
 
 
 def remove_dragon_junk(word):
-    return str(word).lstrip("\\").split("\\", 1)[0]
+    if word == ".\\point\\point":
+        return "point"
+    else:
+        return str(word).lstrip("\\").split("\\", 1)[0].replace("-", " ").strip()
+
+
+def remove_appostrophe_s(words):
+    if "'s" in words:
+        new_words = []
+        for i, word in enumerate(words):
+            if word == "'s":
+                new_words[-1] += "s"
+            else:
+                new_words.append(word)
+        return new_words
+    else:
+        return words
 
 
 def parse_words(m, natural=False):
@@ -68,11 +84,14 @@ def parse_words(m, natural=False):
 
     # split compound words like "pro forma" into two words.
     words = list(map(remove_dragon_junk, words))
+    words = remove_appostrophe_s(words)
     words = sum([word.split(" ") for word in words], [])
     words = list(map(lambda current_word: parse_word(current_word, not natural), words))
     words = replace_words(words, mappings[2], 2)
     words = replace_words(words, mappings[3], 3)
     words = replace_words(words, mappings[4], 4)
+    words = sum([word.split(" ") for word in words], [])
+
     return words
 
 
@@ -290,7 +309,10 @@ def delay(amount=0.1):
 
 
 def is_in_bundles(bundles):
-    return lambda app, win: any(b in app.bundle for b in bundles)
+    def _is_in_bundles(app, win):
+        return any(b in app.bundle for b in bundles)
+
+    return _is_in_bundles
 
 
 def is_vim(app, win):
@@ -304,14 +326,14 @@ def is_not_vim(app, win):
     return not is_vim(app, win)
 
 
-def is_filetype(extensions=()):
+def is_filetype(extensions=(), default=False):
     def matcher(app, win):
         if is_in_bundles(FILETYPE_SENSITIVE_BUNDLES)(app, win):
             if any(ext in win.title for ext in extensions):
                 return True
             else:
                 return False
-        return True
+        return default
 
     return matcher
 
@@ -335,3 +357,15 @@ def normalise_keys(dict):
         for cmd in k.strip("() ").split("|"):
             normalised_dict[cmd.strip()] = v
     return normalised_dict
+
+
+def load_config_json(filename):
+    if not os.path.isfile(filename):
+        with open(filename, "w") as f:
+            f.write("{}")
+
+    try:
+        return json.load(resource.open(filename))
+    except Exception as e:
+        print(f"error opening {filename}: {e}")
+        return {}
