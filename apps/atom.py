@@ -55,6 +55,7 @@ def jump_to_bol(m):
         line = m
 
     if line:
+        press("escape")
         press("ctrl-g")
         Str(str(line))(None)
         press("enter")
