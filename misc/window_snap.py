@@ -4,6 +4,8 @@ from talon import ui
 from talon.voice import Context
 
 from ..config import config
+from .. import utils
+from . import switcher
 
 """Provides a voice-driven window management application implemented in Talon.
 
@@ -21,11 +23,18 @@ def sorted_screens():
     return sorted(ui.screens(), key=lambda screen: screen.visible_rect.left)
 
 
-def move_screen(off):
-    win = ui.active_window()
+def move_screen(off=None, screen_number=None, win=None):
+    if win is None:
+        win = ui.active_window()
+
     src_screen = win.screen
     screens = sorted_screens()
-    dst_screen = screens[(screens.index(src_screen) + off) % len(screens)]
+    if screen_number is None:
+        screen_number = (screens.index(src_screen) + off) % len(screens)
+    else:
+        screen_number -= 1
+
+    dst_screen = screens[screen_number]
     if src_screen == dst_screen:
         return
 
@@ -110,6 +119,17 @@ def previous_screen(m):
     move_screen(-1)
 
 
+def window_move_screen(m):
+    move_screen(screen_number=utils.extract_num_from_m(m))
+
+
+def window_move_application_screen(m):
+    move_screen(
+        screen_number=utils.extract_num_from_m(m),
+        win=switcher.lookup_app(m).active_window,
+    )
+
+
 ctx = Context("window_management")
 ctx.keymap(
     {
@@ -124,7 +144,10 @@ ctx.keymap(
         "snap screen": grid(1, 1, 1, 1),
         "snap next": next_screen,
         "snap last": previous_screen,
-        "window next screen": next_screen,
-        "window preev screen": previous_screen,
+        "window [move] next screen": next_screen,
+        "window [move] preev screen": previous_screen,
+        "window [move] screen" + utils.numerals: window_move_screen,
+        "[window] [move] {switcher.running} [to] screen "
+        + utils.numerals: window_move_application_screen,
     }
 )
