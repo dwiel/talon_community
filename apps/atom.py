@@ -1,3 +1,7 @@
+"""
+Make sure to install the talon plugin: https://github.com/tuomassalo/atom-talon
+"""
+
 import time
 import re
 
