@@ -128,7 +128,7 @@ def find_previous(m):
     )
 
 
-def copy_line(m):
+def duplicate_line(m):
     line = extract_num_from_m(m)
     execute_atom_command(COMMANDS.COPY_LINE, str(line))
 
@@ -145,11 +145,20 @@ def select_lines(m):
     execute_atom_command(COMMANDS.SELECT_LINES, str(line_range))
 
 
-def cut_line(m):
+def select_line(m):
     jump_to_bol(m)
     press("cmd-left")
     press("shift-down")
+
+
+def cut_line(m):
+    select_line(m)
     press("cmd-x")
+
+
+def copy_line(m):
+    select_line(m)
+    press("cmd-c")
 
 
 def paste_line(m):
@@ -161,8 +170,10 @@ def paste_line(m):
     press("cmd-left")
 
 
-def change_pain(m):
-    line = extract_num_from_m(m)
+def change_pain(m=None, line=None):
+    if line is None:
+        line = extract_num_from_m(m)
+
     for i in range(10):
         press("cmd-k")
         press("cmd-left")
@@ -190,8 +201,12 @@ def jump_tab(m, tab_number=None):
     if tab_number is None:
         tab_number = parse_words_as_integer(m._words[1:])
 
-    if tab_number is not None and tab_number > 0 and tab_number < 10:
-        press("cmd-%s" % tab_number)
+    if tab_number is not None and tab_number > 0:
+        if tab_number < 10:
+            press("cmd-%s" % tab_number)
+        else:
+            change_pain(line=int(tab_number / 10))
+            press("cmd-%s" % (tab_number % 10))
 
 
 def close_tab(m, tab_number=None):
@@ -206,6 +221,7 @@ def close_tab(m, tab_number=None):
 snippets = {
     "define function": "definefunction",
     "define method": "definemethod",
+    "define property": "defineproperty",
     "define command": "definecommand",
     "define class": "class",
     "doc string": "docstring",
@@ -237,6 +253,7 @@ def duplicate(m):
     press("cmd-x")
     press("cmd-v")
     press("cmd-v")
+    press("up")
 
 
 def replace_spaces_with_tabs(line):
@@ -279,17 +296,19 @@ keymap = {
     "de-dent": Key("cmd-["),
     "jolt": duplicate,
     "snipline" + optional_numerals: jump_to_bol_and(snipline),
+    "(select | cell) line" + optional_numerals: select_line,
+    "copy line" + optional_numerals: copy_line,
     "cut line" + optional_numerals: cut_line,
     "paste line" + optional_numerals: paste_line,
     # 'snipple': [Key(atom_hotkey), Key(COMMANDS.DELETE_TO_BOL)],
     # 'snipper': [Key(atom_hotkey), Key(COMMANDS.DELETE_TO_EOL)],
-    "(copy line | clonesert)" + numerals: copy_line,
+    "(duplicate line | clonesert)" + numerals: duplicate_line,
     "move line" + numerals: move_line,
     "crew <dgndictation>": find_next,
     "trail <dgndictation>": find_previous,
     "replace next": Key("cmd-alt-e"),
     "shackle": Key("cmd-l"),
-    "selrang" + numerals: select_lines,
+    "selrang" + numerals + " [over]": select_lines,
     "shockey": Key("cmd-shift-enter"),
     "shockoon": Key("cmd-right enter"),
     "sprinkoon" + numerals: jump_to_eol_and(lambda: press("enter")),
@@ -311,7 +330,7 @@ keymap = {
     "go pain right": [Key("cmd-k"), Key("cmd-right")],
     "go pain up": [Key("cmd-k"), Key("cmd-up")],
     "go pain down": [Key("cmd-k"), Key("cmd-down")],
-    "(search all files | mark all)": Key("cmd-shift-f"),
+    "(search all files | mark all | marco project)": Key("cmd-shift-f"),
     "case sensitive": Key("alt-cmd-c"),
     "command pallet": Key(atom_command_pallet),
     "(cursor | curr) (center | mid)": command("center-line:toggle"),
@@ -356,8 +375,8 @@ keymap = {
     "python rename": command("autocomplete-python:rename"),
     "override method": command("autocomplete-python:override-method"),
     # symbols-view
-    "(go to | spring) symbol": command("symbols-view:toggle-file-symbols"),
-    "(go to | spring) symbol <dgndictation>": [
+    "(go to | spring) (symbol | sim)": command("symbols-view:toggle-file-symbols"),
+    "(go to | spring) (symbol | sim) <dgndictation> [over]": [
         command("symbols-view:toggle-file-symbols"),
         lambda m: time.sleep(0.5),
         text,
@@ -378,12 +397,21 @@ keymap = {
     "reflow": Key("cmd-alt-q"),
     "replace [left of] equals [with] return": replace_left_of_equals_with_return,
     # cursor-history
-    "(cursor | curr) (previous | preev)": command("cursor history prev"),
+    "(cursor | curr) (previous | preev | back)": command("cursor history prev"),
     "(cursor | curr) next": command("cursor history next"),
     # config
     "edit snippets": command("application open snippets"),
     "edit key map": command("application open keymap"),
     "install packages": command("settings view install packages and themes"),
+    # switch-header-source
+    "switch [header] source": command("switch header source"),
 }
 
 ctx.keymap(keymap)
+
+"""
+ideal AST navigation and manipulation
+
+syntax_node_type := (function | method | class | if | statement | call | for | loop | with | number | ...)
+(go (start | end) | select | copy | cut | delete) [(inside | all)] [(next | prev)] {syntax_node_type}
+"""
