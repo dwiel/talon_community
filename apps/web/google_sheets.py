@@ -1,4 +1,5 @@
 import string
+import time
 import urllib.parse
 
 from talon import ui
@@ -127,11 +128,18 @@ cells = column + numerals
 
 ctx.keymap(
     {
+        "rename": [
+            Key("alt-/"),
+            lambda m: time.sleep(1),
+            "rename",
+            lambda m: time.sleep(1),
+            Key("enter"),
+        ],
         # navigation by cell reference
         "(view | go to | spring) " + cells: go_to_cell,
         "edit " + cells: [go_to_cell, delay(1.0), Key("enter")],
         # navigation by name, specified in map above (cell column names, e.g. A-Z, not allowed to avoid conflicting with above cell references)
-        "(view | go to | spring) " + regions: go_to_named_cell,
+        # "(view | go to | spring) " + regions: go_to_named_cell,
         "edit " + regions: [go_to_named_cell, delay(1.0), Key("enter")],
         # keyboard shortcut mappings
         "(select range | selrang)" + cells + cells: select_cells,
@@ -154,7 +162,7 @@ ctx.keymap(
         "cut": Key("cmd+x"),
         "paste": Key("cmd+v"),
         "(paste values only | paste without formatting)": Key("cmd+shift+v"),
-        "show common keyboard shortcuts": Key("cmd+/"),
+        "(search [the] menus | command pallet)": Key("cmd+/"),
         "compact controls": Key("ctrl+shift+f"),
         "input tools (on | off)": Key("cmd+shift+k"),
         "select input tools": Key("cmd+alt+shift+k"),
