@@ -208,7 +208,9 @@ def render_contexts_help(_, target_page=1):
     contexts = []
     keymap = {}
 
-    for idx, context in enumerate(voice.talon.subs.values()):
+    for idx, context in enumerate(
+        sorted(voice.talon.subs.values(), key=lambda context: context.name)
+    ):
         contexts.append((idx + 1, context))
         keymap.update({"help " + str(idx + 1): create_context_mapping(context)})
 
