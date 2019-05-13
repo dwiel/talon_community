@@ -3,7 +3,7 @@
 
 # import eye
 import time
-from talon import ctrl, tap
+from talon import ctrl, tap, ui
 from talon.voice import Context
 
 ctx = Context("mouse")
@@ -85,6 +85,14 @@ def mouse_release(m):
     ctrl.mouse_click(x, y, up=True)
 
 
+def mouse_center(m):
+    win = ui.active_window()
+    rect = win.rect
+    center = (rect.x + rect.width / 2, rect.y + rect.height / 2)
+    print(rect, center)
+    ctrl.mouse_move(*center)
+
+
 keymap = {
     # jsc modified with some voice-code compatibility
     "righty": delayed_right_click,
@@ -98,6 +106,7 @@ keymap = {
     "(command click | chom lick)": command_click,
     "wheel down": mouse_scroll(200),
     "wheel up": mouse_scroll(-200),
+    "mouse center": mouse_center,
 }
 
 ctx.keymap(keymap)
