@@ -13,6 +13,7 @@ from ..utils import (
     optional_numerals,
     extract_num_from_m,
     text,
+    remove_dragon_junk,
 )
 from .. import utils
 
@@ -115,11 +116,15 @@ def execute_atom_command(command, parameters=None):
 
 
 def find_next(m):
-    execute_atom_command(COMMANDS.FIND_NEXT, get_first_word(m))
+    execute_atom_command(
+        COMMANDS.FIND_NEXT, remove_dragon_junk(get_first_word(m)).lower()
+    )
 
 
 def find_previous(m):
-    execute_atom_command(COMMANDS.FIND_PREVIOUS, get_first_word(m))
+    execute_atom_command(
+        COMMANDS.FIND_PREVIOUS, remove_dragon_junk(get_first_word(m)).lower()
+    )
 
 
 def copy_line(m):
