@@ -15,13 +15,12 @@ import time
 from talon.voice import Context, Key, press
 from talon import ctrl
 
-
-def context(app, win):
-    # print(win.title)
-    return win.title.endswith("- Google Docs") or "- Google Docs -" in win.title
+from . import browser
 
 
-ctx = Context("google_docs", func=context)
+ctx = Context(
+    "google_docs", func=browser.url_matches_func("https://docs.google.com/.*")
+)
 ctx.keymap(
     {
         "copy": Key("cmd+c"),
@@ -51,7 +50,7 @@ ctx.keymap(
         "subscript": Key("cmd+,"),
         "copy [text] formatting": Key("cmd+alt+c"),
         "paste [text] formatting": Key("cmd+alt+v"),
-        "clear [text] formatting": Key("cmd+\\"),
+        "(clear | remove) [text] formatting": Key("cmd+\\"),
         "increase font size": Key("cmd+shift+>"),
         "decrease font size": Key("cmd+shift+<"),
         "increase [paragraph] indentation": Key("cmd+]"),
@@ -337,13 +336,13 @@ ctx.keymap(
             press("b"),
             ctrl.key_press("cmd", ctrl=True, cmd=True, up=True),
         ),
-        "move to next formatting change": lambda m: (
+        "(move to | spring) (next | neck) (formatting | format) [change]": lambda m: (
             ctrl.key_press("cmd", ctrl=True, cmd=True, down=True),
             press("n"),
             press("w"),
             ctrl.key_press("cmd", ctrl=True, cmd=True, up=True),
         ),
-        "move to (previous | prev) formatting change": lambda m: (
+        "(move to | spring) (previous | prev) (formatting | format) [change]": lambda m: (
             ctrl.key_press("cmd", ctrl=True, cmd=True, down=True),
             press("p"),
             press("w"),

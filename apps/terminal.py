@@ -48,12 +48,8 @@ directory_shortcuts = {
     "talon user": TALON_USER,
     "talon plug-ins": TALON_PLUGINS,
     "talon community": "~/.talon/user/talon_community",
-    "source": "~/src",
-    "community rlkit": "~/src/rlkit",
-    "community rlkit rig": "/~/src/rlkit/examples/rig/pointmass",
-    "sandbox": "~/src/sandbox",
-    "D G I py": "~/src/dji-sdk-python",
 }
+directory_shortcuts.update(load_config_json("directory_shortcuts.json"))
 
 
 def cd_directory_shortcut(m):
