@@ -7,8 +7,10 @@ running = {}
 launch = {}
 
 
-def switch_app(m=None, name=None):
-    if name is None:
+def lookup_app(m=None, name=None):
+    if isinstance(m, str):
+        name = m
+    elif name is None:
         name = str(m["switcher.running"][0])
 
     full = running.get(name)
@@ -16,14 +18,23 @@ def switch_app(m=None, name=None):
         return
     for app in ui.apps():
         if app.name == full:
-            app.focus()
-            # TODO: replace sleep with a check to see when it is in foreground
-            time.sleep(0.25)
-            break
+            return app
 
 
-def launch_app(m):
-    name = str(m["switcher.launch"][0])
+def switch_app(m=None, name=None):
+    app = lookup_app(m=m, name=name)
+    app.focus()
+    print(dir(app))
+    # TODO: replace sleep with a check to see when it is in foreground
+    time.sleep(0.25)
+
+
+def launch_app(m=None, name=None):
+    if m:
+        name = str(m["switcher.launch"][0])
+    elif not name:
+        raise ValueError("must provide name or m")
+
     path = launch.get(name)
     if path:
         ui.launch(path=path)
@@ -47,6 +58,8 @@ ctx.keymap(
     }
 )
 
+hardcoded_application_names = {"term": "iTerm2"}
+
 
 def update_lists():
     global running
@@ -61,6 +74,7 @@ def update_lists():
                 new[word] = app.name
         new[app.name] = app.name
     running = new
+    running.update(hardcoded_application_names)
     ctx.set_list("running", running.keys())
 
     new = {}
