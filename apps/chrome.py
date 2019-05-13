@@ -2,6 +2,7 @@ import time
 
 from .. import utils
 from .web import browser
+from ..misc import switcher
 
 from talon import ui
 from talon.voice import Context, Key, Str, press
@@ -96,15 +97,29 @@ def mendeley(m):
     navigate_to_url(f"https://www.mendeley.com/import/?url={get_url()}")
 
 
+webpages = utils.load_config_json("webpages.json")
+
+
+def get_webpage(m):
+    return webpages[" ".join(m["global_browser.webpages"])]
+
+
+def go_to_webpage(m):
+    press("cmd-t")
+    navigate_to_url(get_webpage(m))
+
+
 context.keymap(
     {
         "(address bar | focus address | focus url | url)": focus_address_bar,
         "copy url": Key("escape y y"),
         "go back": back,
         "go forward": forward,
-        "reload": Key("cmd-r"),
+        "page reload": Key("cmd-r"),
+        "reload page": Key("cmd-r"),
         "hard reload": Key("cmd-shift-r"),
         "new tab": Key("cmd-t"),
+        "new tab {global_browser.webpages}": go_to_webpage,
         "close tab": Key("cmd-w"),
         "(reopen | unclose) tab": Key("cmd-shift-t"),
         "(next tab | goneck)": Key("cmd-shift-]"),
@@ -148,5 +163,32 @@ context.keymap(
         "link": link,
         "move tab left": browser.send_to_vimium("<<"),
         "move tab right": browser.send_to_vimium(">>"),
+        "move tab new window": browser.send_to_vimium("W"),
+        "tab (named | by name)": browser.send_to_vimium("T"),
+        "tab (named | by name) <dgndictation>": [
+            browser.send_to_vimium("T"),
+            utils.text,
+            Key("enter"),
+        ],
+    }
+)
+
+
+def global_chrome_new_tab(m):
+    switcher.switch_app(name="Google Chrome")
+    press("cmd-t")
+
+
+def global_go_to_webpage(m):
+    switcher.switch_app(name="Google Chrome")
+    go_to_webpage(m)
+
+
+global_ctx = Context("global_browser")
+global_ctx.set_list("webpages", webpages.keys())
+global_ctx.keymap(
+    {
+        "chrome new tab": global_chrome_new_tab,
+        "chrome new tab {global_browser.webpages}": global_go_to_webpage,
     }
 )
