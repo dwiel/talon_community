@@ -18,7 +18,7 @@ emojis = normalise_keys(
         "crossed fingers": ":crossed_fingers:",
         "fingers": ":crossed_fingers:",
         "pray": ":pray:",
-        "shrug": lambda x: paste_text("¯\_(ツ)_/¯"),
+        "shrug": lambda x: paste_text(r"¯\_(ツ)_/¯"),
     }
 )
 
