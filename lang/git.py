@@ -22,7 +22,8 @@ ctx.keymap(
         PREFIX + "add partial [<dgndictation>]": ["git add -p ", text],
         PREFIX + "bisect": "git bisect ",
         PREFIX + "branch": "git branch ",
-        PREFIX + "branch set up stream to [<dgndictation>]": [
+        PREFIX
+        + "branch set up stream to [<dgndictation>]": [
             "git branch --set-upstream-to=",
             text,
         ],
@@ -34,15 +35,18 @@ ctx.keymap(
         PREFIX + "checkout branch [<dgndictation>]": ["git checkout -B ", text],
         PREFIX + "cherry pick [<dgndictation>]": ["git cherry-pick ", text],
         PREFIX + "commit [<dgndictation>]": ['git commit -m ""', Key("left"), text],
-        PREFIX + "commit amend [<dgndictation>]": [
+        PREFIX
+        + "commit amend [<dgndictation>]": [
             'git commit --amend -m ""',
             Key("left"),
             text,
         ],
-        PREFIX + "commit all [<dgndictation>]": ['git commit -a -m ""', Key("left"), text],
+        PREFIX
+        + "commit all [<dgndictation>]": ['git commit -a -m ""', Key("left"), text],
         PREFIX + "config [<dgndictation>]": ["git config ", text],
         PREFIX + "config list [<dgndictation>]": ["git config --list ", text],
         PREFIX + "diff [<dgndictation>]": ["git diff ", text],
+        PREFIX + "diff staged": "git diff --staged ",
         PREFIX + "fetch": "git fetch ",
         PREFIX + "history": "git hist ",
         PREFIX + "grep": "git grep ",
@@ -51,14 +55,17 @@ ctx.keymap(
         PREFIX + "merge [<dgndictation>]": ["git merge ", text],
         PREFIX + "move [<dgndictation>]": ["git mv ", text],
         PREFIX + "pull [<dgndictation>]": ["git pull ", text],
-        PREFIX + "pull (base | re-base | rebase | re base) [<dgndictation>]": [
+        PREFIX
+        + "pull (base | re-base | rebase | re base) [<dgndictation>]": [
             "git pull --rebase ",
             text,
         ],
         PREFIX + "push [<dgndictation>]": ["git push ", text],
         PREFIX + "push force [<dgndictation>]": ["git push --force ", text],
-        PREFIX + "push force lease [<dgndictation>]": ["git push --force-with-lease ", text],
-        PREFIX + "push set up stream [<dgndictation>]": ["git push --set-upstream ", text],
+        PREFIX
+        + "push force lease [<dgndictation>]": ["git push --force-with-lease ", text],
+        PREFIX
+        + "push set up stream [<dgndictation>]": ["git push --set-upstream ", text],
         PREFIX + "push set up new branch": "git push --set-upstream origin HEAD",
         PREFIX + "rebase continue": "git rebase --continue",
         PREFIX + "rebase [<dgndictation>]": ["git rebase ", text],
@@ -72,5 +79,6 @@ ctx.keymap(
         PREFIX + "stash pop": "git stash pop ",
         PREFIX + "status": "git status ",
         PREFIX + "tag": "git tag ",
+        PREFIX + "add commit": ["git add  && git commit"] + ([Key("left")] * 14),
     }
 )
