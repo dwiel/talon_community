@@ -43,6 +43,7 @@ ctx.keymap(
         ],
         PREFIX
         + "commit all [<dgndictation>]": ['git commit -a -m ""', Key("left"), text],
+        PREFIX + "commit ticket [number]": ['git commit -m "[#]"', Key("left"), Key("left")],
         PREFIX + "config [<dgndictation>]": ["git config ", text],
         PREFIX + "config list [<dgndictation>]": ["git config --list ", text],
         PREFIX + "diff [<dgndictation>]": ["git diff ", text],
