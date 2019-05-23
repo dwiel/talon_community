@@ -141,7 +141,7 @@ ctx.keymap(
         "snap top right": grid(2, 1, 2, 2),
         "snap bottom left": grid(1, 2, 2, 2),
         "snap bottom right": grid(2, 2, 2, 2),
-        "snap screen": grid(1, 1, 1, 1),
+        "snap (screen | window)": grid(1, 1, 1, 1),
         "snap center": grid(2, 2, 8, 8, 6, 6),
         "snap next": next_screen,
         "snap last": previous_screen,
