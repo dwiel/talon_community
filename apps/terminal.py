@@ -97,6 +97,8 @@ keymap = {
     "shell home": "~/",
     "lefty": Key("ctrl-a"),
     "ricky": Key("ctrl-e"),
+    "clear back": Key("ctrl-u"),
+    "clear line": [Key("ctrl-e"), Key("ctrl-u")],
     "(pain new | split vertical)": Key("cmd-d"),
     "new {global_terminal.servers}": new_server,
     # talon
