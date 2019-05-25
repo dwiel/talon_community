@@ -117,20 +117,24 @@ def execute_atom_command(command, parameters=None):
 
 
 def find_next(m):
-    execute_atom_command(
-        COMMANDS.FIND_NEXT, remove_dragon_junk(get_first_word(m)).lower()
-    )
+    text = "".join(utils.parse_words(m)).lower()
+    if text:
+        execute_atom_command(COMMANDS.FIND_NEXT, text)
 
 
 def find_previous(m):
-    execute_atom_command(
-        COMMANDS.FIND_PREVIOUS, remove_dragon_junk(get_first_word(m)).lower()
-    )
+    text = "".join(utils.parse_words(m)).lower()
+    if text:
+        execute_atom_command(COMMANDS.FIND_PREVIOUS, text)
 
 
 def duplicate_line(m):
     line = extract_num_from_m(m)
+    press("cmd-right")
+    press("cmd-left")
+    press("cmd-left")
     execute_atom_command(COMMANDS.COPY_LINE, str(line))
+    # press("backspace")
 
 
 def move_line(m):
@@ -233,6 +237,8 @@ snippets = {
     "dictionary": "dict",
     "if name main": "ifnamemain",
     "if name main main": "ifnamemainmain",
+    "unit test class": "unittestclass",
+    "define test class": "unittestclass",
 }
 
 
@@ -284,6 +290,12 @@ def replace_left_of_equals_with_return(m):
     press("up")
 
 
+def open_fuzzy_file(m):
+    press("cmd-t")
+    text(m)
+    press("enter")
+
+
 keymap = {
     "sprinkle" + optional_numerals: jump_to_bol,
     # 'spring' + optional_numerals: jump_to_eol_and(jump_to_beginning_of_text),
@@ -314,7 +326,7 @@ keymap = {
     "sprinkoon" + numerals: jump_to_eol_and(lambda: press("enter")),
     "peach": Key("cmd-t"),
     "peach <dgndictation>": [Key("cmd-t"), text],
-    "peachy <dgndictation>": [Key("cmd-t"), text, Key("enter")],
+    "peachy <dgndictation>": open_fuzzy_file,
     "advanced open file": Key("cmd-alt-o"),
     "(pain | bang)" + numerals: change_pain,
     "tab" + numerals: jump_tab,
@@ -405,6 +417,8 @@ keymap = {
     "install packages": command("settings view install packages and themes"),
     # switch-header-source
     "switch [header] source": command("switch header source"),
+    # treeview
+    "tree [view] rename": command("tree view rename"),
 }
 
 ctx.keymap(keymap)
