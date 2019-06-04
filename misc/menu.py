@@ -30,14 +30,18 @@ def update_lists():
     items = applescript.run(
         r"""
 on menubar_items()
-    tell application "System Events"
-        tell (first process whose frontmost is true)
-            tell menu bar 1
-                set test to name of every menu bar item
-                return test
-            end tell
-        end tell
+  tell application "System Events"
+    tell (first process whose frontmost is true)
+      try
+	tell menu bar 1
+	  set menuItems to name of every menu bar item
+	  return menuItems
+	end tell
+      on error errStr number e
+	return []
+      end try
     end tell
+  end tell
 end menubar_items
 
 set theList to menubar_items()
