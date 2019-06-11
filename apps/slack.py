@@ -1,7 +1,8 @@
 import time
-from talon.voice import Context, Key
-from ..utils import text
 
+from talon.voice import Context, Key
+
+from ..utils import text
 
 ctx = Context("slack", bundle="com.tinyspeck.slackmacgap")
 

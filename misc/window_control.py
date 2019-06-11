@@ -17,8 +17,8 @@ ctx.keymap(
         # tab control
         "(open | new) tab": Key("cmd-t"),
         "close tab": Key("cmd-w"),
-        "([switch] tab (right | next) | goneck)": Key("cmd-shift-]"),
-        "([switch] tab (left | previous | preev) | gopreev)": Key("cmd-shift-["),
+        "([switch] tab (right | next))": Key("cmd-shift-]"),
+        "([switch] tab (left | previous | preev))": Key("cmd-shift-["),
         "[switch] tab (1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)": jump_tab,
         "[switch] tab (end | rightmost)": Key("cmd-9"),
         # zooming

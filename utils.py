@@ -303,6 +303,7 @@ def paste_text(text):
 #     sleep(0.25)
 #     return clip.get()
 
+
 def copy_selected(default=None):
     try:
         with clip.capture() as s:

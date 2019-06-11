@@ -1,11 +1,17 @@
 from talon import applescript, ui
 from talon.voice import Context
 
-from ..utils import parse_words
-
 ctx = Context("menu")
 
 menu_items = {}
+
+select_menu_bar_item_applescript = r"""
+tell application "System Events"
+  tell (first process whose frontmost is true)
+    click menu bar item "%s" of menu bar 1
+  end tell
+end tell
+"""
 
 
 def select_menu_bar_item(m):
@@ -13,32 +19,20 @@ def select_menu_bar_item(m):
     full = menu_items.get(name)
     if not full:
         return
-    applescript.run(
-        r"""
-tell application "System Events"
-  tell (first process whose frontmost is true)
-    click menu bar item "%s" of menu bar 1
-  end tell
-end tell
-    """
-        % full
-    )
+    applescript.run(select_menu_bar_item_applescript % full)
 
 
-def update_lists():
-    global menu_items
-    items = applescript.run(
-        r"""
+update_lists_applescript = r"""
 on menubar_items()
   tell application "System Events"
     tell (first process whose frontmost is true)
       try
-	tell menu bar 1
-	  set menuItems to name of every menu bar item
-	  return menuItems
-	end tell
-      on error errStr number e
-	return []
+        tell menu bar 1
+          set menuItems to name of every menu bar item
+          return menuItems
+        end tell
+          on error errStr number e
+        return []
       end try
     end tell
   end tell
@@ -49,7 +43,11 @@ set {text item delimiters, TID} to {",", text item delimiters}
 set {text item delimiters, theListAsString} to {TID, theList as text}
 return theListAsString
 """
-    )
+
+
+def update_lists():
+    global menu_items
+    items = applescript.run(update_lists_applescript)
     if items is not None:
         items = items.split(",")
     else:

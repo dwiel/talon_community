@@ -8,9 +8,15 @@ import time
 from talon.voice import Context, Key, Rule, Str, press
 
 from .. import utils
-from ..utils import (extract_num_from_m, numeral_map, numerals,
-                     optional_numerals, parse_words_as_integer,
-                     remove_dragon_junk, text)
+from ..utils import (
+    extract_num_from_m,
+    numeral_map,
+    numerals,
+    optional_numerals,
+    parse_words_as_integer,
+    remove_dragon_junk,
+    text,
+)
 
 ctx = Context("atom", bundle="com.github.atom")
 
