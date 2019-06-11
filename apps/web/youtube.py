@@ -4,6 +4,8 @@ import os
 from talon.voice import Context, Key, press
 from talon import ctrl, clip, applescript
 
+from . import browser
+
 DOWNLOAD_PATH = "~/Music"
 
 
@@ -39,8 +41,14 @@ def youtube_download(video=True):
     )
 
 
-title = " - YouTube"
-context = Context("youtube", func=lambda app, win: title in win.title)
+context = Context(
+    "youtube", func=browser.url_matches_func("https://www.youtube.com/.*")
+)
 context.keymap(
-    {"download audio": youtube_download_audio, "download video": youtube_download_video}
+    {
+        "download audio": youtube_download_audio,
+        "download video": youtube_download_video,
+        "speed up": browser.send_to_page(">"),
+        "speed down": browser.send_to_page("<"),
+    }
 )

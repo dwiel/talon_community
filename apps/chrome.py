@@ -1,16 +1,27 @@
 import time
+import glob
+import os
 
 from .. import utils
 from .web import browser
 from ..misc import switcher
 
-from talon import ui
+from talon import ui, ctrl
 from talon.voice import Context, Key, Str, press
 
 # It is recommended to use this script in tandem with Vimium, a Google Chrome plugin for controlling the browser via keyboard
 # https://vimium.github.io/
 
 context = Context("GoogleChrome", bundle="com.google.Chrome")
+
+
+def most_recently_downloaded_file():
+    list_of_files = glob.glob(os.path.expanduser("~/Downloads/*"))
+    return max(list_of_files, key=os.path.getctime)
+
+
+def open_most_recently_downloaded_file(m):
+    os.system(f"open {most_recently_downloaded_file()}")
 
 
 def get_url(win=None):
@@ -57,12 +68,12 @@ def last_panel(m):
 
 def focus_address_bar(m=None):
     press("cmd-l")
+    time.sleep(0.1)
 
 
 # Return focus from the devtools to the page
 def refocus_page(m):
     focus_address_bar(None)
-    time.sleep(0.1)
     press("escape")
     press("escape")
     # time.sleep(0.1)
@@ -109,6 +120,35 @@ def go_to_webpage(m):
     navigate_to_url(get_webpage(m))
 
 
+def get_search(m):
+    return searches[" ".join(m["global_browser.searches"])]
+
+
+searches = utils.load_config_json("searches.json")
+
+
+def new_search_new_tab(m):
+    press("cmd-t")
+    utils.insert(get_search(m))
+    press("tab")
+    search_text = utils.join_words(utils.parse_words(m))
+    if search_text:
+        print(search_text)
+        utils.insert(search_text)
+        press("enter")
+
+
+def new_search_existing_tab(m):
+    press("cmd-l")
+    utils.insert(get_search(m))
+    press("tab")
+    search_text = utils.join_words(utils.parse_words(m))
+    if search_text:
+        print(search_text)
+        utils.insert(search_text)
+        press("enter")
+
+
 context.keymap(
     {
         "(address bar | focus address | focus url | url)": focus_address_bar,
@@ -120,6 +160,8 @@ context.keymap(
         "hard reload": Key("cmd-shift-r"),
         "new tab": Key("cmd-t"),
         "new tab {global_browser.webpages}": go_to_webpage,
+        "new search {global_browser.searches} [<dgndictation>]": new_search_new_tab,
+        "search {global_browser.searches} [<dgndictation>]": new_search_existing_tab,
         "close tab": Key("cmd-w"),
         "(reopen | unclose) tab": Key("cmd-shift-t"),
         "(next tab | goneck)": Key("cmd-shift-]"),
@@ -164,12 +206,15 @@ context.keymap(
         "move tab left": browser.send_to_vimium("<<"),
         "move tab right": browser.send_to_vimium(">>"),
         "move tab new window": browser.send_to_vimium("W"),
-        "tab (named | by name)": browser.send_to_vimium("T"),
-        "tab (named | by name) <dgndictation>": [
+        "tab (named | name | by name)": browser.send_to_vimium("T"),
+        "tab (named | name | by name) <dgndictation>": [
             browser.send_to_vimium("T"),
-            utils.text,
+            lambda m: time.sleep(0.3),
+            lambda m: utils.paste_text(utils.string_capture(m)),
+            lambda m: time.sleep(0.0),
             Key("enter"),
         ],
+        "open most recently downloaded file": open_most_recently_downloaded_file,
     }
 )
 
@@ -184,11 +229,29 @@ def global_go_to_webpage(m):
     go_to_webpage(m)
 
 
+def global_chrome_close_tab(m):
+    current_app = ui.active_window().app
+    switcher.switch_app(name="Google Chrome")
+    press("cmd-w")
+    current_app.focus()
+    # app = ui.apps(bundle="com.google.Chrome")[0]
+    # ctrl.key_press("w", cmd=True, app=app)
+
+
 global_ctx = Context("global_browser")
 global_ctx.set_list("webpages", webpages.keys())
+global_ctx.set_list("searches", searches.keys())
 global_ctx.keymap(
     {
         "chrome new tab": global_chrome_new_tab,
-        "chrome new tab {global_browser.webpages}": global_go_to_webpage,
+        "chrome new [tab] {global_browser.webpages}": global_go_to_webpage,
+        "chrome close tab": global_chrome_close_tab,
+        "chrome search [<dgndictation>]": [global_chrome_new_tab, utils.text, " "],
+        "chrome lucky [<dgndictation>]": [
+            global_chrome_new_tab,
+            "lucky ",
+            utils.text,
+            " ",
+        ],
     }
 )

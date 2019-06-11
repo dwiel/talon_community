@@ -100,12 +100,14 @@ keymap = {
     "(dubclick | duke)": delayed_dubclick,
     "(tripclick | triplick)": delayed_tripclick,
     "drag": mouse_drag,
-    "release": mouse_release,
+    "drag release": mouse_release,
     # jsc added
     "(shift click | shicks)": shift_click,
     "(command click | chom lick)": command_click,
     "wheel down": mouse_scroll(200),
     "wheel up": mouse_scroll(-200),
+    "wheel down here": [mouse_center, mouse_scroll(200)],
+    "wheel up here": [mouse_center, mouse_scroll(-200)],
     "mouse center": mouse_center,
 }
 

@@ -43,7 +43,8 @@ ctx.keymap(
         ],
         PREFIX
         + "commit all [<dgndictation>]": ['git commit -a -m ""', Key("left"), text],
-        PREFIX + "commit ticket [number]": ['git commit -m "[#]"', Key("left"), Key("left")],
+        PREFIX
+        + "commit ticket [number]": ['git commit -m "[#]"', Key("left"), Key("left")],
         PREFIX + "config [<dgndictation>]": ["git config ", text],
         PREFIX + "config list [<dgndictation>]": ["git config --list ", text],
         PREFIX + "diff [<dgndictation>]": ["git diff ", text],
@@ -70,6 +71,7 @@ ctx.keymap(
         PREFIX + "push set up new branch": "git push --set-upstream origin HEAD",
         PREFIX + "rebase continue": "git rebase --continue",
         PREFIX + "rebase [<dgndictation>]": ["git rebase ", text],
+        PREFIX + "remote add [<dgndictation>]": ["git remote add ", text],
         PREFIX + "(remove | R M) [<dgndictation>]": ["git rm ", text],
         PREFIX + "reset [<dgndictation>]": ["git reset ", text],
         PREFIX + "reset hard": "git reset --hard ",
@@ -79,6 +81,10 @@ ctx.keymap(
         PREFIX + "stash apply": "git stash apply ",
         PREFIX + "stash pop": "git stash pop ",
         PREFIX + "status": "git status ",
+        PREFIX + "submodule": "git submodule ",
+        PREFIX + "submodule add": "git submodule add ",
+        PREFIX + "submodule in it": "git submodule init",
+        PREFIX + "submodule update": "git submodule update",
         PREFIX + "tag": "git tag ",
         PREFIX + "add commit": ["git add  && git commit"] + ([Key("left")] * 14),
     }

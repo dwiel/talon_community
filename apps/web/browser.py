@@ -5,6 +5,7 @@ from talon.voice import press, Key
 from talon import ui
 
 from ...utils import insert
+from ... import utils
 
 lag = 0.2
 using_tridactyl = False
@@ -21,6 +22,18 @@ def get_url(win=None):
     else:
         raise ValueError("no method for getting url from not chrome yet")
     # win.children.find(AXTitle='Address and search bar')[0].AXValue
+
+
+def set_url(url, win=None):
+    if win is None:
+        win = ui.active_window()
+    focus_address_bar()
+    utils.paste_text(url)
+
+
+def navigate_to_url(url, win=None):
+    set_url(url, win)
+    press("enter")
 
 
 def url_matches_func(url_pattern):

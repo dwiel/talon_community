@@ -50,7 +50,7 @@ def ui_event(event, arg):
             "win_close",
         ):
             if event in ("win_open", "win_closed"):
-                if arg.app.name == "Amethyst" or arg.name == "loginwindow":
+                if arg.app.name == "Amethyst" or arg.app.name == "loginwindow":
                     return
             if event == "app_activate" and arg.name == "loginwindow":
                 return

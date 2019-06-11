@@ -8,6 +8,7 @@ import json
 import os
 
 from .bundle_groups import TERMINAL_BUNDLES, FILETYPE_SENSITIVE_BUNDLES
+from . import vocab
 
 VIM_IDENTIFIER = "(Vim)"
 INCLUDE_TEENS_IN_NUMERALS = False
@@ -15,6 +16,7 @@ INCLUDE_TENS_IN_NUMERALS = False
 
 # mapping = json.load(open(os.path.join(os.path.dirname(__file__), "replace_words.json")))
 mapping = json.load(resource.open("replace_words.json"))
+mapping.update({k.lower(): v for k, v in vocab.vocab_alternate.items()})
 mappings = collections.defaultdict(dict)
 for k, v in mapping.items():
     mappings[len(k.split(" "))][k] = v
@@ -37,6 +39,8 @@ def parse_word(word, force_lowercase=True):
 def replace_words(words, mapping, count):
     if len(words) < count:
         return words
+
+    # print(words, mapping, count)
 
     new_words = []
     i = 0
@@ -86,7 +90,15 @@ def parse_words(m, natural=False):
     words = list(map(remove_dragon_junk, words))
     words = remove_appostrophe_s(words)
     words = sum([word.split(" ") for word in words], [])
-    words = list(map(lambda current_word: parse_word(current_word, not natural), words))
+    if not natural:
+        words = [word.lower() for word in words]
+
+    # replace words and all orders to make sure the replacement is more complete ... a more principled approach here would be nice
+    words = replace_words(words, mappings[4], 4)
+    words = replace_words(words, mappings[3], 3)
+    words = replace_words(words, mappings[2], 2)
+    words = replace_words(words, mappings[1], 1)
+    # words = list(map(lambda current_word: parse_word(current_word, not natural), words))
     words = replace_words(words, mappings[2], 2)
     words = replace_words(words, mappings[3], 3)
     words = replace_words(words, mappings[4], 4)
@@ -108,8 +120,12 @@ def insert(s):
     Str(s)(None)
 
 
+def string_capture(m):
+    return join_words(parse_words(m)).lower()
+
+
 def text(m):
-    insert(join_words(parse_words(m)).lower())
+    insert(string_capture(m))
 
 
 def snake_text(m):
@@ -281,11 +297,19 @@ def paste_text(text):
         sleep(0.1)
 
 
-@preserve_clipboard
-def copy_selected():
-    press("cmd-c")
-    sleep(0.25)
-    return clip.get()
+# @preserve_clipboard
+# def copy_selected():
+#     press("cmd-c")
+#     sleep(0.25)
+#     return clip.get()
+
+def copy_selected(default=None):
+    try:
+        with clip.capture() as s:
+            press("cmd-c")
+        return s.get()
+    except clip.NoChange:
+        return default
 
 
 # The. following function is used to be able to repeat commands by following it by one or several numbers, e.g.:

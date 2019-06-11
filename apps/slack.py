@@ -1,3 +1,4 @@
+import time
 from talon.voice import Context, Key
 from ..utils import text
 
@@ -7,7 +8,13 @@ ctx = Context("slack", bundle="com.tinyspeck.slackmacgap")
 keymap = {
     # Channel
     "channel": Key("cmd-k"),
-    "channel <dgndictation>": [Key("cmd-k"), text, Key("enter")],
+    "channel <dgndictation>": [
+        Key("cmd-k"),
+        lambda m: time.sleep(0.1),
+        text,
+        lambda m: time.sleep(0.1),
+        Key("enter"),
+    ],
     "channel last": Key("alt-up"),
     "([channel] unread last | gopreev)": Key("alt-shift-up"),
     "channel next": Key("alt-down"),
@@ -57,7 +64,7 @@ keymap = {
     "(strike | strikethrough)": Key("cmd-shift-x"),
     "mark all read": Key("shift-esc"),
     "mark channel read": Key("esc"),
-    "clear": [Key("cmd-a"), Key("backspace")],
+    # "clear": [Key("cmd-a"), Key("backspace")],
     # Files and Snippets
     "upload": Key("cmd-u"),
     "snippet": Key("cmd-shift-enter"),

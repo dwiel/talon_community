@@ -83,6 +83,10 @@ def big_word_neck(m):
     return word_neck(m, valid_characters=set(alphanumeric) | set("/\\-_.>=<"))
 
 
+def small_word_neck(m):
+    return word_neck(m, valid_characters=set(alphanumeric) - set("_"))
+
+
 def word_neck(m, valid_characters=alphanumeric):
     word_index = extract_num_from_m(m, 1)
 
@@ -137,6 +141,10 @@ def big_word_prev(m):
     return word_prev(m, valid_characters=set(alphanumeric) | set("/\\-_.>=<"))
 
 
+def small_word_prev(m):
+    return word_prev(m, valid_characters=set(alphanumeric) - set("_"))
+
+
 def word_prev(m, valid_characters=alphanumeric):
     word_index = extract_num_from_m(m, 1)
 
@@ -183,6 +191,12 @@ def word_prev(m, valid_characters=alphanumeric):
         press("shift-left")
 
 
+def word_number(m):
+    # lefty
+    press("cmd-left")
+    word_neck(m)
+
+
 ctx.keymap(
     {
         # meta
@@ -194,9 +208,9 @@ ctx.keymap(
         "(clip copy | stoosh)": Key("cmd-c"),
         "(clip paste | spark)": Key("cmd-v"),
         # motions
-        "(go word left | fame | peg)": Key("alt-left"),
-        "(go word right | fish | fran)": Key("alt-right"),
-        "(go line after end | derek)": Key("cmd-right space"),
+        "(go word left | fame)": Key("alt-left"),
+        "(go word right | fish)": Key("alt-right"),
+        "(go line after end)": Key("cmd-right space"),
         "(go line start | lefty)": Key("cmd-left"),
         "(go line end | ricky)": Key("cmd-right"),
         "(go line before end | smear)": Key("cmd-right left"),
@@ -209,8 +223,8 @@ ctx.keymap(
         ),
         # deleting
         "(delete around this | slurp)": Key("backspace delete"),
-        "(delete line left | snip left | snipple)": Key("shift-cmd-left delete"),
-        "(delete line right | snip right | snipper)": Key("shift-cmd-right delete"),
+        "(delete line left | snip left)": Key("shift-cmd-left delete"),
+        "(delete line right | snip right)": Key("shift-cmd-right delete"),
         "(delete [this] line)": Key("shift-cmd-right delete delete ctrl-a cmd-left"),
         "(delete word left | trough | steffi | carmex)": Key("alt-backspace"),
         "(delete word right | stippy | kite)": Key("alt-delete"),
@@ -223,13 +237,18 @@ ctx.keymap(
         "(select above | shift home)": Key("shift-home"),
         "(select up | shreep)": Key("shift-up"),
         "(select down | shroom)": Key("shift-down"),
+        "(select way down | shroomway)": Key("cmd-shift-down"),
+        "(select way up | shreepway)": Key("cmd-shift-up"),
         "(select all | olly | ali)": Key("cmd-a"),
         "(select left | shrim | shlicky)": Key("shift-left"),
         "(select right | shrish | shricky)": Key("shift-right"),
         "(select word number {generic_editor.n}* above | wordpreev {generic_editor.n}*)": word_prev,
         "big word preev {generic_editor.n}*": big_word_prev,
         "big word neck {generic_editor.n}*": big_word_neck,
+        "small word preev {generic_editor.n}*": small_word_prev,
+        "small word neck {generic_editor.n}*": small_word_neck,
         "(select word number {generic_editor.n}* below | wordneck {generic_editor.n}*)": word_neck,
+        "word {generic_editor.n}": word_number,
         "(select word left | scram)": Key("alt-shift-left"),
         "(select word right | scrish)": Key("alt-shift-right"),
         "(select line left | lecksy)": Key("cmd-shift-left"),
