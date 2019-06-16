@@ -4,7 +4,8 @@ from talon.voice import Key, Context, Str, press
 from talon_init import TALON_HOME, TALON_PLUGINS, TALON_USER
 from talon import ctrl, ui
 
-from ..utils import parse_words, text, is_in_bundles, insert, load_config_json
+from ..utils import parse_words, text, is_in_bundles, insert
+from .. import config
 from ..misc.switcher import switch_app
 from ..bundle_groups import TERMINAL_BUNDLES
 
@@ -50,7 +51,7 @@ directory_shortcuts = {
     "talon plug-ins": TALON_PLUGINS,
     "talon community": "~/.talon/user/talon_community",
 }
-directory_shortcuts.update(load_config_json("directory_shortcuts.json"))
+directory_shortcuts.update(config.load_config_json("directory_shortcuts.json"))
 
 
 def cd_directory_shortcut(m):
@@ -65,7 +66,7 @@ def name_directory_shortcuts(m):
     insert(directory_shortcuts[" ".join(m["terminal.directory_shortcuts"])])
 
 
-servers = load_config_json("servers.json")
+servers = config.load_config_json("servers.json")
 
 
 def get_server(m):
@@ -193,16 +194,6 @@ keymap = {
     # "gripper": ["grep -r  .", Key("left left")],
     "pee socks": "ps aux ",
     "vi": "vi ",
-    # python
-    "pip": "pip",
-    "pip install": "pip install ",
-    "pip install requirements": "pip install -r ",
-    "pip install editable": "pip install -e ",
-    "pip install this": "pip install -e .",
-    "pip install local": "pip install -e .",
-    "pip [install] upgrade": "pip install --upgrade ",
-    "pip uninstall": "pip uninstall ",
-    "pip list": "pip list",
     # docker
     "docker P S": "docker ps ",
     "docker (remove | R M)": "docker rm ",
@@ -319,6 +310,21 @@ keymap = {
     "ross topic pub    ": "rostopic pub ",
     "ross topic type   ": "rostopic type ",
 }
+
+for pip in ("pip", "pip3"):
+    keymap.update(
+        {
+            f"{pip}": f"{pip}",
+            f"{pip} install": f"{pip} install ",
+            f"{pip} install requirements": f"{pip} install -r ",
+            f"{pip} install editable": f"{pip} install -e ",
+            f"{pip} install this": f"{pip} install -e .",
+            f"{pip} install local": f"{pip} install -e .",
+            f"{pip} [install] upgrade": f"{pip} install --upgrade ",
+            f"{pip} uninstall": f"{pip} uninstall ",
+            f"{pip} list": f"{pip} list",
+        }
+    )
 
 for action in ("get", "delete", "describe"):
     for object in (

@@ -1,22 +1,24 @@
 from talon.voice import Context, Str
-from ..utils import alternatives
+
+# from ..utils import alternatives
 
 ctx = Context("shrink")
 
 
 def shrink_word(m):
-    word = str(m._words[1])
-    if word not in shrink_map:
-        raise Exception("%s not in shrink map" % word)
-    Str(shrink_map[word])(None)
+    # Str(shrink_map[" ".join(m["shrink.words"])])(None)
+    Str(shrink_map[m[1]])(None)
 
 
 shrink_map = {
     "administrator": "admin",
     "alternate": "alt",
     "apartment": "apt",
+    "application": "app",
     "applications": "apps",
+    "argument": "arg",
     "arguments": "args",
+    "attribute": "attr",
     "attributes": "attrs",
     "authentication": "auth",
     "button": "btn",
@@ -185,4 +187,11 @@ shrink_map = {
     "december": "dec",
 }
 
+
+def alternatives(options):
+    return " (" + " | ".join(sorted(map(str, options))) + ")"
+
+
 ctx.keymap({"shrink" + alternatives(shrink_map.keys()): shrink_word})
+# ctx.keymap({"shrink {shrink.words}": shrink_word})
+# ctx.set_list("words", shrink_map.keys())

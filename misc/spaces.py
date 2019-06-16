@@ -3,10 +3,11 @@ import json
 import time
 import contextlib
 
-from talon import ui, resource, ctrl
+from talon import ui, resource, ctrl, cron
 from talon.voice import Key, Context, press
 
 from .. import utils
+from . import last_phrase
 
 
 single_digits = "0123456789"
@@ -46,13 +47,16 @@ def window_move_space(m):
         press(f"ctrl-{desktop_number}")
 
 
-keymap = {"window move (space | desk) {spaces.named_desktops}": window_move_space}
-keymap.update(
-    {
-        "(space | desk) %s" % name: Key("ctrl-%s" % NAMED_DESKTOPS[name])
-        for name in NAMED_DESKTOPS.keys()
-    }
-)
+def desk(m):
+    desktop_number = NAMED_DESKTOPS[m["spaces.named_desktops"][0]]
+    press(f"ctrl-{desktop_number}")
+    cron.after('300ms', last_phrase.history.refresh)
+
+
+keymap = {
+    "window move (space | desk) {spaces.named_desktops}": window_move_space,
+    "desk {spaces.named_desktops}": desk,
+}
 
 ctx = Context("spaces")
 ctx.keymap(keymap)

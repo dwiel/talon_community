@@ -3,6 +3,7 @@ import glob
 import os
 
 from .. import utils
+from .. import config
 from .web import browser
 from ..misc import switcher
 
@@ -108,7 +109,7 @@ def mendeley(m):
     navigate_to_url(f"https://www.mendeley.com/import/?url={get_url()}")
 
 
-webpages = utils.load_config_json("webpages.json")
+webpages = config.load_config_json("webpages.json")
 
 
 def get_webpage(m):
@@ -124,7 +125,7 @@ def get_search(m):
     return searches[" ".join(m["global_browser.searches"])]
 
 
-searches = utils.load_config_json("searches.json")
+searches = config.load_config_json("searches.json")
 
 
 def new_search_new_tab(m):

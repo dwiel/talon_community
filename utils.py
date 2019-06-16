@@ -1,14 +1,14 @@
-import string
 import collections
+import json
+import os
+import string
+from time import sleep
 
 from talon import clip, resource
 from talon.voice import Context, Str, press
-from time import sleep
-import json
-import os
 
-from .bundle_groups import TERMINAL_BUNDLES, FILETYPE_SENSITIVE_BUNDLES
 from . import vocab
+from .bundle_groups import FILETYPE_SENSITIVE_BUNDLES, TERMINAL_BUNDLES
 
 VIM_IDENTIFIER = "(Vim)"
 INCLUDE_TEENS_IN_NUMERALS = False
@@ -382,15 +382,3 @@ def normalise_keys(dict):
         for cmd in k.strip("() ").split("|"):
             normalised_dict[cmd.strip()] = v
     return normalised_dict
-
-
-def load_config_json(filename):
-    if not os.path.isfile(filename):
-        with open(filename, "w") as f:
-            f.write("{}")
-
-    try:
-        return json.load(resource.open(filename))
-    except Exception as e:
-        print(f"error opening {filename}: {e}")
-        return {}

@@ -13,6 +13,9 @@ APPLIED_HANDLERS = (
     "ignore_ui_event",
     "simplify_parse_result",
     "ignore_successful_reload",
+    # "ignore_begin",
+    # "ignore_empty",
+    # "simplify",
 )
 
 handlers = {
@@ -42,6 +45,21 @@ handlers = {
         "event": ("p.end",),
         "cond": lambda m: "words" in m,
         "format": lambda m: {k: m[k] for k in m if k in ("cmd", "phrase", "parsed")},
+    },
+    "ignore_begin": {
+        "event": ("p.begin",),
+        "cond": lambda m: True,
+        "format": lambda m: "",
+    },
+    "ignore_empty": {
+        "event": ("p.end",),
+        "cond": lambda m: m["phrase"] == [],
+        "format": lambda m: "",
+    },
+    "simplify": {
+        "event": ("p.end",),
+        "cond": lambda m: "parsed" in m,
+        "format": lambda m: f"{m['phrase']}: {m['parsed']._data}",
     },
 }
 
