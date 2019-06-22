@@ -1,12 +1,8 @@
-from os import system
+from talon.voice import Context, press
 
-from talon.voice import Context, Key, press, Str
-from talon import clip
-
-from ..apps.atom import jump_to_bol
-from ..utils import optional_numerals, is_filetype, text
 from .. import utils
-
+from ..apps.atom import jump_to_bol
+from ..utils import is_filetype, optional_numerals
 
 FILETYPES = (".md",)
 
@@ -20,24 +16,37 @@ ctx = Context("markdown", func=markdown)
 
 def modify_selected_text(fn):
     def wrapper(m):
-        utils.paste_text(fn(m, utils.copy_selected("")))
+        selected = utils.copy_selected("")
+        new_lines = []
+        for line in selected.split('\n'):
+            new_lines.append(fn(m, line))
+
+        utils.paste_text('\n'.join(new_lines))
 
     return wrapper
 
 
 def modify_line(fn):
+    """
+    if a number is provided, that line will be modified
+    if multiple lines are selected, all lines will be modified
+    otherwise, the current line will be modified
+    """
     def wrapper(m):
         line_number = utils.extract_num_from_m(m, default=None)
         if line_number is not None:
             jump_to_bol(m)
 
-        # righty
-        press("cmd-right")
-        # lefty
-        press("cmd-left")
+        selected = utils.copy_selected(None)
+        if selected is None:
+            # righty
+            press("cmd-right")
+            # lefty
+            press("cmd-left")
 
-        # copy this line
-        press("cmd-shift-right")
+            # copy this line
+            press("cmd-shift-right")
+
         modify_selected_text(fn)(m)
 
     return wrapper
@@ -54,10 +63,6 @@ def markdown_incomplete(m, text):
 
 
 def markdown_add_tag(m):
-    # if len(m._words) > 2:
-    #     jump_to_bol(m)
-    # else:
-
     # righty
     press("cmd-right")
     # lefty
@@ -65,11 +70,8 @@ def markdown_add_tag(m):
 
     # copy this line
     press("cmd-shift-right")
-    try:
-        with clip.capture() as s:
-            press("cmd-c")
-        existing = s.get()
-    except clip.NoChange:
+    existing = utils.copy_selected(None)
+    if existing is None:
         return
     press("left")
 
