@@ -11,8 +11,8 @@ except Exception:
 
 def load_config_json(filename, default=dict):
     if not os.path.isfile(filename):
-        with open(filename, "w") as f:
-            f.write("{}")
+        with resource.open(filename, "w") as f:
+            f.write(json.dumps(default()))
 
     try:
         return json.load(resource.open(filename))
