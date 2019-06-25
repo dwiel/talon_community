@@ -34,6 +34,7 @@ ctx.keymap(
         "[switch] space (left | previous | preev)": Key("ctrl-left"),
         "(minimise window | curtail)": Key("cmd-m"),
         "show app windows": Key("ctrl-down"),
+        "quit it": Key("cmd-q"),
         # application navigation
         "[open] launcher": Key("cmd-space"),
         "([switch] app (next | right) | swick)": Key("cmd-tab"),
