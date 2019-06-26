@@ -75,6 +75,7 @@ keymap = {
     "invite": Key("a"),
     # Miscellaneous
     "keyboard shortcuts": Key("cmd-/"),
+    "set status": Key("cmd-shift-y"),
 }
 
 ctx.keymap(keymap)
