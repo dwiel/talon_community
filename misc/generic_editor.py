@@ -207,6 +207,7 @@ ctx.keymap(
         "(clip cut | snatch)": Key("cmd-x"),
         "(clip copy | stoosh)": Key("cmd-c"),
         "(clip paste | spark)": Key("cmd-v"),
+        "(clip paste preserve formatting | match spark)": Key("cmd-shift-alt-v"),
         # motions
         "(go word left | fame)": Key("alt-left"),
         "(go word right | fish)": Key("alt-right"),
@@ -249,9 +250,9 @@ ctx.keymap(
         "small word neck {generic_editor.n}*": small_word_neck,
         "(select word number {generic_editor.n}* below | wordneck {generic_editor.n}*)": word_neck,
         "word {generic_editor.n}": word_number,
-        "(select word left | scram)": Key("alt-shift-left"),
-        "(select word right | scrish)": Key("alt-shift-right"),
-        "(select line left | lecksy)": Key("cmd-shift-left"),
-        "(select line right | ricksy)": Key("cmd-shift-right"),
+        "( (select | sell) word left | scram)": Key("alt-shift-left"),
+        "( (select | sell) word right | scrish)": Key("alt-shift-right"),
+        "( (select | sell) line left | lecksy)": Key("cmd-shift-left"),
+        "( (select | sell) line right | ricksy)": Key("cmd-shift-right"),
     }
 )
