@@ -111,6 +111,15 @@ def control_shift_click(m, button=0, times=1):
     ctrl.key_press("shift", ctrl=True, shift=True, up=True)
 
 
+def press_option_and_drag(m):
+    ctrl.key_press("alt", down=True)
+    mouse_drag(m)
+
+
+def press_option_and_end_drag(m):
+    ctrl.key_press("alt", up=True)
+    mouse_release(m)
+
 keymap = {
     # jsc modified with some voice-code compatibility
     "righty": delayed_right_click,
@@ -119,6 +128,8 @@ keymap = {
     "(tripclick | triplick)": delayed_tripclick,
     "drag": mouse_drag,
     "drag release": mouse_release,
+    "(option | alt) drag": press_option_and_drag,
+    "(option | alt) release": press_option_and_end_drag,
     "(shift click | shicks)": shift_click,
     "(command click | chom lick)": command_click,
     "(control shift click | troll shift click)" : control_shift_click,

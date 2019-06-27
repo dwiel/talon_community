@@ -3,10 +3,10 @@ import string
 from ..utils import normalise_keys, insert
 
 # Talon recommended alphabet
-alpha_alt = "air bat cap drum each fine gust harp sit jury crunch look made near odd pit quench red sun trap urge vest whale plex yank zip".split()
+# alpha_alt = "air bat cap drum each fine gust harp sit jury crunch look made near odd pit quench red sun trap urge vest whale plex yank zip".split()
 
 # Voicecode alphabet
-# alpha_alt = "arch brov char dell etch fomp goof hark ice jinx koop lug mowsh nerb ork pooch quosh rosh sun teak unks verge womp trex yang zooch".split() 
+alpha_alt = "arch brov char dell etch fomp goof hark ice jinx koop lug mowsh nerb ork pooch quosh rosh sun teak unks verge womp trex yang zooch".split()
 
 alphabet = dict(zip(alpha_alt, string.ascii_lowercase))
 
