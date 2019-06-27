@@ -164,6 +164,8 @@ shrink_map = {
     "standing": "stdin",
     "standout": "stdout",
     "string": "str",
+    "synchronize": "sync",
+    "synthesizer": "synth",
     "system": "sys",
     "temporary": "tmp",
     "text": "txt",
