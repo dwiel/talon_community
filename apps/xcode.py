@@ -21,7 +21,7 @@ ctx.keymap(
         "split window": Key("cmd-alt-enter"),
         "show editor": Key("cmd-enter"),
         "(show | hide) debug": Key("cmd-shift-y"),
-        "show call hierarchy": Key("cmd-ctrl-shift-h"),
+        "(show | find) call hierarchy": Key("cmd-ctrl-shift-h"),
         "show (recent | recent files)": [Key("ctrl-1"), "recent files\n"],
         "show related": Key("ctrl-1"),
         "show history": Key("ctrl-2"),
