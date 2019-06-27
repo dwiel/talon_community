@@ -82,5 +82,8 @@ ctx.keymap(
         "spotlight window": Key("cmd-alt-space"),
         # NOT WORKING: Function key shorcuts (f8 through f12)
         "toggle hidden files": Key("cmd-shift-."),
+        # the following require addition of keyboard shortcuts in System Preferences
+        "zip it": Key("cmd-shift-z"),
+        "show package contents": Key("cmd-alt-o"),
     }
 )
