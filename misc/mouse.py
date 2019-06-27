@@ -4,7 +4,7 @@
 # import eye
 import time
 from talon import ctrl, tap, ui
-from talon.voice import Context
+from talon.voice import Context, Key
 
 ctx = Context("mouse")
 
@@ -40,14 +40,12 @@ def delayed_click(m, button=0, times=1):
     # eye.config.control_mouse = old
 
 
-# jsc added
 def press_key_and_click(m, key, button=0, times=1):
     ctrl.key_press(key, down=True)
     ctrl.mouse_click(x, y, button=button, times=times, wait=16000)
     ctrl.key_press(key, up=True)
 
 
-# jsc added
 def shift_click(m, button=0, times=1):
     press_key_and_click(m, "shift", button, times)
 
@@ -93,6 +91,26 @@ def mouse_center(m):
     ctrl.mouse_move(*center)
 
 
+def press_key_and_click(m, key, button=0, times=1):
+    ctrl.key_press(key, down=True)
+    ctrl.mouse_click(x, y, button=button, times=times, wait=16000)
+    ctrl.key_press(key, up=True)
+
+
+def shift_click(m, button=0, times=1):
+    press_key_and_click(m, "shift", button, times)
+
+
+def command_click(m, button=0, times=1):
+    press_key_and_click(m, "cmd", button, times)
+
+
+def control_shift_click(m, button=0, times=1):
+    ctrl.key_press("shift", ctrl=True, shift=True, down=True)
+    ctrl.mouse_click(x, y, button=button, times=times, wait=16000)
+    ctrl.key_press("shift", ctrl=True, shift=True, up=True)
+
+
 keymap = {
     # jsc modified with some voice-code compatibility
     "righty": delayed_right_click,
@@ -101,9 +119,13 @@ keymap = {
     "(tripclick | triplick)": delayed_tripclick,
     "drag": mouse_drag,
     "drag release": mouse_release,
-    # jsc added
     "(shift click | shicks)": shift_click,
     "(command click | chom lick)": command_click,
+    "(control shift click | troll shift click)" : control_shift_click,
+    "(control shift double click | troll shift double click)" : lambda m: control_shift_click(m, 0, 2),
+    "do park": [delayed_dubclick, Key('cmd-v')],
+	"do koosh": [delayed_dubclick, Key('cmd-c')],
+
     "wheel down": mouse_scroll(200),
     "wheel up": mouse_scroll(-200),
     "wheel down here": [mouse_center, mouse_scroll(200)],
