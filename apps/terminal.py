@@ -191,7 +191,7 @@ keymap = {
     # Tools
     # "(grep | grip)": ["grep  .", Key("left left")],
     "(grep | grip)": "grep ",
-    # "gripper": ["grep -r  .", Key("left left")],
+    "gripper": ["grep -r  .", Key("left left")],
     "pee socks": "ps aux ",
     "vi": "vi ",
     # docker
