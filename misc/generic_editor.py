@@ -31,49 +31,50 @@ def find_previous(m):
 
 
 # jcooper-korg from talon slack
-def select_text_to_left_of_cursor(m):
-    words = parse_words(m)
-    if not words:
-        return
-    old = clip.get()
-    key = join_words(words).lower()
-    press("shift-home", wait=2000)
-    press("cmd-c", wait=2000)
-    press("right", wait=2000)
-    text_left = clip.get()
-    clip.set(old)
-    result = text_left.find(key)
+def select_text_to_left_of_cursor(m, cursorKey, clipboardSelectKey="shift-home"):
+    key = join_words(parse_words(m)).lower()
+    with clip.capture() as clipboardText:
+        press(clipboardSelectKey, wait=20000)
+        press("cmd-c", wait=20000)
+        press("right", wait=20000)
+    searchText = clipboardText.get().lower()
+    result = searchText.rfind(key)
     if result == -1:
-        return
-    # cursor over to the found key text
-    for i in range(0, len(text_left) - result):
-        press("left", wait=0)
-    # now select the matching key text
+        return False
+    # cursor over to the found key text and select the matching text
+    for i in range(result, len(searchText) - len(key)):
+        press(cursorKey, wait=0)
     for i in range(0, len(key)):
-        press("shift-right")
+        press("shift-left", wait=0)
+    return True
 
 
 # jcooper-korg from talon slack
-def select_text_to_right_of_cursor(m):
-    words = parse_words(m)
-    if not words:
-        return
-    key = join_words(words).lower()
-    old = clip.get()
-    press("shift-end", wait=2000)
-    press("cmd-c", wait=2000)
-    press("left", wait=2000)
-    text_right = clip.get()
-    clip.set(old)
-    result = text_right.find(key)
+def select_text_to_right_of_cursor(m, cursorKey, clipboardSelectKey="shift-end"):
+    key = join_words(parse_words(m)).lower()
+    with clip.capture() as clipboardText:
+        press(clipboardSelectKey, wait=20000)
+        press("cmd-c", wait=20000)
+        press("left", wait=20000)
+    searchText = clipboardText.get().lower()
+    result = searchText.find(key)
     if result == -1:
-        return
-    # cursor over to the found key text
+        return False
+    # cursor over to the found key text and select the matching text
     for i in range(0, result):
-        press("right", wait=0)
-    # now select the matching key text
+        press(cursorKey, wait=0)
     for i in range(0, len(key)):
-        press("shift-right")
+        press("shift-right", wait=0)
+    return True
+
+
+# jcooper-korg from talon slack
+def select_text_on_same_line(m):
+    key = join_words(parse_words(m)).lower()
+    # first check to the left of the cursor
+    if select_text_to_left_of_cursor(m, cursorKey="left", clipboardSelectKey="shift-ctrl-a") == False:
+        # if nothing found, then check to the right of the cursor
+        select_text_to_right_of_cursor(m, cursorKey="right", clipboardSelectKey="shift-ctrl-e")
 
 
 alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789_"
@@ -231,8 +232,11 @@ ctx.keymap(
         "(delete word right | stippy | kite)": Key("alt-delete"),
         "(delete [this] word | slurpies)": Key("alt-backspace alt-delete"),
         # selecting
-        "((select | sell) find right | crew) <dgndictation>": select_text_to_right_of_cursor,
-        "((select | sell) find left | trail) <dgndictation>": select_text_to_left_of_cursor,
+        "(crew | find right) <dgndictation> [over]": lambda m: select_text_to_right_of_cursor(m, cursorKey="right"),
+        "(select | sell) (crew | find right) <dgndictation> [over]": lambda m: select_text_to_right_of_cursor(m, cursorKey="shift-right"),
+        "(trail | find left) <dgndictation> [over]": lambda m: select_text_to_left_of_cursor(m, cursorKey="left"),
+        "(select | sell) (trail | find left) <dgndictation> [over]": lambda m: select_text_to_left_of_cursor(m, cursorKey="shift-left"),
+        "(find on line | kerleck) <dgndictation> [over]": select_text_on_same_line,
         "((select | sell) this word | word this)": Key("alt-right shift-alt-left"),
         "((select | sell) this line | shackle)": Key("cmd-right shift-cmd-left"),
         "((select | sell) above | shift home)": Key("shift-home"),
