@@ -24,9 +24,10 @@ Notes:
 from talon import tap
 from talon_plugins import speech
 from talon import voice
+from ..config import config
 
 # Hold this key down to disable talon
-TRIGGER_KEY = "shift-ctrl-a"
+TRIGGER_KEY = config.get("mute_trigger_key", "shift-ctrl-alt-a")
 
 
 def on_key(typ, e):
