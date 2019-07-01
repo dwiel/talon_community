@@ -101,7 +101,7 @@ phones_template = (
 <h3>homophones</h3>
 <table>
 {% for word in homophones %}
-<tr class="count"><td class="pick">🔊 pick </td><td>{{ word }}</td></tr>
+<tr class="count"><td class="pick">🔊 pick </td><td>{{ transform(word) }}</td></tr>
 {% endfor %}
 <tr><td colspan="2" class="pick cancel">🔊 cancel</td></tr>
 </table>
@@ -143,6 +143,18 @@ def get_selection():
     return s.get()
 
 
+def capitalize(x):
+    return x[0].upper() + x[1:]
+
+
+def uppercase(x):
+    return x.upper()
+
+
+def lowercase(x):
+    return x.lower()
+
+
 def raise_homophones(m, force_raise=False, is_selection=False):
     global pick_context
     global active_word_list
@@ -162,6 +174,13 @@ def raise_homophones(m, force_raise=False, is_selection=False):
         digit = int(digits[m._words[1]]) if str(m._words[1]) in digits else None
         word = parse_word(m._words[(2 if digit else 1)])
 
+    if word == word.capitalize():
+        transformer = capitalize
+    elif word.isupper():
+        transformer = uppercase
+    else:
+        transformer = lowercase
+
     word = word.lower()
 
     if word not in all_homophones:
@@ -175,30 +194,21 @@ def raise_homophones(m, force_raise=False, is_selection=False):
                 new = active_word_list[1]
             else:
                 new = active_word_list[0]
-            return insert(new, is_selection)
+            return insert(transformer(new), is_selection)
         elif digit:
             new = active_word_list[digit - 1]
             return insert(new, is_selection)
 
     valid_indices = range(len(active_word_list))
 
-    webview.render(phones_template, homophones=active_word_list)
+    webview.render(phones_template, homophones=active_word_list, transform=transformer)
     webview.show()
 
     keymap = {"(cancel | 0)": lambda x: close_homophones()}
 
-    def capitalize(x):
-        return x[0].upper() + x[1:]
-
-    def uppercase(x):
-        return x.upper()
-
-    def lowercase(x):
-        return x.lower()
-
     keymap.update(
         {
-            "[pick] %s" % (i + 1): lambda m: make_selection(m, is_selection)
+            "[pick] %s" % (i + 1): lambda m: make_selection(m, is_selection, transformer)
             for i in valid_indices
         }
     )
