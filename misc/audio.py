@@ -74,21 +74,6 @@ def parse_word(word):
     return word
 
 
-def play_pause(m):
-    script = """tell app "iTunes" to playpause"""
-    run_script(script)
-
-
-def next_track(m):
-    script = """tell app "iTunes" to play next track"""
-    run_script(script)
-
-
-def previous_track(m):
-    script = """tell app "iTunes" to play previous track"""
-    run_script(script)
-
-
 def set_volume(m):
     volume = text_to_number(m)
     if volume == -1:
@@ -100,9 +85,9 @@ def set_volume(m):
 
 
 keymap = {
-    "play pause": play_pause,
-    "track next": next_track,
-    "track last": previous_track,
+    "play pause": Key("play"),
+    "track next": Key("next"),
+    "track last": Key("previous"),
     "set volume <dgndictation>": set_volume,
 }
 
