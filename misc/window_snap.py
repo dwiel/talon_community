@@ -158,7 +158,7 @@ ctx.keymap(
         "snap top right two thirds": grid(2, 1, 3, 2, colspan=2),
         "snap top center third": grid(2, 1, 3, 2),
 
-        # hird-of-the-screen versions of top quarters
+        # Third-of-the-screen versions of bottom quarters
         "snap bottom left third": grid(1, 2, 3, 2),
         "snap bottom right third": grid(3, 2, 3, 2),
         "snap bottom left two thirds": grid(1, 2, 3, 2, colspan=2),
