@@ -5,13 +5,16 @@ from ..utils import (
     insert,
     normalise_keys,
     parse_word,
-    surround,
     text,
     sentence_text,
     word,
     parse_words,
     spoken_text,
 )
+from .. import utils
+
+LEAVE_CURSOR_INSIDE = True
+LEAVE_CURSOR_INSIDE_IF_NO_WORDS = True
 
 
 def title_case_capitalize_word(index, word, _):
@@ -22,6 +25,54 @@ def title_case_capitalize_word(index, word, _):
         return word.capitalize()
     else:
         return word
+
+
+class Surround:
+    def __init__(self, left_surrounder, right_surrounder=None):
+        self.left_surrounder = left_surrounder
+        self.right_surrounder = right_surrounder or left_surrounder
+
+    def __call__(self, i, word, last):
+        if i == 0:
+            word = self.left_surrounder + word
+        if last:
+            word += self.right_surrounder
+        return word
+
+
+def FormatText(m):
+    fmt = []
+
+    for w in m._words:
+        if isinstance(w, Word) and w != "over":
+            fmt.append(w.word)
+    words = parse_words(m)
+    if not words:
+        words = utils.copy_selected(default="").split(" ")
+
+    tmp = []
+
+    smash = False
+    for i, w in enumerate(words):
+        word = parse_word(w, True)
+        for name in reversed(fmt):
+            smash, func = formatters[name]
+            word = func(i, word, i == len(words) - 1)
+        tmp.append(word)
+
+    sep = "" if smash else " "
+    insert(sep.join(tmp))
+    # if no words, move cursor inside surrounders
+    if LEAVE_CURSOR_INSIDE or (LEAVE_CURSOR_INSIDE_IF_NO_WORDS and not words[0]):
+        right_surrounders = "".join(
+            [
+                surrounders[name][1].right_surrounder
+                for name in fmt
+                if name in surrounders
+            ]
+        )
+        for i in range(len(right_surrounders)):
+            press("left")
 
 
 formatters = normalise_keys(
@@ -52,6 +103,7 @@ formatters = normalise_keys(
         "(criff | criffed)": (True, lambda i, word, _: word.capitalize()),
         "tridal": (False, lambda i, word, _: word.capitalize()),
         "snake": (True, lambda i, word, _: word if i == 0 else "_" + word),
+        "private": (True, lambda i, word, _: "_" + word),
         "dotsnik": (True, lambda i, word, _: "." + word if i == 0 else "_" + word),
         "dot": (True, lambda i, word, _: "." + word if i == 0 else "_" + word),
         "smash": (True, lambda i, word, _: word),
@@ -62,53 +114,21 @@ formatters = normalise_keys(
 
 surrounders = normalise_keys(
     {
-        "(dubstring | coif)": (False, surround('"')),
-        "(string | posh)": (False, surround("'")),
-        "(tics | glitch)": (False, surround("`")),
-        "padded": (False, surround(" ")),
-        "dunder": (False, surround("__")),
-        "angler": (False, surround("<", ">")),
-        "brax": (False, surround("[", "]")),
-        "kirk": (False, surround("{", "}")),
-        "precoif": (False, surround('("', '")')),
-        "(prex | args)": (False, surround("(", ")")),
+        "(dubstring | coif)": (False, Surround('"')),
+        "posh": (False, Surround("'")),
+        "(tics | glitch)": (False, Surround("`")),
+        "blockquote": (False, Surround("```\n", "\n```")),
+        "padded": (False, Surround(" ")),
+        "dunder": (False, Surround("__")),
+        "angler": (False, Surround("<", ">")),
+        "brax": (False, Surround("[", "]")),
+        "kirk": (False, Surround("{", "}")),
+        "precoif": (False, Surround('("', '")')),
+        "prex": (False, Surround("(", ")")),
     }
 )
 
 formatters.update(surrounders)
-
-
-def FormatText(m):
-    fmt = []
-
-    for w in m._words:
-        if isinstance(w, Word) and w != "over":
-            fmt.append(w.word)
-    words = parse_words(m)
-    if not words:
-        try:
-            with clip.capture() as s:
-                press("cmd-c")
-            words = s.get().split(" ")
-        except clip.NoChange:
-            words = [""]
-
-    tmp = []
-
-    smash = False
-    for i, w in enumerate(words):
-        word = parse_word(w, True)
-        for name in reversed(fmt):
-            smash, func = formatters[name]
-            word = func(i, word, i == len(words) - 1)
-        tmp.append(word)
-
-    sep = "" if smash else " "
-    insert(sep.join(tmp))
-    # if no words, move cursor inside surrounders
-    if not words[0]:
-        for i in range(len(tmp[0]) // 2):
-            press("left")
 
 
 ctx = Context("formatters")
