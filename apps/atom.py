@@ -4,8 +4,10 @@ Make sure to install the talon plugin: https://github.com/tuomassalo/atom-talon
 
 import re
 import time
+import os
 
 from talon.voice import Context, Key, Rule, Str, press
+from talon import ui
 
 from .. import utils
 from ..utils import (
@@ -315,10 +317,18 @@ def replace_left_of_equals_with_return(m):
     press("up")
 
 
-def open_fuzzy_file(m):
+def open_fuzzy_file(m=None, fuzzy_filename=None):
     press("cmd-t")
-    text(m)
+    if m:
+        text(m)
+    else:
+        utils.paste_text(fuzzy_filename)
     press("enter")
+
+
+def make_executable(m):
+    file = str(ui.active_window().doc)
+    os.system(f"chmod a+x {file}")
 
 
 keymap = {
@@ -370,7 +380,7 @@ keymap = {
     "(search all files | mark all | marco project)": Key("cmd-shift-f"),
     "case sensitive": Key("alt-cmd-c"),
     "command pallet": Key(atom_command_pallet),
-    "(cursor | curr) (center | mid)": command("center-line:toggle"),
+    "((cursor | curr) (center | mid) | curse enter)": command("center-line:toggle"),
     "(cursor | curr) top": [
         command("center-line:toggle"),
         command("center-line:toggle"),
@@ -383,7 +393,9 @@ keymap = {
         "expand-selection-to-quotes:toggle"
     ),
     # needs bracket-matcher atom package; still a bit poor.
-    "bracken": command("bracket-matcher:select-inside-bracket"),
+    "(bracken | select inside brackets)": command(
+        "bracket-matcher:select-inside-bracket"
+    ),
     "go match": command("bracket-matcher:go-to-matching-bracket"),
     "remove [matching] (bracket | brackets)": command(
         "bracket-matcher:remove-matching-brackets"
@@ -454,6 +466,8 @@ keymap = {
     "move line up": command("editor: move line up"),
     "move line down": command("editor: move line down"),
     "move [current line] [to] line" + numerals: move_to_line,
+    # other
+    "make executable": make_executable,
 }
 ctx.set_list("snippets", set(snippets.keys()) - set(snippet_formatters.keys()))
 ctx.set_list("snippets_with_formatter", snippet_formatters.keys())
