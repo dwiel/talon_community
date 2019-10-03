@@ -61,6 +61,8 @@ def replace_words(words, mapping, count):
 def remove_dragon_junk(word):
     if word == ".\\point\\point":
         return "point"
+    elif word == ".\\period\\period":
+        return "period"
     else:
         return str(word).lstrip("\\").split("\\", 1)[0].replace("-", " ").strip()
 
