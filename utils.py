@@ -154,26 +154,6 @@ def word(m):
         pass
 
 
-def surround(left_surrounder, right_surrounder=None):
-    def func(i, word, last):
-        if i == 0:
-            word = left_surrounder + word
-        if last:
-            word += right_surrounder or left_surrounder
-        return word
-
-    return func
-
-
-def rot13(i, word, _):
-    out = ""
-    for c in word.lower():
-        if c in string.ascii_lowercase:
-            c = chr((((ord(c) - ord("a")) + 13) % 26) + ord("a"))
-        out += c
-    return out
-
-
 numeral_map = dict((str(n), n) for n in range(0, 10))
 if INCLUDE_TEENS_IN_NUMERALS:
     for n in range(10, 20, 1):
