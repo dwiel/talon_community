@@ -6,10 +6,12 @@ from talon.engine import engine
 from talon.voice import Context
 from talon_init import TALON_HOME
 
+from .. import config
+
 path = os.path.join(TALON_HOME, "last_phrase")
 WEBVIEW = True
 NOTIFY = False
-hist_len = 6
+hist_len = 10
 
 
 def parse_phrase(phrase):
@@ -68,11 +70,38 @@ td {
 </ul>
 """
 
+
+def screen_key():
+    return str(sorted(ui.screens(), key=lambda screen: screen.visible_rect.left))
+
+
 if WEBVIEW:
+    webview_locations = config.load_config_json("webview_locations.json")
+
+    def webview_blur(*args, **kwargs):
+        global webview_locations
+        key = screen_key()
+        r = webview.rect
+        new_location = {"x": r.x, "y": r.y}
+        webview_location = webview_locations[key]
+        if (
+            webview_location["x"] != new_location["x"]
+            or webview_location["y"] != new_location["y"]
+        ):
+            webview_locations[key] = new_location
+            config.save_config_json("webview_locations.json", webview_locations)
+
     webview = webview.Webview()
     webview.render(template, phrases=["command"])
     webview.show()
-    webview.move(1, ui.main_screen().height)
+
+    key = screen_key()
+    if key not in webview_locations:
+        webview_locations[key] = {"x": 1, "y": ui.main_screen().height}
+    print("moving webview_locations", webview_locations[key])
+    webview.move(webview_locations[key]["x"], webview_locations[key]["y"])
+
+    webview.register("blur", webview_blur)
 
 
 class History:
