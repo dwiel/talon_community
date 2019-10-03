@@ -208,7 +208,8 @@ def raise_homophones(m, force_raise=False, is_selection=False):
 
     keymap.update(
         {
-            "[pick] %s" % (i + 1): lambda m: make_selection(m, is_selection, transformer)
+            "[pick] %s"
+            % (i + 1): lambda m: make_selection(m, is_selection, transformer)
             for i in valid_indices
         }
     )

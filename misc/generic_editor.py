@@ -72,9 +72,16 @@ def select_text_to_right_of_cursor(m, cursorKey, clipboardSelectKey="shift-end")
 def select_text_on_same_line(m):
     key = join_words(parse_words(m)).lower()
     # first check to the left of the cursor
-    if select_text_to_left_of_cursor(m, cursorKey="left", clipboardSelectKey="shift-ctrl-a") == False:
+    if (
+        select_text_to_left_of_cursor(
+            m, cursorKey="left", clipboardSelectKey="shift-ctrl-a"
+        )
+        == False
+    ):
         # if nothing found, then check to the right of the cursor
-        select_text_to_right_of_cursor(m, cursorKey="right", clipboardSelectKey="shift-ctrl-e")
+        select_text_to_right_of_cursor(
+            m, cursorKey="right", clipboardSelectKey="shift-ctrl-e"
+        )
 
 
 alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789_"
@@ -232,10 +239,18 @@ ctx.keymap(
         "(delete word right | stippy | kite)": Key("alt-delete"),
         "(delete [this] word | slurpies)": Key("alt-backspace alt-delete"),
         # selecting
-        "(crew | find right) <dgndictation> [over]": lambda m: select_text_to_right_of_cursor(m, cursorKey="right"),
-        "(select | sell) (crew | find right) <dgndictation> [over]": lambda m: select_text_to_right_of_cursor(m, cursorKey="shift-right"),
-        "(trail | find left) <dgndictation> [over]": lambda m: select_text_to_left_of_cursor(m, cursorKey="left"),
-        "(select | sell) (trail | find left) <dgndictation> [over]": lambda m: select_text_to_left_of_cursor(m, cursorKey="shift-left"),
+        "(crew | find right) <dgndictation> [over]": lambda m: select_text_to_right_of_cursor(
+            m, cursorKey="right"
+        ),
+        "(select | sell) (crew | find right) <dgndictation> [over]": lambda m: select_text_to_right_of_cursor(
+            m, cursorKey="shift-right"
+        ),
+        "(trail | find left) <dgndictation> [over]": lambda m: select_text_to_left_of_cursor(
+            m, cursorKey="left"
+        ),
+        "(select | sell) (trail | find left) <dgndictation> [over]": lambda m: select_text_to_left_of_cursor(
+            m, cursorKey="shift-left"
+        ),
         "(find on line | kerleck) <dgndictation> [over]": select_text_on_same_line,
         "((select | sell) this word | word this)": Key("alt-right shift-alt-left"),
         "((select | sell) this line | shackle)": Key("cmd-right shift-cmd-left"),

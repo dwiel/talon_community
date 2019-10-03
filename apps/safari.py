@@ -30,7 +30,7 @@ ctx.keymap(
         "zoom in": Key("cmd-+"),
         "zoom out": Key("cmd--"),
         "[(enter | exit)] full screen": Key("ctrl-cmd-f"),
-		# useful for Polyglot translation extension
+        # useful for Polyglot translation extension
         "translate": Key("ctrl-`"),
     }
 )

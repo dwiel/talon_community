@@ -50,8 +50,12 @@ ctx.keymap(
         "(empty array | brackers)": "[]",
         # Blocks
         "[brace] block": [" {}", Key("left enter enter up tab")],
-        "[brace] shocker block": [Key("cmd-right enter"), "{}", Key("enter up right enter tab")],
-         "(square | brax) block": ["[", Key("enter")],
+        "[brace] shocker block": [
+            Key("cmd-right enter"),
+            "{}",
+            Key("enter up right enter tab"),
+        ],
+        "(square | brax) block": ["[", Key("enter")],
         "(paren | prex) block": ["(", Key("enter")],
         # Combos
         "coalshock": [":", Key("enter")],

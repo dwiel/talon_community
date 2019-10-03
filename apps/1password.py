@@ -7,7 +7,7 @@ ctx = Context("1password", bundle="com.agilebits.onepassword4")
 
 ctx.keymap(
     {
-		"new login": Key("shift-cmd-n"),
+        "new login": Key("shift-cmd-n"),
         "fill it": Key("alt-cmd-enter"),
         "duplicate": Key("cmd-d"),
         "edit": Key("cmd-e"),

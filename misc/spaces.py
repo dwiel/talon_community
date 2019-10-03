@@ -50,7 +50,7 @@ def window_move_space(m):
 def desk(m):
     desktop_number = NAMED_DESKTOPS[m["spaces.named_desktops"][0]]
     press(f"ctrl-{desktop_number}")
-    cron.after('300ms', last_phrase.history.refresh)
+    cron.after("300ms", last_phrase.history.refresh)
 
 
 keymap = {

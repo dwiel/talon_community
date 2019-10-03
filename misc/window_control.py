@@ -34,7 +34,9 @@ ctx.keymap(
         "[switch] space (right | next)": Key("ctrl-right"),
         "[switch] space (left | previous | preev)": Key("ctrl-left"),
         "(minimise window | curtail)": Key("cmd-m"),
-        "([show] (app | application) windows | expozay)": lambda m: macos.dock_notify("com.apple.expose.front.awake"),
+        "([show] (app | application) windows | expozay)": lambda m: macos.dock_notify(
+            "com.apple.expose.front.awake"
+        ),
         "quit it": Key("cmd-q"),
         # application navigation
         "[open] launcher": Key("cmd-space"),
@@ -42,8 +44,10 @@ ctx.keymap(
         "[switch] app (left | previous | preev)": Key("cmd-shift-tab"),
         "[open] mission control": lambda m: macos.dock_notify("com.apple.expose.awake"),
         "[open] launchpad": lambda m: macos.dock_notify("com.apple.launchpad.toggle"),
-		# the following requires keyboard shortcut for mission control in System Preferences > Keyboard > Shortcuts > Mission Control > Show Notification Center.
-		# is there a bundle id we can use instead?
-        "([(open | show)] notification center | ( (show | open) (today | widgets) ))": Key("shift-ctrl-f8"),
+        # the following requires keyboard shortcut for mission control in System Preferences > Keyboard > Shortcuts > Mission Control > Show Notification Center.
+        # is there a bundle id we can use instead?
+        "([(open | show)] notification center | ( (show | open) (today | widgets) ))": Key(
+            "shift-ctrl-f8"
+        ),
     }
 )

@@ -25,7 +25,8 @@ def smooth_location():
     x = mouse.origin.x
     y = mouse.origin.y
     n = 75
-    if len(mouse.xy_hist) < n: n = len(mouse.xy_hist)
+    if len(mouse.xy_hist) < n:
+        n = len(mouse.xy_hist)
     total = 1
     minimum_group = 4
     for i in range(n):
@@ -35,8 +36,10 @@ def smooth_location():
         # If there are at least 5 points (so there's some smoothness)
         if i > minimum_group:
             # Don't use if points are really far away, so long moves are fast
-            if abs(x2-mouse.origin.x) > 60: continue
-            if abs(y2-mouse.origin.y) > 60: continue
+            if abs(x2 - mouse.origin.x) > 60:
+                continue
+            if abs(y2 - mouse.origin.y) > 60:
+                continue
 
         x += x2
         y += y2
@@ -50,14 +53,13 @@ def smooth_location():
 class LensMouse:
     def __init__(self):
 
-        tracker.register('gaze', self.on_gaze)
+        tracker.register("gaze", self.on_gaze)
 
         self.xy_hist = [Point2d(0, 0)]
         self.origin = Point2d(0, 0)
 
-        canvas.register('overlay', self.draw)
+        canvas.register("overlay", self.draw)
         self.enabled = True
-
 
     def draw(self, canvas):
 
@@ -71,33 +73,34 @@ class LensMouse:
         mouse.xy_hist.append(Point2d(pos[0], pos[1]))
         mouse.xy_hist.append(Point2d(pos[0], pos[1]))
 
-        if pos == None: return
+        if pos == None:
+            return
 
         paint = canvas.paint
 
         paint.stroke_width = 1
         paint.style = paint.Style.STROKE
-        paint.color = '44444444'
+        paint.color = "44444444"
 
         canvas.draw_circle(pos[0], pos[1], 7)
 
         paint.style = paint.Style.FILL
-        paint.color = '99999944'
+        paint.color = "99999944"
         canvas.draw_circle(pos[0], pos[1], 7)
-
-
 
     def on_gaze(self, b):
 
-        l = b["Left Eye 2D Gaze Point"]['$point2d']
-        r = b["Right Eye 2D Gaze Point"]['$point2d']
+        l = b["Left Eye 2D Gaze Point"]["$point2d"]
+        r = b["Right Eye 2D Gaze Point"]["$point2d"]
 
         x = (l["x"] + r["x"]) / 2
         y = (l["y"] + r["y"]) / 2
 
         # Don't pass edges of screen
-        if x < 0: x = 0
-        if y < 0: y = 0
+        if x < 0:
+            x = 0
+        if y < 0:
+            y = 0
 
         # Multiply by screen width
         x *= size_px.x
@@ -117,7 +120,8 @@ def click():
 def on_key(tap, e):
 
     # Only do something on key down
-    if not e.down: return
+    if not e.down:
+        return
 
     # F3 means click
     if e == "f3":
@@ -130,12 +134,13 @@ def on_key(tap, e):
 
         if mouse.enabled:
             print("    unregister")
-            tracker.unregister('gaze', mouse.on_gaze)
+            tracker.unregister("gaze", mouse.on_gaze)
         else:
             print("    register")
-            tracker.register('gaze', mouse.on_gaze)
+            tracker.register("gaze", mouse.on_gaze)
 
         mouse.enabled = not mouse.enabled
+
 
 tap.register(tap.KEY | tap.HOOK, on_key)
 

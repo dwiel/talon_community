@@ -14,8 +14,12 @@ ctx.keymap(
         "go back": Key("cmd-ctrl-left"),
         "go (fore | forward)": Key("cmd-ctrl-right"),
         "find in (proj | project)": Key("cmd-shift-f"),
-        "(sell find in (proj | project) | find selection in project)": Key("cmd-e cmd-shift-f enter"),
-        "(sell find ace in (proj | project) | replace selection in project)": Key("cmd-e cmd-shift-alt-f"),
+        "(sell find in (proj | project) | find selection in project)": Key(
+            "cmd-e cmd-shift-f enter"
+        ),
+        "(sell find ace in (proj | project) | replace selection in project)": Key(
+            "cmd-e cmd-shift-alt-f"
+        ),
         "next in (proj | project)": Key("cmd-ctrl-g"),
         "prev in (proj | project)": Key("shift-cmd-ctrl-g"),
         "split window": Key("cmd-alt-enter"),
@@ -28,7 +32,9 @@ ctx.keymap(
         "show files": Key("ctrl-5"),
         "show (methods | items)": Key("ctrl-6"),
         "show navigator": Key("cmd-0"),
-        "hide (navigator | project | warnings | breakpoints | reports | build)": Key("cmd-0"),
+        "hide (navigator | project | warnings | breakpoints | reports | build)": Key(
+            "cmd-0"
+        ),
         "show project": Key("cmd-1"),
         "show warnings": Key("cmd-5"),
         "show breakpoints": Key("cmd-8"),

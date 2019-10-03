@@ -121,11 +121,12 @@ keymap = {
     "drag release": mouse_release,
     "(shift click | shicks)": shift_click,
     "(command click | chom lick)": command_click,
-    "(control shift click | troll shift click)" : control_shift_click,
-    "(control shift double click | troll shift double click)" : lambda m: control_shift_click(m, 0, 2),
-    "do park": [delayed_dubclick, Key('cmd-v')],
-	"do koosh": [delayed_dubclick, Key('cmd-c')],
-
+    "(control shift click | troll shift click)": control_shift_click,
+    "(control shift double click | troll shift double click)": lambda m: control_shift_click(
+        m, 0, 2
+    ),
+    "do park": [delayed_dubclick, Key("cmd-v")],
+    "do koosh": [delayed_dubclick, Key("cmd-c")],
     "wheel down": mouse_scroll(200),
     "wheel up": mouse_scroll(-200),
     "wheel down here": [mouse_center, mouse_scroll(200)],

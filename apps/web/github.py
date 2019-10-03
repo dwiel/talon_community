@@ -7,9 +7,7 @@ from talon.voice import Context, Key, press
 from . import browser
 
 BROWSERS = ["com.google.Chrome", "org.mozilla.firefox"]
-ctx_global = Context(
-    "github-sitewide", func=browser.url_matches_func("github.com/.*")
-)
+ctx_global = Context("github-sitewide", func=browser.url_matches_func("github.com/.*"))
 ctx_repo = Context(
     "github-repo", func=browser.url_matches_func("github.com/[^/]+/[^/]+.*")
 )
@@ -130,7 +128,9 @@ def repo_switch_branch(m):
 def repo_copy_git_repo(m):
     # git@github.com:vitchyr/rlkit.git
     url = browser.get_url()
-    git_url = f"git@github.com:{re.fullmatch('github.com/([^/]*/[^/]*).*', url).group(1)}.git"
+    git_url = (
+        f"git@github.com:{re.fullmatch('github.com/([^/]*/[^/]*).*', url).group(1)}.git"
+    )
     clip.set(git_url)
 
 

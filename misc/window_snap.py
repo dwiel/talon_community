@@ -137,38 +137,31 @@ ctx.keymap(
         "snap right": grid(2, 1, 2, 1),
         "snap top": grid(1, 1, 1, 2),
         "snap bottom": grid(1, 2, 1, 2),
-
         # Thirds and two thirds of the screen
         "snap center third": grid(2, 1, 3, 1),
         "snap left third": grid(1, 1, 3, 1),
         "snap right third": grid(3, 1, 3, 1),
         "snap left two thirds": grid(1, 1, 3, 1, colspan=2),
         "snap right two thirds": grid(2, 1, 3, 1, colspan=2),
-
         # Quarters of the screen
         "snap top left": grid(1, 1, 2, 2),
         "snap top right": grid(2, 1, 2, 2),
         "snap bottom left": grid(1, 2, 2, 2),
         "snap bottom right": grid(2, 2, 2, 2),
-
         # Third-of-the-screen versions of top quarters
         "snap top left third": grid(1, 1, 3, 2),
         "snap top right third": grid(3, 1, 3, 2),
         "snap top left two thirds": grid(1, 1, 3, 2, colspan=2),
         "snap top right two thirds": grid(2, 1, 3, 2, colspan=2),
         "snap top center third": grid(2, 1, 3, 2),
-
         # Third-of-the-screen versions of bottom quarters
         "snap bottom left third": grid(1, 2, 3, 2),
         "snap bottom right third": grid(3, 2, 3, 2),
         "snap bottom left two thirds": grid(1, 2, 3, 2, colspan=2),
         "snap bottom right two thirds": grid(2, 2, 3, 2, colspan=2),
         "snap bottom center third": grid(2, 2, 3, 2),
-
         "snap center": grid(2, 2, 8, 8, 6, 6),
-
         "snap (fullscreen | screen | window)": grid(1, 1, 1, 1),
-
         "snap next": next_screen,
         "snap last": previous_screen,
         "window [move] next screen": next_screen,

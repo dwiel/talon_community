@@ -35,12 +35,11 @@ ctx.keymap(
         "reject": Key("x"),
         "flag it": Key("`"),
         "unflag it": Key("u"),
-        "rotate (left | counter clockwise)" : Key("cmd-["),
-        "rotate (right | clockwise)" : Key("cmd-]"),
+        "rotate (left | counter clockwise)": Key("cmd-["),
+        "rotate (right | clockwise)": Key("cmd-]"),
         "keywords": Key("cmd-k"),
         "auto tone": Key("cmd-u"),
         "auto white balance": Key("shift-cmd-u"),
         "black and white": Key("v"),
-
     }
 )

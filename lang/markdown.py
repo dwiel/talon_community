@@ -18,10 +18,10 @@ def modify_selected_text(fn):
     def wrapper(m):
         selected = utils.copy_selected("")
         new_lines = []
-        for line in selected.split('\n'):
+        for line in selected.split("\n"):
             new_lines.append(fn(m, line))
 
-        utils.paste_text('\n'.join(new_lines))
+        utils.paste_text("\n".join(new_lines))
 
     return wrapper
 
@@ -32,6 +32,7 @@ def modify_line(fn):
     if multiple lines are selected, all lines will be modified
     otherwise, the current line will be modified
     """
+
     def wrapper(m):
         line_number = utils.extract_num_from_m(m, default=None)
         if line_number is not None:
