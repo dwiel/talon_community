@@ -7,7 +7,10 @@ terminal: improve completeness of kubectl
 terminal: add "shell curl" and "shell W get"
 terminal: configurable default ssh client
 github: fix url matching
-
+youtube: full screen
+last phrase: remember where the window is
+utils: fix period
+lens_mouse: disabled by default
 
 
 
