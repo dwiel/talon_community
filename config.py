@@ -10,11 +10,13 @@ except Exception:
 
 
 def load_config_json(filename, default=dict):
-    if not os.path.isfile(filename):
+    try:
+        f = resource.open(filename, "r")
+        f.close()
+    except FileNotFoundError:
+        print("creating missing resource file ", filename)
         with resource.open(filename, "w") as f:
-            print('creating file', filename)
             f.write(json.dumps(default()))
-
     try:
         return json.load(resource.open(filename))
     except Exception as e:
