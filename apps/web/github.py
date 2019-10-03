@@ -8,30 +8,30 @@ from . import browser
 
 BROWSERS = ["com.google.Chrome", "org.mozilla.firefox"]
 ctx_global = Context(
-    "github-sitewide", func=browser.url_matches_func("https://github.com/.*")
+    "github-sitewide", func=browser.url_matches_func("github.com/.*")
 )
 ctx_repo = Context(
-    "github-repo", func=browser.url_matches_func("https://github.com/[^/]+/[^/]+.*")
+    "github-repo", func=browser.url_matches_func("github.com/[^/]+/[^/]+.*")
 )
 ctx_editor = Context(
     "github-code-editor",
-    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/edit/.*"),
+    func=browser.url_matches_func("github.com/[^/]+/[^/]+/edit/.*"),
 )
 ctx_issues_pull_lists = Context(
     "github-issues-pull-requests_lists",
-    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/(pulls|issues)"),
+    func=browser.url_matches_func("github.com/[^/]+/[^/]+/(pulls|issues)"),
 )
 ctx_issues_pull = Context(
     "github-issues-pull-requests",
-    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/issues"),
+    func=browser.url_matches_func("github.com/[^/]+/[^/]+/issues"),
 )
 ctx_pull_changes = Context(
     "github-pull-request-changes",
-    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/pulls"),
+    func=browser.url_matches_func("github.com/[^/]+/[^/]+/pulls"),
 )
 ctx_network_graph = Context(
     "github-network-graph",
-    func=browser.url_matches_func("https://github.com/[^/]+/[^/]+/network"),
+    func=browser.url_matches_func("github.com/[^/]+/[^/]+/network"),
 )
 
 # USER-DEFINED VARIABLES
@@ -93,7 +93,7 @@ def repo_goto_wiki(m):
 
 
 def repo_url(url):
-    return re.fullmatch("(https://github.com/[^/]*/[^/]*).*", url).group(1)
+    return re.fullmatch("(github.com/[^/]*/[^/]*).*", url).group(1)
 
 
 def go_to_repo_relative_url(relative_url):
@@ -130,7 +130,7 @@ def repo_switch_branch(m):
 def repo_copy_git_repo(m):
     # git@github.com:vitchyr/rlkit.git
     url = browser.get_url()
-    git_url = f"git@github.com:{re.fullmatch('https://github.com/([^/]*/[^/]*).*', url).group(1)}.git"
+    git_url = f"git@github.com:{re.fullmatch('github.com/([^/]*/[^/]*).*', url).group(1)}.git"
     clip.set(git_url)
 
 
@@ -257,12 +257,12 @@ def scroll_up_most(m):
 ctx_repo.keymap(
     {
         "go [to] code": repo_goto_code,
-        "[go to] issues": repo_goto_issues,
-        "[go to] (pull | pulls)[requests]": repo_goto_pull_requests,
-        "[go to] projects": repo_goto_projects,
-        "[go to] wiki": repo_goto_wiki,
-        "go to settings": repo_go_to_settings,
-        "go to collaborators": repo_go_to_collaborators,
+        "[go [to]] issues": repo_goto_issues,
+        "[go [to]] (pull [requests] | pulls)": repo_goto_pull_requests,
+        "[go [to]] projects": repo_goto_projects,
+        "[go [to]] wiki": repo_goto_wiki,
+        "[go [to]] settings": repo_go_to_settings,
+        "[go [to]] collaborators": repo_go_to_collaborators,
         "new issue": repo_go_to_new_issue,
         "(find file | peach)": repo_find_file,
         "switch [(branch | tag)]": repo_switch_branch,
