@@ -50,5 +50,6 @@ context.keymap(
         "download video": youtube_download_video,
         "speed up": browser.send_to_page(">"),
         "speed down": browser.send_to_page("<"),
+        "full screen": browser.send_to_page("f"),
     }
 )
