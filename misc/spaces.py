@@ -1,19 +1,21 @@
-import os
+import contextlib
 import json
 import time
-import contextlib
 
-from talon import ui, resource, ctrl, cron
-from talon.voice import Key, Context, press
+from talon import cron, ctrl, resource, ui
+from talon.voice import Context, press
 
 from .. import utils
 from . import last_phrase
-
 
 single_digits = "0123456789"
 NAMED_DESKTOPS = {digit: int(digit) for digit in single_digits}
 desktops_filename = utils.local_filename(__file__, "named_desktops.json")
 NAMED_DESKTOPS.update(json.load(resource.open(desktops_filename)))
+
+
+def amethyst_running():
+    return bool(ui.apps(bundle="com.amethyst.Amethyst"))
 
 
 @contextlib.contextmanager
@@ -43,12 +45,17 @@ def move_win_right_space(m):
 
 def window_move_space(m):
     desktop_number = NAMED_DESKTOPS[m["spaces.named_desktops"][0]]
-    with drag_window():
-        press(f"ctrl-{desktop_number}")
+    if amethyst_running():
+        press(f"ctrl-alt-shift-{desktop_number}")
+    else:
+        with drag_window():
+            press(f"ctrl-{desktop_number}")
 
 
-def desk(m):
-    desktop_number = NAMED_DESKTOPS[m["spaces.named_desktops"][0]]
+def desk(m=None, desktop_number=None):
+    if m:
+        desktop_number = NAMED_DESKTOPS[m["spaces.named_desktops"][0]]
+
     press(f"ctrl-{desktop_number}")
     cron.after("300ms", last_phrase.history.refresh)
 
