@@ -48,13 +48,13 @@ def send_key_to_page(key=None):
     return function
 
 
-ctx = Context("gmail", func=browser.url_matches_func("https://mail.google.com/.*"))
+ctx = Context("gmail", func=browser.url_matches_func("(https://)?mail.google.com/.*"))
 ctx.keymap(
     {
         "thread (next | neck)": send_string_to_page("j"),
         "thread (previous | preev)": send_string_to_page("k"),
         # Compose and Chat Commands
-        "inbox": send_string_to_page("gi"),
+        "go inbox": send_string_to_page("gi"),
         # "help": send_key_to_page("shift-?"),
         "search mail": send_key_to_page("/"),
         "compose new tab": send_key_to_page("d"),
@@ -65,7 +65,7 @@ ctx.keymap(
         "advance to next chat": send_key_to_page("ctrl-."),
         "advance to previous chat": send_key_to_page("ctrl-,"),
         # "send": send_key_to_page("ctrl-enter"),
-        "send": send_key_to_page("cmd-enter"),
+        "send email": send_key_to_page("cmd-enter"),
         # "add cc": send_key_to_page("ctrl-shift-c"),
         "add cc": send_key_to_page("cmd-shift-c"),
         # "add bcc": send_key_to_page("ctrl-shift-b"),
@@ -110,7 +110,7 @@ ctx.keymap(
         "update conversation": send_key_to_page("shift-n"),
         "archive conversation and previous": send_key_to_page("]"),
         "archive conversation and next": send_key_to_page("["),
-        "mark unread from selected message": send_key_to_page("_"),
+        "mark unread [from selected message]": send_key_to_page("_"),
         # "mark as important": send_key_to_page("+"),
         "mark as important": send_key_to_page("="),
         "mark as not important": send_key_to_page("-"),
@@ -128,7 +128,7 @@ ctx.keymap(
         # Jumping
         "go [to] inbox": send_string_to_page("gi"),
         "go [to] starred conversations": send_string_to_page("gs"),
-        "go [to] sent messages": send_string_to_page("gt"),
+        "go [to] sent [messages]": send_string_to_page("gt"),
         "go [to] drafts": send_string_to_page("gd"),
         "go [to] all mail": send_string_to_page("ga"),
         # "switch to inbox": send_key_to_page("ctrl-alt-,"),
