@@ -112,3 +112,13 @@ venv.bak/
 # personal scripts
 personal.py
 personal
+
+.DS_Store
+apps/directory_shortcuts.json
+apps/searches.json
+apps/servers.json
+apps/webpages.json
+vocab.json
+vocab_alternate.json
+vocab_remove.json
+misc/webview_locations.json
