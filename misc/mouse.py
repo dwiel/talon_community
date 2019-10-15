@@ -6,6 +6,9 @@ import time
 from talon import ctrl, tap, ui
 from talon.voice import Context, Key
 
+# increase to enable smooth scrolling
+SCROLL_TOTAL_TIME = 0.0
+
 ctx = Context("mouse")
 
 x, y = ctrl.mouse_pos()
@@ -73,7 +76,7 @@ def mouse_scroll(amount):
     return scroll
 
 
-def mouse_smooth_scroll(amount, SCROLL_TOTAL_TIME=0):
+def mouse_smooth_scroll(amount):
     def scroll(m):
         if SCROLL_TOTAL_TIME != 0:
             interval = 0.007
@@ -141,10 +144,10 @@ keymap = {
     ),
     "do park": [delayed_dubclick, Key("cmd-v")],
     "do koosh": [delayed_dubclick, Key("cmd-c")],
-    "wheel down": mouse_smooth_scroll(250, 0.11),
-    "wheel up": mouse_smooth_scroll(-250, 0.11),
-    "wheel down here": [mouse_center, mouse_scroll(200)],
-    "wheel up here": [mouse_center, mouse_scroll(-200)],
+    "wheel down": mouse_smooth_scroll(250),
+    "wheel up": mouse_smooth_scroll(-250),
+    "wheel down here": [mouse_center, mouse_smooth_scroll(250)],
+    "wheel up here": [mouse_center, mouse_smooth_scroll(-250)],
     "mouse center": mouse_center,
 }
 
