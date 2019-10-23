@@ -28,7 +28,7 @@ To install linters and formatter
 
 ## Context activation
 
-When adding new commands, try to scope their context as narowly as possible.
+When adding new commands, try to scope their context as narrowly as possible.
 
 The implementation of a flexible way to determine context activtion is a work in progress. For the time being:
 
