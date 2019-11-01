@@ -203,9 +203,9 @@ context.keymap(
         "(refocus | focus) page": refocus_page,
         "[refocus] dev tools": open_focus_devtools,
         # Clipboard
-        "cut": Key("cmd-x"),
-        "copy": Key("cmd-c"),
-        "paste": Key("cmd-v"),
+        # "cut": Key("cmd-x"),
+        # "copy": Key("cmd-c"),
+        # "paste": Key("cmd-v"),
         "paste same style": Key("cmd-alt-shift-v"),
         # "mendeley": Key("cmd-shift-m"),
         "(add | save) to mendeley": mendeley,
