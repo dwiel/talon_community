@@ -28,8 +28,11 @@ def open_most_recently_downloaded_file(m):
 def get_url(win=None):
     if win is None:
         win = ui.active_window()
-    print(win.children.find(AXRole="AXTextField"))
-    return tuple(win.children.find(AXRole="AXTextField"))[0].AXValue
+    children = win.children.find(AXRole="AXTextField")
+    if children:
+        return children[0].AXValue
+    else:
+        return None
 
 
 def set_url(url, win=None):
@@ -56,6 +59,15 @@ def show_panel(name):
 
     Str("Show %s" % (name))(None)
     press("enter")
+
+
+def new_tab(m):
+    print("hidden", ui.active_window().hidden)
+    print(ui.active_window().children)
+    if not ui.active_window().hidden:
+        press("cmd-t")
+    else:
+        press("cmd-n")
 
 
 def next_panel(m):
@@ -173,11 +185,12 @@ context.keymap(
         "page reload": Key("cmd-r"),
         "reload page": Key("cmd-r"),
         "hard reload": Key("cmd-shift-r"),
-        "new tab": Key("cmd-t"),
+        "new tab": new_tab,
         "new tab {global_browser.webpages}": new_tab_go_to_webpage,
         "go {global_browser.webpages}": go_to_webpage,
         "new search [{global_browser.searches}] [<dgndictation>]": new_search_new_tab,
         "go search [{global_browser.searches}] [<dgndictation>]": new_search_existing_tab,
+        "search {global_browser.searches} [<dgndictation>]": new_search_existing_tab,
         "close tab": Key("cmd-w"),
         "(reopen | unclose) tab": Key("cmd-shift-t"),
         "(next tab | goneck)": Key("cmd-shift-]"),
@@ -233,7 +246,7 @@ context.keymap(
         "pin tab": Key("alt-p"),
         "open most recently downloaded file": open_most_recently_downloaded_file,
         # archive.org
-        "open [in] way back [machine]": open_way_back_machine,
+        "open [in] (way back [machine] | archive)": open_way_back_machine,
     }
 )
 
@@ -246,6 +259,11 @@ def global_chrome_new_tab(m):
 def global_go_to_webpage(m):
     switcher.switch_app(name="Google Chrome")
     new_tab_go_to_webpage(m)
+
+
+def global_chrome_new_search(m):
+    switcher.switch_app(name="Google Chrome")
+    new_search_new_tab(m)
 
 
 def global_chrome_close_tab(m):
@@ -268,6 +286,12 @@ global_ctx.keymap(
         "chrome search [<dgndictation>]": [global_chrome_new_tab, utils.text, " "],
         "chrome lucky [<dgndictation>]": [
             global_chrome_new_tab,
+            "lucky ",
+            utils.text,
+            " ",
+        ],
+        "chrome {global_browser.searches} [<dgndictation>]": [
+            global_chrome_new_search,
             "lucky ",
             utils.text,
             " ",
