@@ -23,9 +23,9 @@ ctx = Context(
 )
 ctx.keymap(
     {
-        "copy": Key("cmd+c"),
-        "cut": Key("cmd+x"),
-        "paste": Key("cmd+v"),
+        # "copy": Key("cmd+c"),
+        # "cut": Key("cmd+x"),
+        # "paste": Key("cmd+v"),
         "paste without formatting": Key("cmd+shift+v"),
         "undo": Key("cmd+z"),
         "redo": Key("cmd+shift+z"),
