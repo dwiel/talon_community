@@ -33,40 +33,26 @@ def click_pos(m):
     return pos[:2]
 
 
-def delayed_click(m, button=0, times=1):
-    # old = eye.config.control_mouse
-    # eye.config.control_mouse = False
-    # x, y = click_pos(m)
-    # ctrl.mouse(x, y)
+def click(m, button=0, times=1):
     ctrl.mouse_click(x, y, button=button, times=times, wait=16000)
-    # time.sleep(0.032)
-    # eye.config.control_mouse = old
+
+
+def right_click(m):
+    click(m, button=1)
+
+
+def dubclick(m):
+    click(m, button=0, times=2)
+
+
+def tripclick(m):
+    click(m, button=0, times=3)
 
 
 def press_key_and_click(m, key, button=0, times=1):
     ctrl.key_press(key, down=True)
     ctrl.mouse_click(x, y, button=button, times=times, wait=16000)
     ctrl.key_press(key, up=True)
-
-
-def shift_click(m, button=0, times=1):
-    press_key_and_click(m, "shift", button, times)
-
-
-def command_click(m, button=0, times=1):
-    press_key_and_click(m, "cmd", button, times)
-
-
-def delayed_right_click(m):
-    delayed_click(m, button=1)
-
-
-def delayed_dubclick(m):
-    delayed_click(m, button=0, times=2)
-
-
-def delayed_tripclick(m):
-    delayed_click(m, button=0, times=3)
 
 
 def mouse_scroll(amount):
@@ -108,14 +94,12 @@ def mouse_center(m):
     ctrl.mouse_move(*center)
 
 
-def press_key_and_click(m, key, button=0, times=1):
-    ctrl.key_press(key, down=True)
-    ctrl.mouse_click(x, y, button=button, times=times, wait=16000)
-    ctrl.key_press(key, up=True)
-
-
 def shift_click(m, button=0, times=1):
     press_key_and_click(m, "shift", button, times)
+
+
+def control_click(m, button=0, times=1):
+    press_key_and_click(m, "control", button, times)
 
 
 def command_click(m, button=0, times=1):
@@ -130,20 +114,21 @@ def control_shift_click(m, button=0, times=1):
 
 keymap = {
     # jsc modified with some voice-code compatibility
-    "righty": delayed_right_click,
-    "(click | chiff)": delayed_click,
-    "(dubclick | duke)": delayed_dubclick,
-    "(tripclick | triplick)": delayed_tripclick,
+    "righty": right_click,
+    "(click | chiff)": click,
+    "(dubclick | duke)": dubclick,
+    "(tripclick | triplick)": tripclick,
     "drag": mouse_drag,
     "drag release": mouse_release,
-    "(shift click | shicks)": shift_click,
+    "control click": control_click,
+    "shift click": shift_click,
     "(command click | chom lick)": command_click,
     "(control shift click | troll shift click)": control_shift_click,
     "(control shift double click | troll shift double click)": lambda m: control_shift_click(
         m, 0, 2
     ),
-    "do park": [delayed_dubclick, Key("cmd-v")],
-    "do koosh": [delayed_dubclick, Key("cmd-c")],
+    "do park": [dubclick, Key("cmd-v")],
+    "do koosh": [dubclick, Key("cmd-c")],
     "wheel down": mouse_smooth_scroll(250),
     "wheel up": mouse_smooth_scroll(-250),
     "wheel down here": [mouse_center, mouse_smooth_scroll(250)],
