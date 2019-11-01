@@ -1,7 +1,6 @@
 import collections
 import json
 import os
-import string
 from time import sleep
 
 from talon import clip, resource
@@ -22,6 +21,24 @@ for k, v in mapping.items():
     mappings[len(k.split(" "))][k] = v
 
 punctuation = set(".,-!?/")
+
+
+ordinal_indexes = {
+    "first": 0,
+    "second": 1,
+    "third": 2,
+    "fourth": 3,
+    "fifth": 4,
+    "sixth": 5,
+    "seventh": 6,
+    "eighth": 7,
+    "ninth": 8,
+    "tenth": 9,
+    "final": -1,
+    "next": "next",  # Yeah, yeah, not a number.
+    "last": "last",
+    "this": "this",
+}
 
 
 def local_filename(file, name):
