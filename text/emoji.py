@@ -42,7 +42,7 @@ def react(m):
         if old_clipboard != old_text:
             press("cmd-a", wait=2000)
             time.sleep(0.25)
-            utils.insert(old_text)
+            utils.paste_text(old_text)
     finally:
         clip.set(old_clipboard)
 
