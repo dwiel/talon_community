@@ -42,7 +42,7 @@ def youtube_download(video=True):
 
 
 context = Context(
-    "youtube", func=browser.url_matches_func("https://www.youtube.com/.*")
+    "youtube", func=browser.url_matches_func("https://youtube.com/.*")
 )
 context.keymap(
     {
