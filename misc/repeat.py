@@ -19,6 +19,11 @@ from .. import utils
 
 ctx = Context("repeater")
 
+# use this if you want `action trace` to result in action being executed 3 times
+offset = -1
+# use this if you want `action` pause `trace` to result in action being executed 4 times
+# offset = 0
+
 
 def repeat(m):
     # TODO: This could be made more intelligent:
@@ -38,10 +43,10 @@ ctx.keymap(
     {
         "wink": Rep(1),
         "creek": RepPhrase(1),
-        "soup": Rep(1),
-        "trace": Rep(2),
-        "quarr": Rep(3),
-        "fypes": Rep(4),
+        "soup": Rep(2 + offset),
+        "trace": Rep(3 + offset),
+        "quarr": Rep(4 + offset),
+        "fypes": Rep(5 + offset),
         "(repeat | repple)" + utils.numerals: repeat,
     }
 )
