@@ -101,6 +101,12 @@ def wrap_call(m):
     utils.snake_text(m)
 
 
+def f_string(m):
+    utils.paste_text('f"{' + utils.copy_selected("") + '}"')
+    press("left")
+    press("left")
+
+
 ctx.keymap(
     {
         "dunder in it": "__init__",
@@ -108,13 +114,12 @@ ctx.keymap(
         "dot pipe": ".py",
         "star (arguments | args)": "*args",
         "star star K wargs": "**kwargs",
-        "raise value error": ["raise ValueError()", Key("left")],
-        "raise not implemented error": "raise NotImplementedError()",
         "raise {global_python.exception}": raise_exception,
     }
 )
 ctx.set_list("exception", exceptions.keys())
 
+PREFIX = "(py | python)"
 ctx = Context("python", func=is_filetype(FILETYPES))
 ctx.keymap(
     {
@@ -129,14 +134,10 @@ ctx.keymap(
         "self dot": "self.",
         "self [(dot | doubt)] <dgndictation> [over]": ["self.", snake_text],
         "self [(dot | doubt)] private <dgndictation> [over]": ["self._", snake_text],
-        "import [<dgndictation>] [over]": ["import ", snake_text],
-        "from [<dgndictation>] [over]": ["from ", snake_text],
         # this isn't easy to write because snake_text always assumes it is
-        # working on # the first <dgndictation>, but this command has two of
+        # working on the first <dgndictation>, but this command has two of
         # them
         # "from <dgndictation> import [<dgndictation>] [over]": from_import ,
-        "in": " in ",
-        "is": " is ",
         "is not": " is not ",
         "true": "True",
         "champ true": "True",
@@ -144,16 +145,23 @@ ctx.keymap(
         "champ false": "False",
         "none": "None",
         "champ none": "None",
-        "F string": [lambda m: utils.paste_text("f'{}'"), Key("left"), Key("left")],
+        "F string": f_string,
         "wrap call [<dgndictation>]": wrap_call,
-        # "if": ["if :", Key("left")],
-        "else": "else:\n",
-        "with": ["with :", Key("left")],
+        f"{PREFIX} is": " is ",
+        f"{PREFIX} in [<dgndictation>]": [" in ", snake_text],
+        f"{PREFIX} if [<dgndictation>]": ["if :", Key("left"), snake_text],
+        f"{PREFIX} else": "else:\n",
+        f"{PREFIX} elif": ["elif :", Key("left")],
+        f"{PREFIX} with": ["with :", Key("left")],
+        f"{PREFIX} while": ["while :", Key("left")],
+        f"{PREFIX} try": ["try", Key("tab")],
+        f"{PREFIX} import [<dgndictation>] [over]": ["import ", snake_text],
+        f"{PREFIX} from [<dgndictation>] [over]": ["from ", snake_text],
+        f"{PREFIX} from [<dgndictation>] import": ["from ", snake_text, " import "],
         "return [<dgndictation>] [over]": ["return ", snake_text],
         "set trace": "import ipdb; ipdb.set_trace()",
     }
 )
-
 # TODO: defined function
 # TODO: defined class
 # TODO: python-ast
