@@ -10,15 +10,36 @@ from ... import utils
 lag = 0.2
 using_tridactyl = False
 using_vimium = True
+using_surfingkeys = False
 BROWSERS = ["com.google.Chrome", "org.mozilla.firefox"]
+
+cache_times = {}
+cache_values = {}
 
 
 def get_url(win=None):
     if win is None:
         win = ui.active_window()
 
+    now = time.time()
+    last_cache = cache_times.get(win, default=0)
+    if now - last_cache > .1:
+        url = _get_url(win)
+        cache_values[win] = url
+        cache_times[win] = time.time()
+
+    # print(now - last_cache, now, last_cache, cache_values[win])
+    return cache_values[win]
+
+
+def _get_url(win=None):
     if win.app.bundle == "com.google.Chrome":
-        return win.children.find(AXTitle="Address and search bar")[0].AXValue
+        children = win.children.find(AXRole="AXTextField")
+        try:
+            return children[0].AXValue
+        except IndexError as e:
+            return ""
+        # return win.children.find(AXTitle="Address and search bar")[0].AXValue
     else:
         raise ValueError("no method for getting url from not chrome yet")
     # win.children.find(AXTitle='Address and search bar')[0].AXValue
@@ -37,9 +58,20 @@ def navigate_to_url(url, win=None):
 
 
 def url_matches_func(url_pattern):
+    if url_pattern[:8] == "https://":
+        url_pattern = "(https://)?" + url_pattern[8:]
+    elif url_pattern[:7] == "http://":
+        url_pattern = "(http://)?" + url_pattern[7:]
+    else:
+        url_pattern = "(http://|https://)?" + url_pattern
+
     def func(app, win):
         if win.app.bundle == "com.google.Chrome":
-            return re.fullmatch(url_pattern, get_url(win))
+            result = bool(re.fullmatch(url_pattern, get_url(win)))
+            # if result:
+            # print("matches", result, url_pattern, type(get_url(win)), repr(get_url(win)))
+            return result
+
         else:
             return False
 
@@ -86,6 +118,10 @@ def page_mode():
         press("escape")
         time.sleep(lag)
         press("i")
+    elif using_surfingkeys:
+        print("after normal")
+        press("alt-i")
+        time.sleep(lag)
 
 
 def do(thing, *args, **kwargs):
