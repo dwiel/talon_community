@@ -171,6 +171,7 @@ keymap = {
     "[shell] (S S H | SSH) {global_terminal.servers}": ssh_servers,
     # "shell server {terminal.servers}": name_servers,
     "[shell] S S H copy I D {global_terminal.servers}": ssh_copy_id_servers,
+    "[shell] copy key {global_terminal.servers}": ssh_copy_id_servers,
     "shell M player": "mplayer ",
     "shell nvidia S M I": "nvidia-smi ",
     "shell R sync": "./src/dotfiles/sync_rsync ",
@@ -265,10 +266,10 @@ keymap = {
     "conda install": "conda install ",
     "conda list": "conda list ",
     # tmux
-    "T mux new session": "tmux ",
-    "T mux list": "tmux ls",
-    "T mux attach [<dgndictation>]": ["tmux a -t ", text],
-    "T mux scroll": [Key("ctrl-b"), Key("[")],
+    "(T mux | teemucks) list": "tmux ls",
+    "(T mux | teemucks) new session [<dgndictation>]": ["tmux new-session -t ", text],
+    "(T mux | teemucks) attach [<dgndictation>]": ["tmux a -t ", text],
+    "(T mux | teemucks) scroll": [Key("ctrl-b"), Key("[")],
     # other
     "shell make": "make\n",
     "shell jobs": "jobs\n",
@@ -322,6 +323,24 @@ keymap = {
     # supervisorctl
     "supervisor control": "supervisorctl ",
     "supervisor control status": "supervisorctl status",
+    # dat
+    "dat": "dat ",
+    "dat share": "dat share ",
+    "dat create": "dat create ",
+    "dat sync": "dat sync ",
+    "dat clone": "dat clone ",
+    "dat pull": "dat pull ",
+    "dat sync": "dat sync ",
+    "dat log": "dat log ",
+    "dat status": "dat status ",
+    "dat register": "dat register ",
+    "dat login": "dat login ",
+    "dat publish": "dat publish ",
+    "dat whoami": "dat whoami ",
+    "dat logout": "dat logout ",
+    "dat doctor": "dat doctor ",
+    "dat help": "dat help ",
+    "dat version": "dat version ",
 }
 
 for pip in ("pip", "pip3"):
@@ -349,6 +368,7 @@ for action in ("get", "delete", "describe", "label"):
         "events",
         "deployments",
         "replicasets",
+        "daemonsets",
         "",
     ):
         if object:
