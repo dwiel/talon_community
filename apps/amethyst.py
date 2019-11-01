@@ -1,11 +1,7 @@
-import os
-import json
 import time
 
-from talon import ui, resource
-from talon.voice import Key, Context, press
-
-from .. import utils
+from talon import ui
+from talon.voice import Context, Key, press
 
 
 def amethyst_running():
