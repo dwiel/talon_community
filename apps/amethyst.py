@@ -1,6 +1,4 @@
-import time
-
-from talon import ui
+from talon import cron, ui
 from talon.voice import Context, Key, press
 
 
@@ -45,17 +43,27 @@ def ui_event(event, arg):
             "win_open",
             "win_close",
         ):
-            if event in ("win_open", "win_closed"):
-                if arg.app.name == "Amethyst" or arg.app.name == "loginwindow":
-                    return
-            if event == "app_activate" and arg.name == "loginwindow":
+            if event[:4] == "win_" and arg.app.name in ("Amethyst", "loginwindow"):
                 return
-            print(event, arg)
+            if event[:4] == "app_" and arg.name in (
+                "AddressBookSourceSync",
+                "Google Software Update",
+                "CoreServicesUIAgent",
+                "AddressBookManager",
+                "loginwindow",
+            ):
+                return
+            try:
+                print(event, arg)
+                print(arg.app.name, arg.name)
+                print(ui.active_window())
+                print(ui.active_window().hidden)
+                print()
+            except:
+                pass
             press("alt-shift-z")
-            time.sleep(0.25)
-            press("alt-shift-z")
-            time.sleep(0.25)
-            press("alt-shift-z")
+            cron.after("250ms", lambda: press("alt-shift-z"))
+            cron.after("250ms", lambda: press("alt-shift-z"))
 
 
 ui.register("", ui_event)
