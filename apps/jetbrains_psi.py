@@ -16,12 +16,21 @@ PSI_PATHS = {
     #     "_": "this",
     #     "cs": "DUMMY_BLOCK,DUMMY_BLOCK"
     # },
+    "parameters": {
+        "_": "this",  # You probably want the parameters of the current function
+        "+": ["left", None],
+        "go": "FILE,METHOD_DECLARATION|FUNCTION_DECLARATION##,PARAMETERS",
+        "java": "FILE,METHOD|FUNCTION##,^PARAMETER_LIST",
+        "py": "FILE,FUNCTION_DECLARATION##,PARAMETER_LIST",
+        "php": "File,Class method|function|Function##,Parameter list",
+        "default": "FILE,DECLARATION##,PARAMETER",
+    },
     "parameter": {
-        "_": 0, # You probably want the first parameter of the current function
+        "_": 0,  # You probably want the first parameter of the current function
         "+": [", space", None],
         "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,PARAMETERS,PARAMETER_DECLARATION",
         "java": "METHOD|FUNCTION,^PARAMETER_LIST,PARAMETER",
-        "py": "FUNCTION_DECLARATION,PARAMETER",
+        "py": "FILE,FUNCTION_DECLARATION,PARAMETER",
         "php": "Class method|function|Function,Parameter list,Parameter",
         "default": "DECLARATION,PARAMETER",
     },
@@ -29,11 +38,14 @@ PSI_PATHS = {
         "_": 0,  # You probably want the first parameter of the current function
         "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,PARAMETERS,PARAMETER_DECLARATION##,PARAM_DEFINITION",
         "java": "METHOD|FUNCTION,^PARAMETER_LIST,PARAMETER##,IDENTIFIER",
+        "py": "FILE,FUNCTION_DECLARATION,PARAMETER##,IDENTIFIER",
+        "php": "Class method|function|Function,Parameter list,Parameter",
     },
     "parameter type": {
         "_": 0,  # You probably want the first parameter of the current function
         "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,PARAMETERS,PARAMETER_DECLARATION##,TYPE",
         "java": "METHOD|FUNCTION,^PARAMETER_LIST,PARAMETER##,TYPE,IDENTIFIER",
+        "py": "FILE,FUNCTION_DECLARATION,PARAMETER##,ANNOTATION,EXPRESSION",
     },
     "import": {
         "_": 0, # You probably want the first import of the current file
@@ -54,7 +66,7 @@ PSI_PATHS = {
     },
     "comment": {
         "_": "next",  # You probably want the next comment
-        # "+": ["\n", None],
+        # "+": ["cmd-right space ", None],
         "php": "FILE,Comment",
         "default": "FILE,COMMENT",
     },
@@ -69,28 +81,40 @@ PSI_PATHS = {
         "default": "FILE,METHOD_DECLARATION",
     },
     "method name": {
-        "_": 0,  # You probably want the method name of the current method
-        "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,identifier",
-        "py": "Py:FUNCTION_DECLARATION,Py:IDENTIFIER",
-        "java": "METHOD,IDENTIFIER",
-        "php": "Class method,identifier",
-        "default": "METHOD_DECLARATION,identifier",
+        "_": "this",  # You probably want the method name of the current method
+        "go": "FILE,METHOD_DECLARATION|FUNCTION_DECLARATION##,identifier",
+        "py": "FILE,Py:FUNCTION_DECLARATION##,Py:IDENTIFIER",
+        "java": "FILE,METHOD##,IDENTIFIER",
+        "php": "FILE,Class method##,identifier",
+        "default": "FILE,METHOD_DECLARATION##,identifier",
     },
     "receiver": {
-        "_": 0,  # You probably want the method name of the current method
-        "go": "METHOD_DECLARATION,RECEIVER,identifier",
+        "_": "this",  # You probably want the receiver name of the current method
+        "go": "FILE,METHOD_DECLARATION##,RECEIVER",
+    },
+    "receiver name": {
+        "_": "this",  # You probably want the receiver name of the current method
+        "go": "METHOD_DECLARATION##,RECEIVER,identifier",
     },
     "receiver type": {
-        "_": 0,  # You probably want the method name of the current method
-        "go": "METHOD_DECLARATION,RECEIVER,TYPE",
+        "_": "this",  # You probably want the receiver type of the current method
+        "go": "FILE,METHOD_DECLARATION##,RECEIVER,TYPE",
+    },
+    "results": {
+        "_": "this",  # You probably want the results of the current method
+        "go": "FILE,METHOD_DECLARATION|FUNCTION_DECLARATION##,SIGNATURE,RESULT",
     },
     "result": {
-        "_": 0,  # You probably want the method name of the current method
-        "go": "METHOD_DECLARATION,SIGNATURE,RESULT,TYPE",
+        "_": 0,  # You probably want the results of the current method
+        "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,SIGNATURE,RESULT,PARAMETER_DECLARATION",
+    },
+    "result type": {
+        "_": 0,  # You probably want the results of the current method
+        "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,SIGNATURE,RESULT,PARAMETER_DECLARATION##,TYPE",
     },
     "result name": {
-        "_": 0,  # You probably want the method name of the current method
-        "go": "METHOD_DECLARATION,SIGNATURE,RESULT,identifier",  # XXX Doesn't quite handle two.
+        "_": 0,  # You probably want the result name of the current method
+        "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,SIGNATURE,RESULT,PARAMETER_DECLARATION##,identifier",
     },
     "function": {
         "_": "this",  # You probably want the function containing the cursor
@@ -174,6 +198,10 @@ PSI_PATHS = {
         "_": "next",  # You probably want the next literal
         "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,LITERAL_VALUE",
     },
+    "function literal": {
+        "_": "this",  # You probably want the current composite literal
+        "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,FUNCTION_LIT",
+    },
     "complex literal": {
         "_": "this",  # You probably want the current composite literal
         "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,COMPOSITE_LIT",
@@ -203,7 +231,7 @@ PSI_PATHS = {
         "+": [", space", None],
         "go": "STATEMENT,ARGUMENT_LIST,_EXPR|LITERAL|_EXPRESSION",
         "java": "STATEMENT,EXPRESSION_LIST,_EXPRESSION",
-        "py": "STATEMENT,ARGUMENT_LIST,EXPRESSION",
+        "py": "STATEMENT,ARGUMENT_LIST,CALL_EXPRESSION,ARGUMENT_LIST,EXPRESSION",
         "php": "Statement,Parameter list,Parameter",
         "default": "STATEMENT,ARGUMENT_LIST,EXPRESSION",
     },
@@ -221,6 +249,11 @@ PSI_PATHS = {
         "+": ["enter r e t u r n space", None],
         "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,STATEMENT",
     },
+    "defer": {
+        "_": "next",  # You probably want the next return statement of the method
+        "+": ["enter d e f e r space", None],
+        "go": "METHOD_DECLARATION|FUNCTION_DECLARATION,DEFER_STATEMENT",
+    },
     # "value": {
     #     "_": 0, # First value of the literal?
     #     "go": "LITERAL_VALUE,ELEMENT",
@@ -228,9 +261,18 @@ PSI_PATHS = {
     #     "default": "LITERAL_VALUE,ELEMENT",
     # },
     "left hand": {
-        "_": 0,  # LHS of the current statement.  Ordinals make sense for multi-assign.
+        "_": "next",  # LHS of the current statement.  Ordinals make sense for multi-assign.
         "go": "STATEMENT,LEFT_HAND_EXPR_LIST|VAR_DEFINITION",
-        "py": "Py:ASSIGNMENT_STATEMENT,Py:TARGET_EXPRESSION",
+        "py": "Py:FUNCTION_DECLARATION,Py:ASSIGNMENT_STATEMENT##,Py:TARGET_EXPRESSION",
+    },
+    "right hand": {
+        "_": "next",  # RHS of the current statement.  Ordinals make sense for multi-assign.
+        "py": "Py:FUNCTION_DECLARATION,Py:ASSIGNMENT_STATEMENT##,EXPRESSION%231",
+    },
+    "key value": {
+        "_": "this",
+        "+": [", enter : left", None],
+        "py": "FILE,Py:DICT_LITERAL_EXPRESSION,Py:KEY_VALUE_EXPRESSION",
     },
     # XXX RHS expression
     # "index": {
