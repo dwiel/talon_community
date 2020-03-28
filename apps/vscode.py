@@ -14,7 +14,7 @@ def jump_to_line(m):
     if line_number == 0:
         line_number = 1
 
-    press("cmd-g")
+    press("ctrl-g")
     Str(str(line_number))(None)
     press("enter")
 
@@ -66,8 +66,8 @@ context.keymap(
         # Clipboard
         "clone": Key("alt-shift-down"),
         # Navigation
-        "line" + optional_numerals: jump_to_line,
-        "Go to line": Key("cmd-g"),
+        ("line | spring") + optional_numerals: jump_to_line,
+        "Go to line": Key("ctrl-g"),
         "line up" + optional_numerals: repeat_function(2, "alt-up"),
         "line down" + optional_numerals: repeat_function(2, "alt-down"),
         # Navigating Interface
