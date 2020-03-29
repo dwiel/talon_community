@@ -114,7 +114,7 @@ def control_shift_click(m, button=0, times=1):
 
 keymap = {
     # jsc modified with some voice-code compatibility
-    "righty": right_click,
+    "(righty | chipper)": right_click,
     "(click | chiff)": click,
     "(dubclick | duke)": dubclick,
     "(tripclick | triplick)": tripclick,
