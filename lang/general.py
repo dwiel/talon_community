@@ -74,6 +74,7 @@ ctx.keymap(
         "state case": ["case \nbreak;", Key("up")],
         # Other Keywords
         "const": "const ",
+        "var": "var ",
         "static": "static ",
         "tip pent": "int ",
         "tip (char | care)": "char ",
