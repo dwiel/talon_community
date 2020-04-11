@@ -75,6 +75,7 @@ ctx.keymap(
         # Other Keywords
         "const": "const ",
         "var": "var ",
+        "int": "int ",
         "static": "static ",
         "tip pent": "int ",
         "tip (char | care)": "char ",
