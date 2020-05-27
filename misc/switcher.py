@@ -71,7 +71,7 @@ def update_lists():
     ctx.set_list("running", running.keys())
 
     new = {}
-    for base in "/Applications", "/Applications/Utilities":
+    for base in "/Applications", "/Applications/Utilities","/System/Applications","/System/Applications/Utilities":
         for name in os.listdir(base):
             path = os.path.join(base, name)
             name = name.rsplit(".", 1)[0]
